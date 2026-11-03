@@ -2,23 +2,21 @@
 
 <h2>로그인</h2>
 
-<form>
-  <div>
-    <label for="id">아이디</label>
-    <input type="text" id="id" name="id" required />
-  </div>
+<form action="#" method="post">
+  <p>
+    ID
+    <input type="text" name="id" required />
+  </p>
 
-  <div>
-    <label for="pw">비밀번호</label>
-    <input type="text" id="pw" name="pw" required />
-  </div>
+  <p>
+    Password
+    <input typ="password" name="pw" required />
+  </p>
 
-  <button type="submit">로그인</button>
+  <p>
+    Input ID and password, and click the login button<br />
+    <input type="submit" value="Login" />
+  </p>
 </form>
 
-<p>
-  계정이 없으신가요?
-  <a href="{{url_for('sign up')}}">회원가입</a>
-</p>
-
-{% endblock section %}
+<button onclick="location.href='/signup'">Signup</button> {% endblock section%}

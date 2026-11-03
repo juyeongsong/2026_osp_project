@@ -1,8 +1,11 @@
 import os
-from flask import Flask, render_template, request
+import hashlib
+
+from flask import Flask, render_template, request, flash, redirect, url_for, session
 from database import DBhandler
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "helloosp"
 DB = DBhandler()
 
 UPLOAD_DIR = os.path.join(app.root_path, "static", "images")
@@ -19,6 +22,24 @@ def login():
 @app.route("/signup")
 def signup():
     return render_template("signup.html")
+
+@app.route("/signup_post", methods=["POST"])
+def register_user():
+    data = request.form
+    print(data)
+    pw = request.form['pw']
+
+    pw_hash = hashlib.sha256(
+        pw.encode('utf-8')
+    ).hexdigest()
+
+    if DB.insert_user(data, pw_hash):
+        return render_template("login.html")
+    else: 
+        return render_template(
+            "signup.html",
+            error="User ID already exists!"
+        )
 
 @app.route("/list")
 def view_list():

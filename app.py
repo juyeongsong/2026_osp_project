@@ -10,6 +10,14 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 def hello():
     return render_template("index.html")
 
+@app.py("/login")
+def login():
+    return render_template("login.html")
+
+@app.py("/signup")
+def signup():
+    return render_template("signup.html")
+
 @app.route("/list")
 def view_list():
     return render_template("list.html")

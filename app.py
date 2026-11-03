@@ -14,12 +14,12 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 @app.route("/")
 def hello():
     return render_template("index.html")
-
-@app.py("/login")
+    
+@app.route("/login")
 def login():
     return render_template("login.html")
 
-@app.py("/signup")
+@app.route("/signup")
 def signup():
     return render_template("signup.html")
 
@@ -62,6 +62,7 @@ def reg_item_submit_post():
     image_file = request.files["file_input"]
     image_file.save(os.path.join(UPLOAD_DIR, image_file.filename))
     data = request.form
+    DB.insert_item(data['name'], data, image_file.filename)
     return render_template("result.html", data=data,
                            img_path="images/" + image_file.filename)
 

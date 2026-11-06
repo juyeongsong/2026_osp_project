@@ -3,26 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EwhaMarket</title>
+    <title>이화 붕어빵</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
     <script src="{{ url_for('static', filename='main.js') }}" defer></script>
   </head>
+
   <body>
-    <nav class="navbar">
-      <div class="navbar__logo">
-        <a href="/">EwhaMarket</a>
+    <header class="site-top">
+      <div class="awning">
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
       </div>
-      <ul class="navbar__menu">
-        <li><a href="/login">Login</a></li>
-        <li><a href="/list">List</a></li>
-        <li><a href="/review">Review</a></li>
-        <li><a href="/reg_items">Register Items</a></li>
-        <li><a href="/reg_reviews">Register Reviews</a></li>
-      </ul>
-    </nav>
+
+      <div class="site-logo">
+        <a href="/">
+          <img
+            src="{{url_for('static', filename='images/logo.png')}}"
+            alt="이화붕어빵"
+          />
+        </a>
+      </div>
+
+      <a href="/" class="home-btn">
+        <img src="{{url_for('static', filename='images/home.png')}}" alt="홈" />
+      </a>
+    </header>
+
     <section>{% block section %} {% endblock section %}</section>
   </body>
 </html>

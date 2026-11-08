@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이화 붕어빵 - 오늘의 붕어빵은?</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .body-area { padding: 28px 48px 10px; }
+
+  /* 팀 수정사항: 이 페이지 타이틀 "오늘의 붕어빵은?"도 taste_select.html과 같은 텍스트라
+     Figma 실측 좌표(X:468 Y:48)가 common.css 공통값(X:560 Y:67, 상품 등록 기준)과 다름 — 동일하게 덮어씀 */
+  .awning .page-title {
+    left: 468px;
+    top: 48px;
+  }
+
+  .lead {
+    display: flex;
+    align-items: center;
+    gap: 16px; /* 물고기 아이콘 X52+W74=126, 텍스트 X142 → 간격 16 (taste_select.html과 동일 Figma 데이터) */
+    margin-left: 4px; /* Figma 물고기 아이콘 X:52 - .body-area 좌측 패딩 48px */
+    font-family: "OkDanDan", "Pretendard", sans-serif;
+    font-size: 50px;
+    font-weight: 700; /* OkDanDan은 700만 있음 — 800이면 Pretendard로 깨짐 */
+    color: var(--line);
+    margin-bottom: 18px;
+  }
+  .lead .fish { width: 74px; height: 59.11px; display: block; }
+
+  .board-wrap {
+    background: rgba(255, 222, 121, 0.45);
+    border-radius: 30px;
+    padding: 20px 18px 24px;
+    margin-bottom: 20px;
+  }
+
+  /* 시작점 선택 버튼 (사다리 위쪽) — 6칸을 svg와 동일한 그리드로 정렬 */
+  .start-row, .bottom-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    justify-items: center;
+  }
+
+  .start-btn-dot {
+    /* Figma 실측: 배경 W82 H63 Corner radius30 Fill FBFFE5 / 숫자 텍스트 OkDanDan Bold 40px, Fill 000000 */
+    width: 82px; height: 63px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 30px;
+    background: #FBFFE5;
+    color: #000000;
+    border: none;
+    font-family: "OkDanDan", "Pretendard", sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+  }
+  .start-btn-dot:disabled { background: #FBFFE5; cursor: default; } /* Figma엔 "비활성" 색상 변화가 없어서 배경은 그대로 유지 */
+  .start-btn-dot:hover:not(:disabled) { background: #FBFFE5; opacity: 0.85; transform: scale(1.08); }
+  .start-btn-dot.used { opacity: 0.35; }
+
+  svg { display: block; margin: 8px 0; width: 100%; height: auto; }
+  .path-line { stroke: #000000; stroke-width: 4; fill: none; } /* Figma 실측: Stroke 000000, Weight 4 */
+  .highlight-line { stroke: var(--green); stroke-width: 5; stroke-linecap: round; fill: none; }
+
+  .flavor-card-mini {
+    /* Figma 실측(Group 131): W140 H170 */
+    width: 140px;
+    height: 170px;
+    text-align: center;
+  }
+  .card-mini-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    transition: filter 0.2s ease, transform 0.2s ease;
+  }
+  .card-mini-img.winner {
+    filter: drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 8px var(--accent));
+    transform: scale(1.06);
+  }
+
+  .result-box {
+    margin-top: 16px;
+    min-height: 30px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--green);
+  }
+
+  .action-row {
+    display: flex;
+    align-items: center;
+    gap: 93.68px; /* Figma 실측: Rectangle29 X767 - (Group77 X389 + W284.32) = 93.68 */
+    margin-left: 341px; /* Figma Group77 X:389 - .body-area 좌측 패딩 48px */
+    padding-bottom: 20px;
+  }
+
+  .ladder-btn {
+    /* Figma 실측(Group 77): W284.32 H83, Corner radius 50, Fill 00640F / 텍스트 "사다리 타기": OkDanDan Bold 40px */
+    width: 284.32px; height: 83px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--green); color: #fff; border: none;
+    border-radius: 50px;
+    font-family: "OkDanDan", "Pretendard", sans-serif;
+    font-size: 40px; font-weight: 700; cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .ladder-btn:hover { background: var(--green); opacity: 0.85; }
+  .ladder-btn.started { background: var(--green); opacity: 0.6; }
+
+  .reagain-btn {
+    /* Figma 실측(Rectangle 29): W284.32 H83, Corner radius 50, Fill FFFFFF, Stroke 없음(확인됨) / 글자 크기는 "사다리 타기"와 같다고 가정(미확인 — 추정치) */
+    width: 284.32px; height: 83px;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff; color: var(--line); border: none;
+    border-radius: 50px;
+    font-family: "OkDanDan", "Pretendard", sans-serif;
+    font-size: 40px; font-weight: 700; cursor: pointer;
+  }
+  .reagain-btn:hover { background: var(--cream); }
+
+  .hint { text-align: center; font-size: 20px; color: #8a9e8e; padding-bottom: 14px; } /* 글자 크기 = 상품 등록 .page-subtitle과 동일 */
+
+  /* 문의 상담 텍스트 — 다른 페이지(상품 등록)와 통일 */
+  .contact-info {
+    margin-top: 4px;
+    margin-left: -9px; /* .body-area 좌측 패딩이 48px인데 Figma 실측 X는 39px이므로 보정 (48-9=39) */
+    font-family: "Inter", "Pretendard", sans-serif;
+    font-size: 14px;
+    color: var(--green);
+  }
+  .contact-info .phone-num { color: rgba(0, 0, 0, 0.5); }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="frame">
+
+    <div class="site-header">
+      <div class="awning">
+        <img class="awning-stripes" src="images/awning-stripes.png" alt="">
+                <img class="logo" src="images/logo.png" alt="이화 붕어빵">
+        <h1 class="page-title">오늘의 붕어빵은?</h1>
+        <button class="home-btn" aria-label="홈">
+          <img src="images/home-icon.png" alt="">
+        </button>
+      </div>
+    </div>
+
+    <div class="body-area">
+      <div class="lead"><img class="fish" src="images/fish-base.png" alt="">뭐 먹을지 고민이 될 땐, 사다리를 타보세요~</div>
+
+      <div class="board-wrap">
+        <div class="start-row" id="startRow"></div>
+        <svg id="ladderSvg"></svg>
+        <div class="bottom-row" id="bottomRow"></div>
+      </div>
+
+      <div class="result-box" id="resultBox"></div>
+
+      <div class="action-row">
+        <button class="ladder-btn" id="ladderBtn">사다리 타기</button>
+        <button class="reagain-btn" id="reagainBtn">다시 한 번</button>
+      </div>
+      <div class="hint">※ 먼저 "사다리 타기"를 누른 뒤, 위쪽 숫자 중 하나를 골라주세요</div>
+      <div class="contact-info">문의 상담 | 이화 붕어빵 02) <span class="phone-num">2525-2523</span></div>
+    </div>
+
+
+  </div>
+</div>
+
+<script>
+(function () {
+  // 팀 수정사항: 붕어빵 가격 표시 삭제 (이름만 표시)
+  const flavors = ["팥 붕어빵", "고구마 붕어빵", "딸기슈크림 붕어빵", "슈크림 붕어빵", "피자 붕어빵", "말차 붕어빵"];
+  const cardImgs = [
+    "images/card-red-bean.png",
+    "images/card-sweet-potato.png",
+    "images/card-strawberry.png",
+    "images/card-cream.png",
+    "images/card-pizza.png",
+    "images/card-matcha.png"
+  ];
+  const N = flavors.length;
+  // 팀 수정사항: 랜덤 생성 대신 Figma 디자인 그대로 고정된 사다리 모양 사용.
+  // 실측한 가로줄 Y좌표(세로줄 시작 Y411 기준 오프셋: 47→col2-3, 83→col1-2, 112→col3-4, 147→col2-3, 192→col1-2)를
+  // 행 간격 35px로 환산해서 아래 FIXED_RUNGS 배열에 그대로 반영함.
+  // col4-5(Y435), col5-6(Y499) 데이터도 받아서 전부 반영함
+  const ROWS = 7;
+  const svgW = 1500; // 그리드(1fr * 6)와 같은 내부 좌표계
+  const SLICE = svgW / N;
+  const ROW_H = 35;
+  const svgH = ROWS * ROW_H;
+  const FIXED_RUNGS = [
+    [3],       // row 0: col4-col5 (Figma Y435)
+    [1],       // row 1: col2-col3 (Figma Y458)
+    [0, 4],    // row 2: col1-col2 (Figma Y494) + col5-col6 (Figma Y499)
+    [2],       // row 3: col3-col4 (Figma Y523)
+    [1],       // row 4: col2-col3 (Figma Y558)
+    [0],       // row 5: col1-col2 (Figma Y603)
+    [],        // row 6
+  ];
+
+  const startRow = document.getElementById("startRow");
+  const bottomRow = document.getElementById("bottomRow");
+  const svg = document.getElementById("ladderSvg");
+  const resultBox = document.getElementById("resultBox");
+  const ladderBtn = document.getElementById("ladderBtn");
+  const reagainBtn = document.getElementById("reagainBtn");
+
+  svg.setAttribute("width", svgW);
+  svg.setAttribute("height", svgH);
+  svg.setAttribute("viewBox", `0 0 ${svgW} ${svgH}`);
+
+  let rungs = [];
+  let usedStarts = new Set();
+  let animating = false;
+  let started = false;
+
+  function colX(i) { return (i + 0.5) * SLICE; }
+
+  function generateLadder() {
+    // 랜덤 생성 없이 FIXED_RUNGS를 그대로 복사해서 사용
+    rungs = FIXED_RUNGS.map(row => row.slice());
+  }
+
+  function drawLadder() {
+    // 팀 수정사항: Figma 선이 완전 직선이 아니라 손그림 느낌의 미세한 흔들림이 있어서,
+    // feTurbulence + feDisplacementMap 필터로 선 전체에 손그림 질감을 입힘
+    svg.innerHTML = `
+      <filter id="wobble">
+        <feTurbulence type="fractalNoise" baseFrequency="0.01 0.06" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/>
+      </filter>
+      <g id="linesGroup" filter="url(#wobble)"></g>
+    `;
+    const linesGroup = svg.querySelector("#linesGroup");
+    for (let i = 0; i < N; i++) {
+      const x = colX(i);
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", x); line.setAttribute("y1", 0);
+      line.setAttribute("x2", x); line.setAttribute("y2", svgH);
+      line.setAttribute("class", "path-line");
+      linesGroup.appendChild(line);
+    }
+    for (let r = 0; r < ROWS; r++) {
+      const y = r * ROW_H + ROW_H / 2;
+      rungs[r].forEach(c => {
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", colX(c)); line.setAttribute("y1", y);
+        line.setAttribute("x2", colX(c + 1)); line.setAttribute("y2", y);
+        line.setAttribute("class", "path-line");
+        linesGroup.appendChild(line);
+      });
+    }
+  }
+
+  function buildRows() {
+    startRow.innerHTML = "";
+    bottomRow.innerHTML = "";
+    for (let i = 0; i < N; i++) {
+      const btn = document.createElement("button");
+      btn.className = "start-btn-dot";
+      btn.textContent = i + 1;
+      btn.dataset.col = i;
+      btn.disabled = true;
+      btn.addEventListener("click", () => handleStart(i, btn));
+      startRow.appendChild(btn);
+
+      const card = document.createElement("div");
+      card.className = "flavor-card-mini";
+      card.innerHTML = `<img class="card-mini-img" data-col="${i}" src="${cardImgs[i]}" alt="${flavors[i]}">`;
+      bottomRow.appendChild(card);
+    }
+  }
+
+  function tracePathSegments(startCol) {
+    const segs = [];
+    let col = startCol, y = 0;
+    for (let r = 0; r < ROWS; r++) {
+      const rowY1 = r * ROW_H + ROW_H / 2;
+      segs.push({ x1: colX(col), y1: y, x2: colX(col), y2: rowY1 });
+      y = rowY1;
+      if (rungs[r].includes(col)) { segs.push({ x1: colX(col), y1: y, x2: colX(col + 1), y2: y }); col += 1; }
+      else if (rungs[r].includes(col - 1)) { segs.push({ x1: colX(col), y1: y, x2: colX(col - 1), y2: y }); col -= 1; }
+    }
+    segs.push({ x1: colX(col), y1: y, x2: colX(col), y2: svgH });
+    return { segs, endCol: col };
+  }
+
+  function handleStart(col, btn) {
+    if (!started || animating || usedStarts.has(col) || btn.disabled) return;
+    animating = true;
+    usedStarts.add(col);
+    btn.disabled = true;
+    btn.classList.add("used");
+    resultBox.textContent = "";
+
+    const { segs, endCol } = tracePathSegments(col);
+    let i = 0;
+
+    function step() {
+      if (i >= segs.length) {
+        animating = false;
+        const bun = bottomRow.querySelector(`.card-mini-img[data-col="${endCol}"]`);
+        bun.classList.add("winner");
+        resultBox.textContent = `${col + 1}번 → ${flavors[endCol]} 당첨! 🎉`;
+        return;
+      }
+      const s = segs[i];
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", s.x1); line.setAttribute("y1", s.y1);
+      line.setAttribute("x2", s.x1); line.setAttribute("y2", s.y1);
+      line.setAttribute("class", "highlight-line");
+      svg.appendChild(line);
+
+      const duration = 110;
+      const start = performance.now();
+      function animate(now) {
+        const t = Math.min(1, (now - start) / duration);
+        line.setAttribute("x2", s.x1 + (s.x2 - s.x1) * t);
+        line.setAttribute("y2", s.y1 + (s.y2 - s.y1) * t);
+        if (t < 1) requestAnimationFrame(animate);
+        else { i++; step(); }
+      }
+      requestAnimationFrame(animate);
+    }
+    step();
+  }
+
+  function activateStart() {
+    started = true;
+    ladderBtn.textContent = "숫자를 골라보세요 ↑";
+    ladderBtn.classList.add("started");
+    ladderBtn.disabled = true;
+    document.querySelectorAll(".start-btn-dot").forEach(b => { if (!usedStarts.has(Number(b.dataset.col))) b.disabled = false; });
+  }
+
+  function resetAll() {
+    usedStarts.clear();
+    animating = false;
+    started = false;
+    resultBox.textContent = "";
+    ladderBtn.textContent = "사다리 타기";
+    ladderBtn.classList.remove("started");
+    ladderBtn.disabled = false;
+    generateLadder();
+    drawLadder();
+    buildRows();
+  }
+
+  ladderBtn.addEventListener("click", activateStart);
+  reagainBtn.addEventListener("click", resetAll);
+
+  resetAll();
+})();
+</script>
+
+</body>
+</html>

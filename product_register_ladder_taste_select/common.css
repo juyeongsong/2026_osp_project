@@ -1,0 +1,104 @@
+/* ===========================================================
+   이화 붕어빵-상품 등록 / 맛 선택 / 사다리 타기 페이지 공용
+   =========================================================== */
+
+@font-face {
+  font-family: "OkDanDan";
+  src: url("fonts/OkDanDan-Bold.otf");
+  font-weight: 700;
+}
+
+:root {
+  --green: #00640F;       /* Figma에서 확인한 유일한 초록색 (awning, 버튼, 선택 상태, 카드 테두리 전부 동일) */
+  --cream: #FBFFE5;        /* awning 밝은 줄무늬, 카드/숫자 배경 */
+  --page-yellow: #FFF184;  /* 페이지 전체 배경(Frame 자체 Fill) */
+  --cream-deep: #FBFFE5;   /* 헤더바/footer용 — 별도 수치 확인 전까지 cream과 동일하게 둠 */
+  --accent: #9ED4B1;       /* 아직 Figma로 확인 못한 보조 테두리색 (추정치, form-card/status-pill 등) */
+  --input-bg: #FFF9D0;     /* 입력창 배경 (seller_id 등에서 확인) */
+  --input-border: #7B95B7; /* 입력창 테두리 (확인된 값, 초록 아님) */
+  --text: #123621;
+  --line: #2B2B2B;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--page-yellow);
+  font-family: "OkDanDan", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  padding: 0 16px 40px;
+}
+
+.page-wrap {
+  width: 100%;
+  max-width: 1440px; /* 줄무늬 9개 x 160px = 1440px로 프레임 폭과 정확히 맞춤 */
+}
+
+.frame {
+  width: 100%;
+}
+
+
+.site-header { width: 100%; }
+
+.awning {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: visible;
+}
+
+/* 줄무늬: Figma에서 9개 줄무늬 전체를 하나의 완성된 이미지로 내보낸 것을 그대로 사용
+   — 직접 이어붙이는 부분이 전혀 없으므로 이음새/틈이 생길 수 없음 */
+.awning-stripes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 로고: Figma에서 내보낸 PNG (1배 원본 크기 430x269) */
+.awning .logo {
+  position: absolute;
+  left: 19px;
+  top: 22px;
+  width: 430px;
+  height: auto;
+  display: block;
+}
+
+.awning .page-title {
+  position: absolute;
+  left: 560px;
+  top: 50px;
+  margin: 0;
+  font-size: 90px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--line);
+  -webkit-text-stroke: 8px #fff;
+  paint-order: stroke fill;
+  white-space: nowrap;
+}
+
+.home-btn {
+  position: absolute;
+  left: 1240px;
+  top: 29px;
+  width: 80px;
+  height: 113px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home-btn img { width: 100%; height: 100%; object-fit: contain; display: block; }

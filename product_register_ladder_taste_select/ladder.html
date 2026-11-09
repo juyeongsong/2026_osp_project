@@ -179,18 +179,18 @@
   ];
   const N = flavors.length;
   const ROWS = 7;
-  const svgW = 1500; // 그리드(1fr * 6)와 같은 내부 좌표계
+  const svgW = 1500;
   const SLICE = svgW / N;
   const ROW_H = 35;
   const svgH = ROWS * ROW_H;
   const FIXED_RUNGS = [
-    [3],       // row 0: col4-col5 (Figma Y435)
-    [1],       // row 1: col2-col3 (Figma Y458)
-    [0, 4],    // row 2: col1-col2 (Figma Y494) + col5-col6 (Figma Y499)
-    [2],       // row 3: col3-col4 (Figma Y523)
-    [1],       // row 4: col2-col3 (Figma Y558)
-    [0],       // row 5: col1-col2 (Figma Y603)
-    [],        // row 6
+    [3], 
+    [1], 
+    [0, 4],
+    [2], 
+    [1],
+    [0],
+    [],
   ];
 
   const startRow = document.getElementById("startRow");

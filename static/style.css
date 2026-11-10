@@ -13,32 +13,10 @@ body {
   font-family: "Inter", sans-serif;
   background-color: #fff184;
   color: #000;
-  min-height: 100vh;
 
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-.page-title {
-  position: absolute;
-  top: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-
-  font-family: "okdandan", sans-serif;
-  font-size: 80px;
-  font-weight: normal;
-
-  color: #000;
-
-  text-shadow: -3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff,
-    3px 3px 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff;
-}
-
-.site-top {
-  position: relative;
-  width: 100%;
 }
 
 section {
@@ -47,6 +25,14 @@ section {
   max-width: 1100px;
   margin: 0 auto;
   padding: 30px 20px;
+}
+
+.site-footer {
+  width: 90%;
+  padding: 20px 20px 30px;
+
+  text-align: left;
+  font-size: 14px;
 }
 
 a {
@@ -144,7 +130,7 @@ button,
 }
 
 button:hover,
-.bun::hover {
+.btn:hover {
   background-color: #013409;
 }
 
@@ -163,87 +149,4 @@ select:focus,
 textarea:focus {
   outline: none;
   border-color: #00640f;
-}
-
-.site-footer {
-  padding: 20px 40px;
-  text-align: left;
-  font-size: 14px;
-}
-
-.auth-container {
-  width: 100%;
-  max-width: 620px;
-  margin: 100px auto 20px;
-}
-
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 34px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.form-group + .form-group {
-  margin-top: 25px;
-}
-
-.form-group label {
-  font-family: "okdandan", sans-serif;
-  font-size: 30px;
-  font-weight: normal;
-}
-
-.form-group input {
-  width: 100%;
-  height: 55px;
-  padding: 0 18px;
-
-  border: none;
-  border-radius: 14px;
-
-  background-attachment: #fffce8;
-}
-
-.signup-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 25px;
-
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.signup-link a {
-  text-decoration: underline;
-}
-
-.auth-btn {
-  width: 100%;
-  height: 60px;
-  border: none;
-  border-radius: 14px;
-  background-color: #006b2d;
-  color: white;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.auth-container.signup-container {
-  margin-top: 105px;
-  margin-bottom: 40px;
-}
-
-.signup-container .auth-form {
-  gap: 20px;
-}
-
-.signup-container .form-group + .form-group {
-  margin-top: 5px;
 }

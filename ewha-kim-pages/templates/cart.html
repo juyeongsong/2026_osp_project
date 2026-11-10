@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}장바구니 · 이화 붕어빵{% endblock %}
+{% block page_title %}장바구니{% endblock %}
+
+{% block content %}
+{% if items %}
+<div class="cart-wrap">
+
+  <label class="check-all">
+    <input type="checkbox" class="cbox" id="checkAll"> 전체 선택
+  </label>
+
+  <div class="cart-layout">
+
+    <section class="card cart-panel" id="cartList">
+      {% for item in items %}
+      <div class="cart-row" data-name="{{ item.name }}" data-price="{{ item.price }}">
+        <input type="checkbox" class="cbox item-check" checked aria-label="{{ item.name }} 선택">
+
+        <article class="cart-card">
+          <button type="button" class="remove" aria-label="{{ item.name }} 삭제">✕</button>
+
+          <div class="item-head">
+            <img src="{{ url_for('static', filename='images/' ~ (item.image or 'fish-default.svg')) }}" alt="">
+            <div>
+              <div class="item-name">{{ item.name }}</div>
+              <div class="item-unit">{{ "{:,}".format(item.price) }}원</div>
+            </div>
+          </div>
+
+          <div class="qty-bar">
+            <button type="button" class="qty-btn minus" aria-label="수량 줄이기">-</button>
+            <span class="count">{{ item.qty }}</span>
+            <button type="button" class="qty-btn plus" aria-label="수량 늘리기">+</button>
+            <span class="item-total"></span>
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </section>
+
+    <aside>
+      <div class="card summary">
+        <h2>주문예상금액</h2>
+        <ul class="sum-list" id="sumList"></ul>
+        <div class="sum-line ship"><span>배송비</span><span id="sumShip">0원</span></div>
+        <div class="sum-line total"><span>총 결제 금액</span><b id="sumTotal">0원</b></div>
+      </div>
+      <button type="button" class="btn btn-wide order-btn">주문하기</button>
+    </aside>
+
+  </div>
+</div>
+{% else %}
+<div class="card empty">
+  <p>장바구니가 비어 있어요.</p>
+  <a class="btn" href="/">붕어빵 보러 가기</a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const SHIPPING = 1500;                       // 배송비 (Figma 기준 1,500원)
+  const won = n => n.toLocaleString('ko-KR') + '원';
+  const rows = () => [...document.querySelectorAll('.cart-row')];
+  const qtyOf = r => +r.querySelector('.count').textContent;
+
+  function recalc() {
+    const list = document.getElementById('sumList');
+    list.innerHTML = '';
+    let items = 0;
+
+    rows().forEach(row => {
+      const sub = +row.dataset.price * qtyOf(row);
+      row.querySelector('.item-total').textContent = won(sub);
+
+      if (row.querySelector('.item-check').checked) {
+        items += sub;
+        const li = document.createElement('li');
+        const name = document.createElement('span');
+        name.textContent = row.dataset.name;
+        const x = document.createElement('span');
+        x.className = 'x';
+        x.textContent = '× ' + qtyOf(row);
+        name.appendChild(x);
+        const price = document.createElement('span');
+        price.textContent = won(sub);
+        li.append(name, price);
+        list.appendChild(li);
+      }
+    });
+
+    const ship = items > 0 ? SHIPPING : 0;
+    document.getElementById('sumShip').textContent = won(ship);
+    document.getElementById('sumTotal').textContent = won(items + ship);
+
+    const all = rows();
+    document.getElementById('checkAll').checked =
+      all.length > 0 && all.every(r => r.querySelector('.item-check').checked);
+  }
+
+  document.getElementById('cartList').addEventListener('click', e => {
+    const row = e.target.closest('.cart-row');
+    if (!row) return;
+    const count = row.querySelector('.count');
+    if (e.target.closest('.plus')) count.textContent = qtyOf(row) + 1;
+    if (e.target.closest('.minus')) count.textContent = Math.max(1, qtyOf(row) - 1);
+    if (e.target.closest('.remove')) row.remove();
+    recalc();
+  });
+
+  document.getElementById('cartList').addEventListener('change', recalc);
+
+  document.getElementById('checkAll').addEventListener('change', e => {
+    rows().forEach(r => r.querySelector('.item-check').checked = e.target.checked);
+    recalc();
+  });
+
+  recalc();
+</script>
+{% endblock %}

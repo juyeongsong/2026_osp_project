@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}후기 작성 · 이화 붕어빵{% endblock %}
+{% block page_title %}후기 작성{% endblock %}
+
+{% block content %}
+<form class="card review-card" action="{{ url_for('review_write') }}" method="post" enctype="multipart/form-data">
+
+  <div class="row r1">
+    <div class="field">
+      <label for="writer">아이디</label>
+      <input type="text" id="writer" name="writer" value="{{ session.get('id', '') }}" readonly>
+    </div>
+    <div class="field">
+      <label for="product">상품명</label>
+      <input type="text" id="product" name="product" value="{{ product_name or '' }}" placeholder="예) 팥 붕어빵" required>
+    </div>
+  </div>
+
+  <div class="row r2">
+    <div class="field">
+      <label for="title">제목</label>
+      <input type="text" id="title" name="title" maxlength="50" required>
+    </div>
+    <div class="field">
+      <span class="label" id="ratingLabel">별점</span>
+      <div class="stars" role="radiogroup" aria-labelledby="ratingLabel">
+        {% for n in [5, 4, 3, 2, 1] %}
+          <input type="radio" id="star{{ n }}" name="rating" value="{{ n }}" required>
+          <label for="star{{ n }}" title="{{ n }}점">★</label>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="row r3">
+    <div class="field">
+      <label for="content">내용</label>
+      <textarea id="content" name="content" placeholder="맛, 식감 등 솔직한 후기를 남겨주세요!" required></textarea>
+    </div>
+    <div class="field">
+      <span class="label">사진 추가</span>
+      <label class="upload" id="uploadBox">
+        <input type="file" id="photo" name="photo" accept="image/png, image/jpeg">
+        <span>클릭해서 사진 업로드<br>(JPG, PNG)</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <a class="btn btn-ghost" href="{{ url_for('review_list') }}">취소</a>
+    <button class="btn" type="submit">등록하기</button>
+  </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // 선택한 사진 미리보기
+  const photo = document.getElementById('photo');
+  const box = document.getElementById('uploadBox');
+  photo.addEventListener('change', () => {
+    const file = photo.files[0];
+    if (!file) return;
+    const img = document.createElement('img');
+    img.alt = '첨부한 사진 미리보기';
+    img.src = URL.createObjectURL(file);
+    box.querySelector('span').remove();
+    box.querySelector('img')?.remove();
+    box.appendChild(img);
+  });
+</script>
+{% endblock %}

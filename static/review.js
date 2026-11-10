@@ -103,22 +103,22 @@ function cardHtml(review) {
   const shownDate = date.replace(/-/g, '.');      // 2026.10.09
   return `
         <li>
-          <a class="review-card" href="${detailUrl(review.id)}">
+          <a class="review-item" href="${detailUrl(review.id)}">
             <span class="avatar avatar--${escapeHtml(review.avatar)}"><img src="${IMG}fish.png" alt=""></span>
-            <div class="review-card__body">
-              <div class="review-card__meta">
-                <span class="review-card__user">${escapeHtml(review.user)}</span>
-                <span class="review-card__flavor">구매: ${escapeHtml(flavorName(review.flavor))} 붕어빵</span>
+            <div class="review-item__body">
+              <div class="review-item__meta">
+                <span class="review-item__user">${escapeHtml(review.user)}</span>
+                <span class="review-item__flavor">구매: ${escapeHtml(flavorName(review.flavor))} 붕어빵</span>
                 ${starsHtml(review.rating)}
               </div>
-              <p class="review-card__title">${escapeHtml(review.title)}</p>
-              <p class="review-card__excerpt">${escapeHtml(review.excerpt)}</p>
-              <div class="review-card__footer">
-                <span class="review-card__more">··· 더 보기</span>
-                <time class="review-card__date" datetime="${date}">${shownDate}</time>
+              <p class="review-item__title">${escapeHtml(review.title)}</p>
+              <p class="review-item__excerpt">${escapeHtml(review.excerpt)}</p>
+              <div class="review-item__footer">
+                <span class="review-item__more">··· 더 보기</span>
+                <time class="review-item__date" datetime="${date}">${shownDate}</time>
               </div>
             </div>
-            <div class="review-card__thumb">
+            <div class="review-item__thumb">
               <span class="bungeo">
                 <img class="bungeo__fish" src="${IMG}fish.png" alt="">
                 <img class="bungeo__filling" src="${IMG}filling-${escapeHtml(review.flavor)}.svg" alt="">

@@ -1,0 +1,193 @@
+{% extends "index.html" %}
+{% block section %}
+<!-- 마이페이지 (담당: 조소연)
+     공통 style.css가 모든 <section>에 폭·여백을 주기 때문에, 안쪽 묶음은 <div>로 만들었어요.
+     공통 부분(천막, 로고, 푸터)은 index.html, 붕어빵 그림·페이지 번호는 review.css를 같이 써요.
+     지금은 예시 데이터라서, DB 연결 후 Flask가 실제 회원·주문 정보로 채우면 돼요. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="{{ url_for('static', filename='review.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='mypage.css') }}">
+
+<h1 class="page-title">마이페이지</h1>
+
+<div class="mypage">
+  <!-- 1. 내 정보 (전화번호는 선택 항목이라 표시하지 않아요) -->
+  <div class="mypage-card profile" role="region" aria-label="내 정보">
+    <span class="avatar avatar--green avatar--lg"><img src="{{ url_for('static', filename='images/review/fish.png') }}" alt=""></span>
+    <div class="profile__info">
+      <p class="profile__name">chooo9<small>님, 오늘도 붕어빵 어때요?</small></p>
+      <dl class="profile__list">
+        <dt>이메일</dt>
+        <dd>chooo9@ewha.ac.kr</dd>
+        <dt>기본 배송지</dt>
+        <dd>서울 서대문구 이화여대길 52, 한우리집 기숙사 A동 S000호</dd>
+      </dl>
+    </div>
+    <div class="profile__actions">
+      <a class="btn" href="/logout">로그아웃</a>
+    </div>
+  </div>
+
+  <!-- 2. 배송 현황 (관리자 화면에서 바꾼 상태가 여기 숫자로 보여요) -->
+  <ol class="mypage-card delivery-summary" aria-label="배송 현황">
+    <li>
+      <span class="delivery-summary__count is-zero">0</span>
+      <span class="delivery-summary__label">주문 접수</span>
+    </li>
+    <li>
+      <span class="delivery-summary__count is-zero">0</span>
+      <span class="delivery-summary__label">배송 준비</span>
+    </li>
+    <li>
+      <span class="delivery-summary__count">1</span>
+      <span class="delivery-summary__label">배송 중</span>
+    </li>
+    <li>
+      <span class="delivery-summary__count">2</span>
+      <span class="delivery-summary__label">배송 완료</span>
+    </li>
+  </ol>
+
+  <!-- 3. 주문·배송 내역: 최신 주문부터 한 화면에 하나씩 (static/mypage.js)
+       카드는 내용만큼 늘고 줄지만, 페이지 번호는 맛 3개 카드 기준 자리에 고정돼요 -->
+  <div role="region" aria-labelledby="orders-heading">
+    <h2 class="mypage-heading" id="orders-heading">주문·배송 내역</h2>
+    <ul class="order-list">
+      <li>
+        <article class="mypage-card order">
+          <div class="order__head">
+            <time class="order__date" datetime="2026-11-06">2026.11.06</time>
+            <span class="order__number">주문번호 20261106-0007</span>
+            <span class="status status--shipping">배송 중</span>
+          </div>
+          <ul class="order__items">
+            <li>
+              <span class="bungeo">
+                <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
+                <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-pat.svg') }}" alt="">
+              </span>
+              <span class="order__item-name">팥 붕어빵<span class="order__item-qty">× 2</span></span>
+              <span class="order__item-price">1,000원</span>
+              <span class="order__review-slot"></span>
+            </li>
+            <li>
+              <span class="bungeo">
+                <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
+                <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-choux.svg') }}" alt="">
+              </span>
+              <span class="order__item-name">슈크림 붕어빵<span class="order__item-qty">× 2</span></span>
+              <span class="order__item-price">1,000원</span>
+              <span class="order__review-slot"></span>
+            </li>
+            <li>
+              <span class="bungeo">
+                <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
+                <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-sweetpotato.svg') }}" alt="">
+              </span>
+              <span class="order__item-name">고구마 붕어빵<span class="order__item-qty">× 1</span></span>
+              <span class="order__item-price">500원</span>
+              <span class="order__review-slot"></span>
+            </li>
+          </ul>
+          <div class="order__foot">
+            <span class="order__address">배송지: 서울 서대문구 이화여대길 52, 한우리집 기숙사 A동 S000호</span>
+            <span class="order__total">상품 5개 2,500원 + 배송비 1,500원<strong>4,000원</strong></span>
+          </div>
+        </article>
+      </li>
+      <li>
+        <article class="mypage-card order">
+          <div class="order__head">
+            <time class="order__date" datetime="2026-10-09">2026.10.09</time>
+            <span class="order__number">주문번호 20261009-0031</span>
+            <span class="status status--delivered">배송 완료</span>
+          </div>
+          <ul class="order__items">
+            <li>
+              <span class="bungeo">
+                <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
+                <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-pat.svg') }}" alt="">
+              </span>
+              <span class="order__item-name">팥 붕어빵<span class="order__item-qty">× 3</span></span>
+              <span class="order__item-price">1,500원</span>
+              <span class="order__review is-done">후기 작성 완료</span>
+            </li>
+            <li>
+              <span class="bungeo">
+                <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
+                <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-pizza.svg') }}" alt="">
+              </span>
+              <span class="order__item-name">피자 붕어빵<span class="order__item-qty">× 1</span></span>
+              <span class="order__item-price">500원</span>
+              <a class="btn order__review" href="/reg_reviews?order=20261009-0031&amp;item=pizza">후기 쓰기</a>
+            </li>
+            <li>
+              <span class="bungeo">
+                <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
+                <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-choux.svg') }}" alt="">
+              </span>
+              <span class="order__item-name">슈크림 붕어빵<span class="order__item-qty">× 1</span></span>
+              <span class="order__item-price">500원</span>
+              <a class="btn order__review" href="/reg_reviews?order=20261009-0031&amp;item=choux">후기 쓰기</a>
+            </li>
+          </ul>
+          <div class="order__foot">
+            <span class="order__address">배송지: 서울 서대문구 이화여대길 52, 한우리집 기숙사 A동 S000호</span>
+            <span class="order__total">상품 5개 2,500원 + 배송비 1,500원<strong>4,000원</strong></span>
+          </div>
+        </article>
+      </li>
+      <li>
+        <article class="mypage-card order">
+          <div class="order__head">
+            <time class="order__date" datetime="2026-10-02">2026.10.02</time>
+            <span class="order__number">주문번호 20261002-0015</span>
+            <span class="status status--delivered">배송 완료</span>
+          </div>
+          <ul class="order__items">
+            <li>
+              <span class="bungeo">
+                <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
+                <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-sweetpotato.svg') }}" alt="">
+              </span>
+              <span class="order__item-name">고구마 붕어빵<span class="order__item-qty">× 2</span></span>
+              <span class="order__item-price">1,000원</span>
+              <a class="btn order__review" href="/reg_reviews?order=20261002-0015&amp;item=sweetpotato">후기 쓰기</a>
+            </li>
+            <li>
+              <span class="bungeo">
+                <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
+                <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-matcha.svg') }}" alt="">
+              </span>
+              <span class="order__item-name">말차 붕어빵<span class="order__item-qty">× 2</span></span>
+              <span class="order__item-price">1,000원</span>
+              <a class="btn order__review" href="/reg_reviews?order=20261002-0015&amp;item=matcha">후기 쓰기</a>
+            </li>
+            <li>
+              <span class="bungeo">
+                <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
+                <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-strawberry-choux.svg') }}" alt="">
+              </span>
+              <span class="order__item-name">딸기슈크림 붕어빵<span class="order__item-qty">× 1</span></span>
+              <span class="order__item-price">500원</span>
+              <a class="btn order__review" href="/reg_reviews?order=20261002-0015&amp;item=strawberry-choux">후기 쓰기</a>
+            </li>
+          </ul>
+          <div class="order__foot">
+            <span class="order__address">배송지: 서울 서대문구 이화여대길 52, 한우리집 기숙사 A동 S000호</span>
+            <span class="order__total">상품 5개 2,500원 + 배송비 1,500원<strong>4,000원</strong></span>
+          </div>
+        </article>
+      </li>
+    </ul>
+
+    <nav class="pagination" aria-label="주문 내역 페이지">
+      <a class="pagination__arrow pagination__prev" href="#"><img src="{{ url_for('static', filename='images/review/page-prev.svg') }}" alt="이전 주문"></a>
+      <ol class="pagination__list"></ol>
+      <a class="pagination__arrow pagination__next" href="#"><img src="{{ url_for('static', filename='images/review/page-next.svg') }}" alt="다음 주문"></a>
+    </nav>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='mypage.js') }}"></script>
+{% endblock section %}

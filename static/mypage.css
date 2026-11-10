@@ -1,0 +1,277 @@
+/* =========================================================
+   마이페이지 전용 스타일 - 조소연
+   공통(천막, 로고, 홈·장바구니 아이콘, 푸터, .btn)은 style.css,
+   제목(.page-title), 붕어빵 그림, 프로필 동그라미, 페이지 번호는 review.css를 같이 써요.
+   Figma 화면(1440×1024) 한 장에 들어가도록 구성했어요.
+   ========================================================= */
+
+/* 내용 폭은 공통 section(최대 1100px)을 그대로 따라요 */
+.mypage {
+  width: 100%;
+  padding: 70px 0 20px; /* 천막 아래로 (후기 목록과 같은 시작 높이) */
+  font-family: var(--review-font-body);
+}
+
+.mypage ul,
+.mypage ol {
+  list-style: none;
+}
+
+/* 크림색 카드 공통 */
+.mypage-card {
+  border-radius: var(--review-radius);
+  background: var(--review-cream);
+}
+
+/* ---------------- 1. 내 정보 ---------------- */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 36px;
+}
+
+/* 큰 프로필 동그라미 */
+.avatar--lg {
+  flex: 0 0 80px;
+  width: 80px;
+  height: 80px;
+}
+
+.avatar--lg img {
+  top: 16px;
+  left: 10px;
+  width: 62px;
+  height: 50px;
+}
+
+.profile__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile__name {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.profile__name small {
+  margin-left: 8px;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--review-text-sub);
+}
+
+.profile__list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 20px;
+  margin-top: 8px;
+  font-size: 17px;
+}
+
+.profile__list dt {
+  color: var(--review-text-sub);
+}
+
+.profile__actions {
+  display: flex;
+  gap: 10px;
+}
+
+.profile__actions .btn {
+  min-width: 110px;
+  font-size: 15px;
+  text-align: center;
+}
+
+/* ---------------- 2. 배송 현황 요약 ---------------- */
+.delivery-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 16px;
+  padding: 14px 0;
+}
+
+.delivery-summary li {
+  position: relative;
+  text-align: center;
+}
+
+/* 단계 사이 화살표 */
+.delivery-summary li + li::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  border-width: 9px 0 9px 14px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--review-green);
+  transform: translate(-50%, -50%);
+  opacity: 0.35;
+}
+
+.delivery-summary__count {
+  display: block;
+  color: var(--review-green);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.delivery-summary__count.is-zero {
+  opacity: 0.3;
+}
+
+.delivery-summary__label {
+  font-size: 16px;
+  color: var(--review-text-sub);
+}
+
+/* ---------------- 3. 주문·배송 내역 ---------------- */
+.mypage-heading {
+  margin-top: 26px;
+  color: var(--review-green);
+  font-family: var(--review-font-display);
+  font-size: 34px;
+  font-weight: 700;
+}
+
+/* 주문 영역 높이는 맛 3개 카드 기준으로 고정.
+   카드는 내용만큼 늘고 줄고, 아래 페이지 번호는 늘 같은 자리에 있어요 */
+.order-list {
+  min-height: 295px;
+  margin-top: 10px;
+}
+
+/* JS가 켜지기 전에는 첫 주문만 */
+.order-list > li:nth-child(n + 2) {
+  display: none;
+}
+
+.order-list.is-ready > li {
+  display: block;
+}
+
+.order-list.is-ready > li[hidden] {
+  display: none;
+}
+
+.order {
+  padding: 18px 32px;
+}
+
+.order__head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(0, 100, 15, 0.3);
+}
+
+.order__date {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.order__number {
+  font-size: 15px;
+  color: var(--review-text-sub);
+}
+
+/* 배송 상태 표시 */
+.status {
+  margin-left: auto;
+  padding: 5px 16px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status--received  { background: rgba(0, 0, 0, 0.08); color: rgba(0, 0, 0, 0.7); }
+.status--preparing { background: var(--review-yellow); color: #000000; }
+.status--shipping  { box-shadow: inset 0 0 0 2px var(--review-green); color: var(--review-green); }
+.status--delivered { background: var(--review-green); color: #ffffff; }
+
+/* 주문한 상품 줄 */
+.order__items li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 7px 0;
+}
+
+.order__items li + li {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.order__items .bungeo {
+  flex: 0 0 54px;
+  width: 54px;
+}
+
+.order__item-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 19px;
+}
+
+.order__item-qty {
+  margin-left: 6px;
+  color: var(--review-text-sub);
+}
+
+.order__item-price {
+  min-width: 80px;
+  font-size: 17px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 후기 쓰기 버튼 자리 (배송 완료 전에는 빈자리로 줄 맞춤) */
+.order__review,
+.order__review-slot {
+  min-width: 112px;
+}
+
+.order__review {
+  padding: 8px 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+.order__review.is-done {
+  color: var(--review-text-sub);
+  font-weight: 600;
+}
+
+.order__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 24px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0, 100, 15, 0.3);
+  font-size: 15px;
+}
+
+.order__address {
+  color: var(--review-text-sub);
+}
+
+.order__total {
+  font-variant-numeric: tabular-nums;
+}
+
+.order__total strong {
+  margin-left: 8px;
+  color: var(--review-green);
+  font-size: 22px;
+}
+
+/* 주문 페이지 번호: 후기 목록과 같은 모양 (review.css) */
+.mypage .pagination {
+  margin-top: 16px;
+}

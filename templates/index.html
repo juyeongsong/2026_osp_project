@@ -34,11 +34,29 @@
         </a>
       </div>
 
-      <a href="/" class="home-btn">
-        <img src="{{url_for('static', filename='images/home.png')}}" alt="홈" />
-      </a>
+      <div class="header-icons">
+        <a href="/" class="icon-btn">
+          <img
+            src="{{url_for('static', filename='images/home.png')}}"
+            alt="홈"
+          />
+        </a>
+
+        <a href="#" class="icon-btn">
+          <img
+            src="{{url_for('static', filename='images/cart.png')}}"
+            alt="장바구니"
+          />
+        </a>
+      </div>
     </header>
 
     <section>{% block section %} {% endblock section %}</section>
+    <footer class="site-footer">
+      <p>
+        <span style="color: #006b2d">문의 상담 | 이화 붕어빵 </span>
+        02) 1886-0531
+      </p>
+    </footer>
   </body>
 </html>

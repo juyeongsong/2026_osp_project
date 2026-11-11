@@ -67,7 +67,7 @@
 .check:focus-visible,
 .qty__btn:focus-visible,
 .cart-item__remove:focus-visible,
-.stars input:focus-visible + label {
+.field.stars .stars__row input:focus-visible + label {
   outline: 3px solid var(--green);
   outline-offset: 3px;
 }
@@ -138,16 +138,18 @@
   border: 0;
   opacity: 0;
 }
-.stars label {
-  padding: 0;
+/* .field label 규칙(18px, 초록)보다 우선하도록 선택자를 더 구체적으로 */
+.field.stars .stars__row label {
+  padding: 0 2px 0 0;
+  font-family: inherit;
   font-size: 54px;
   line-height: 1;
   color: #cfcfcf;
   cursor: pointer;
 }
-.stars input:checked ~ label,
-.stars label:hover,
-.stars label:hover ~ label { color: #f5b301; }
+.field.stars .stars__row input:checked ~ label,
+.field.stars .stars__row label:hover,
+.field.stars .stars__row label:hover ~ label { color: #f5b301; }
 
 .dropzone {
   position: relative;
@@ -338,8 +340,7 @@
 .summary__row--total { padding-top: 18px; }
 .summary__row--total dt { font-family: var(--font-display); font-size: 18px; }
 .summary__row--total dd {
-  font-family: var(--font-display);
-  font-size: 28px;
+  font: 700 28px "Inter", sans-serif; /* okdandan은 숫자 0이 네모로 보여서 일반 폰트 사용 */
   color: var(--green);
 }
 .summary .btn--wide { margin-top: 30px; }

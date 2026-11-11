@@ -1,23 +1,20 @@
+
 {% extends "base.html" %}
 
 {% block body_class %}page-main{% endblock %}
 {% block section_class %}main-layout{% endblock %}
 
 {% block section %}
+
 <nav class="main-menu">
-  <a class="pill-btn" href="{{ url_for('detail', pid=products[0].id) if products else '#' }}">오늘의 붕어빵은?</a>
-  <a class="pill-btn" href="{{ url_for('view_review') }}">후기 보기</a>
+  <a class="pill-btn" href="{{ url_for('detail', pid=products[0].id) if products else '#' }}">
+    오늘의 붕어빵은?
+  </a>
 
-<<<<<<< Updated upstream
-      <a href="/" class="home-btn">
-        <img src="{{url_for('static', filename='images/home.png')}}" alt="홈" />
-      </a>
-    </header>
+  <a class="pill-btn" href="{{ url_for('view_review') }}">
+    후기 보기
+  </a>
 
-    <section>{% block section %} {% endblock section %}</section>
-  </body>
-</html>
-=======
   {% if logged_in %}
   <div class="auth-links">
     <span class="hello">{{ user_id }}님</span>
@@ -30,8 +27,12 @@
     <a href="{{ url_for('login') }}">로그인</a>
   </div>
   {% endif %}
+
+  <a href="/" class="home-btn">
+    <img src="{{ url_for('static', filename='images/home.png') }}" alt="홈" />
+  </a>
 </nav>
 
 {% include "_product_grid.html" %}
+
 {% endblock section %}
->>>>>>> Stashed changes

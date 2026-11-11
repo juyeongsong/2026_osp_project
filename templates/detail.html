@@ -3,13 +3,13 @@
 {% block title %} · {{ p.name }}{% endblock %}
 {% block page_title %}상품 상세{% endblock %}
 {% block section_class %}detail-layout{% endblock %}
+{% block header_cart %}{% endblock %}   {# PDF 시안 상세 화면에는 장바구니 아이콘이 없음 #}
 
 {% block section %}
-<a class="back-link" href="{{ home_url }}">◀ 목록으로 돌아가기</a>
-
 <article class="detail-card" id="detailCard"
          data-id="{{ p.id }}" data-name="{{ p.name }}" data-price="{{ p.price }}">
 
+  {# 판매 상태 (보기 모드) #}
   <span class="badge badge--{{ p.status }} detail-badge view-only">
     <i class="dot"></i>{{ status_label[p.status] }}
   </span>
@@ -40,7 +40,11 @@
 
   <div class="detail-info">
     <h2 class="detail-name">{{ p.name }}</h2>
-    <p class="detail-desc">{{ p.desc|safe }}</p>
+
+    {# 상품 설명 영역: 설명 안의 <br> 은 줄바꿈으로 반영 #}
+    <p class="detail-desc">
+      {% if p.desc %}{{ p.desc|safe }}{% else %}<span class="detail-desc--empty">상품 설명이 아직 등록되지 않았어요.</span>{% endif %}
+    </p>
 
     <div class="price-row">
       <span class="price">{{ p.price|won }}원</span>
@@ -61,7 +65,7 @@
   </div>
 
   <p class="seller-info">
-    <b>판매처</b> | <b>이화 붕어빵</b> 서울특별시 서대문구 이화여대길52
+    <b>판매자</b> | <b>{{ p.seller or '이화 붕어빵' }}</b> {{ p.addr or '서울특별시 서대문구 이화여대길52' }}
   </p>
 </article>
 {% endblock section %}

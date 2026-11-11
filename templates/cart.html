@@ -1,10 +1,14 @@
-{% extends "index.html" %}
-{% block section %}
-<link rel="stylesheet" href="{{ url_for('static', filename='bungeo.css') }}" />
+{% extends "index.html" %} {% block section %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/bungeo.css') }}"
+/>
 
 <!-- 장바구니 페이지에서만 헤더의 장바구니 아이콘 숨김 (공용 index.html은 수정하지 않음) -->
 <style>
-  .header-icons .icon-btn:last-child { display: none; }
+  .header-icons .icon-btn:last-child {
+    display: none;
+  }
 </style>
 
 <h1 class="page-title">장바구니</h1>
@@ -18,74 +22,102 @@
   <div class="cart__body">
     <div class="cart__list" aria-label="장바구니 상품">
       <div class="cart__scroll">
-      {% for item in items %}
-      <div
-        class="cart-row"
-        data-name="{{ item.name }}"
-        data-price="{{ item.price }}"
-      >
-        <input
-          type="checkbox"
-          class="check item-check"
-          checked
-          aria-label="{{ item.name }} 선택"
-        />
-        <article class="cart-item">
-          <button type="button" class="cart-item__remove" aria-label="{{ item.name }} 삭제">×</button>
-          <div class="cart-item__head">
-            {% if item.image %}
-            <img
-              class="thumb"
-              src="{{ url_for('static', filename='images/' + item.image) }}"
-              alt=""
-            />
-            {% else %}
-            <span class="thumb thumb--placeholder"></span>
-            {% endif %}
-            <div>
-              <h2 class="cart-item__name">{{ item.name }}</h2>
-              <p class="cart-item__price">{{ "{:,}".format(item.price) }}원</p>
+        {% for item in items %}
+        <div
+          class="cart-row"
+          data-name="{{ item.name }}"
+          data-price="{{ item.price }}"
+        >
+          <input
+            type="checkbox"
+            class="check item-check"
+            checked
+            aria-label="{{ item.name }} 선택"
+          />
+          <article class="cart-item">
+            <button
+              type="button"
+              class="cart-item__remove"
+              aria-label="{{ item.name }} 삭제"
+            >
+              ×
+            </button>
+            <div class="cart-item__head">
+              {% if item.image %}
+              <img
+                class="thumb"
+                src="{{ url_for('static', filename='images/' + item.image) }}"
+                alt=""
+              />
+              {% else %}
+              <span class="thumb thumb--placeholder"></span>
+              {% endif %}
+              <div>
+                <h2 class="cart-item__name">{{ item.name }}</h2>
+                <p class="cart-item__price">
+                  {{ "{:,}".format(item.price) }}원
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="qty-bar">
-            <div class="qty">
-              <button type="button" class="qty__btn qty__btn--minus" aria-label="수량 줄이기">−</button>
-              <span class="qty__num" aria-live="polite">{{ item.qty }}</span>
-              <button type="button" class="qty__btn qty__btn--plus" aria-label="수량 늘리기">+</button>
+            <div class="qty-bar">
+              <div class="qty">
+                <button
+                  type="button"
+                  class="qty__btn qty__btn--minus"
+                  aria-label="수량 줄이기"
+                >
+                  −
+                </button>
+                <span class="qty__num" aria-live="polite">{{ item.qty }}</span>
+                <button
+                  type="button"
+                  class="qty__btn qty__btn--plus"
+                  aria-label="수량 늘리기"
+                >
+                  +
+                </button>
+              </div>
+              <span class="line-total"
+                >{{ "{:,}".format(item.price * item.qty) }}원</span
+              >
             </div>
-            <span class="line-total">{{ "{:,}".format(item.price * item.qty) }}원</span>
-          </div>
-        </article>
-      </div>
-      {% endfor %}
-      <p class="cart__empty" id="cart-empty" hidden>장바구니가 비어 있어요.</p>
+          </article>
+        </div>
+        {% endfor %}
+        <p class="cart__empty" id="cart-empty" hidden>
+          장바구니가 비어 있어요.
+        </p>
       </div>
     </div>
 
-    {% set ns = namespace(sum=0) %}
-    {% for item in items %}{% set ns.sum = ns.sum + item.price * item.qty %}{% endfor %}
+    {% set ns = namespace(sum=0) %} {% for item in items %}{% set ns.sum =
+    ns.sum + item.price * item.qty %}{% endfor %}
     <aside class="summary" data-fee="{{ fee }}">
       <div class="summary__card">
-      <h2 class="summary__title">주문예상금액</h2>
-      <ul class="summary__list" id="summary-list">
-        {% for item in items %}
-        <li>
-          <span>{{ item.name }}</span>
-          <span class="summary__qty">× {{ item.qty }}</span>
-          <span class="summary__amount">{{ "{:,}".format(item.price * item.qty) }}원</span>
-        </li>
-        {% endfor %}
-      </ul>
-      <dl class="summary__row summary__row--fee">
-        <dt>배송비</dt>
-        <dd id="fee">{{ "{:,}".format(fee) }}원</dd>
-      </dl>
-      <dl class="summary__row summary__row--total">
-        <dt>총 결제 금액</dt>
-        <dd id="total">{{ "{:,}".format(ns.sum + fee) }}원</dd>
-      </dl>
+        <h2 class="summary__title">주문예상금액</h2>
+        <ul class="summary__list" id="summary-list">
+          {% for item in items %}
+          <li>
+            <span>{{ item.name }}</span>
+            <span class="summary__qty">× {{ item.qty }}</span>
+            <span class="summary__amount"
+              >{{ "{:,}".format(item.price * item.qty) }}원</span
+            >
+          </li>
+          {% endfor %}
+        </ul>
+        <dl class="summary__row summary__row--fee">
+          <dt>배송비</dt>
+          <dd id="fee">{{ "{:,}".format(fee) }}원</dd>
+        </dl>
+        <dl class="summary__row summary__row--total">
+          <dt>총 결제 금액</dt>
+          <dd id="total">{{ "{:,}".format(ns.sum + fee) }}원</dd>
+        </dl>
       </div>
-      <button type="button" class="btn btn--primary btn--wide" id="order">주문하기</button>
+      <button type="button" class="btn btn--primary btn--wide" id="order">
+        주문하기
+      </button>
     </aside>
   </div>
 </div>

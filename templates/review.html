@@ -1,9 +1,14 @@
-{% extends "index.html" %}
-{% block section %}
+{% extends "index.html" %} {% block section %}
 <!-- 후기 목록 페이지 (담당: 조소연)
      공통 부분(천막, 로고, 홈 버튼)은 index.html에서 가져와요. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Sans+KR:wght@400;500&display=swap">
-<link rel="stylesheet" href="{{ url_for('static', filename='review.css') }}">
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Sans+KR:wght@400;500&display=swap"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/review.css') }}"
+/>
 
 <h1 class="page-title">후기 목록</h1>
 
@@ -13,15 +18,28 @@
     <!-- 맛 필터: 3개씩 보이고 화살표로 하나씩 돌아가요 (static/review.js)
          새 메뉴는 맨 끝(피자 뒤)에 <li> 하나만 추가하면 돼요. -->
     <nav class="flavor-filter" aria-label="맛별 후기 골라보기">
-      <p class="flavor-filter__label">후기<br>골라보기</p>
-      <button class="flavor-filter__arrow" type="button" data-dir="-1"><img src="{{ url_for('static', filename='images/review/arrow-left.svg') }}" alt="이전 맛"></button>
+      <p class="flavor-filter__label">후기<br />골라보기</p>
+      <button class="flavor-filter__arrow" type="button" data-dir="-1">
+        <img
+          src="{{ url_for('static', filename='images/review/arrow-left.svg') }}"
+          alt="이전 맛"
+        />
+      </button>
       <ul class="flavor-filter__list">
         <li data-flavor="pat" data-name="팥">
           <a class="flavor-chip" href="/review?flavor=pat">
             <span class="sr-only">팥 붕어빵 후기만 보기</span>
             <span class="bungeo">
-              <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-              <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-pat.svg') }}" alt="">
+              <img
+                class="bungeo__fish"
+                src="{{ url_for('static', filename='images/review/fish.png') }}"
+                alt=""
+              />
+              <img
+                class="bungeo__filling"
+                src="{{ url_for('static', filename='images/review/filling-pat.svg') }}"
+                alt=""
+              />
             </span>
           </a>
         </li>
@@ -29,8 +47,16 @@
           <a class="flavor-chip" href="/review?flavor=choux">
             <span class="sr-only">슈크림 붕어빵 후기만 보기</span>
             <span class="bungeo">
-              <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-              <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-choux.svg') }}" alt="">
+              <img
+                class="bungeo__fish"
+                src="{{ url_for('static', filename='images/review/fish.png') }}"
+                alt=""
+              />
+              <img
+                class="bungeo__filling"
+                src="{{ url_for('static', filename='images/review/filling-choux.svg') }}"
+                alt=""
+              />
             </span>
           </a>
         </li>
@@ -38,8 +64,16 @@
           <a class="flavor-chip" href="/review?flavor=strawberry-choux">
             <span class="sr-only">딸기슈크림 붕어빵 후기만 보기</span>
             <span class="bungeo">
-              <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-              <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-strawberry-choux.svg') }}" alt="">
+              <img
+                class="bungeo__fish"
+                src="{{ url_for('static', filename='images/review/fish.png') }}"
+                alt=""
+              />
+              <img
+                class="bungeo__filling"
+                src="{{ url_for('static', filename='images/review/filling-strawberry-choux.svg') }}"
+                alt=""
+              />
             </span>
           </a>
         </li>
@@ -47,8 +81,16 @@
           <a class="flavor-chip" href="/review?flavor=sweetpotato">
             <span class="sr-only">고구마 붕어빵 후기만 보기</span>
             <span class="bungeo">
-              <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-              <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-sweetpotato.svg') }}" alt="">
+              <img
+                class="bungeo__fish"
+                src="{{ url_for('static', filename='images/review/fish.png') }}"
+                alt=""
+              />
+              <img
+                class="bungeo__filling"
+                src="{{ url_for('static', filename='images/review/filling-sweetpotato.svg') }}"
+                alt=""
+              />
             </span>
           </a>
         </li>
@@ -56,8 +98,16 @@
           <a class="flavor-chip" href="/review?flavor=matcha">
             <span class="sr-only">말차 붕어빵 후기만 보기</span>
             <span class="bungeo">
-              <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-              <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-matcha.svg') }}" alt="">
+              <img
+                class="bungeo__fish"
+                src="{{ url_for('static', filename='images/review/fish.png') }}"
+                alt=""
+              />
+              <img
+                class="bungeo__filling"
+                src="{{ url_for('static', filename='images/review/filling-matcha.svg') }}"
+                alt=""
+              />
             </span>
           </a>
         </li>
@@ -65,13 +115,26 @@
           <a class="flavor-chip" href="/review?flavor=pizza">
             <span class="sr-only">피자 붕어빵 후기만 보기</span>
             <span class="bungeo">
-              <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-              <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-pizza.svg') }}" alt="">
+              <img
+                class="bungeo__fish"
+                src="{{ url_for('static', filename='images/review/fish.png') }}"
+                alt=""
+              />
+              <img
+                class="bungeo__filling"
+                src="{{ url_for('static', filename='images/review/filling-pizza.svg') }}"
+                alt=""
+              />
             </span>
           </a>
         </li>
       </ul>
-      <button class="flavor-filter__arrow" type="button" data-dir="1"><img src="{{ url_for('static', filename='images/review/arrow-right.svg') }}" alt="다음 맛"></button>
+      <button class="flavor-filter__arrow" type="button" data-dir="1">
+        <img
+          src="{{ url_for('static', filename='images/review/arrow-right.svg') }}"
+          alt="다음 맛"
+        />
+      </button>
     </nav>
 
     <a class="write-button" href="/reg_reviews">후기 작성하기</a>
@@ -79,118 +142,229 @@
 
   <!-- 후기 카드: 한 페이지에 3개, 최신순 -->
   <ul class="review-list">
-      <li>
-        <a class="review-item" href="/review_detail?id=1">
-          <span class="avatar avatar--green"><img src="{{ url_for('static', filename='images/review/fish.png') }}" alt=""></span>
-          <div class="review-item__body">
-            <div class="review-item__meta">
-              <span class="review-item__user">chooo9</span>
-              <span class="review-item__flavor">구매: 팥 붕어빵</span>
-              <span class="stars">
-                <span class="sr-only">별점 5점</span>
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-              </span>
-            </div>
-            <p class="review-item__title">팥 붕어빵 최고</p>
-            <p class="review-item__excerpt">팥 붕어빵 역시 근본있네요. 너무 많이 달지 않고 고소해서 먹기 좋습니다.</p>
-            <div class="review-item__footer">
-              <span class="review-item__more">··· 더 보기</span>
-              <time class="review-item__date" datetime="2026-10-09">2026.10.09</time>
-            </div>
-          </div>
-          <!-- 첫 번째 사진. 실제 사진은 <img class="review-photo" src="..."> 로 바꿔 넣으면 돼요 -->
-          <div class="review-item__thumb">
-            <span class="bungeo">
-              <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-              <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-pat.svg') }}" alt="">
+    <li>
+      <a class="review-item" href="/review_detail?id=1">
+        <span class="avatar avatar--green"
+          ><img
+            src="{{ url_for('static', filename='images/review/fish.png') }}"
+            alt=""
+        /></span>
+        <div class="review-item__body">
+          <div class="review-item__meta">
+            <span class="review-item__user">chooo9</span>
+            <span class="review-item__flavor">구매: 팥 붕어빵</span>
+            <span class="stars">
+              <span class="sr-only">별점 5점</span>
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
             </span>
           </div>
-        </a>
-      </li>
-      <li>
-        <a class="review-item" href="/review_detail?id=2">
-          <span class="avatar avatar--brown"><img src="{{ url_for('static', filename='images/review/fish.png') }}" alt=""></span>
-          <div class="review-item__body">
-            <div class="review-item__meta">
-              <span class="review-item__user">juyeong</span>
-              <span class="review-item__flavor">구매: 슈크림 붕어빵</span>
-              <span class="stars">
-                <span class="sr-only">별점 5점</span>
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-              </span>
-            </div>
-            <p class="review-item__title">내 인생 - 이화 붕어빵 슈붕 = 0</p>
-            <p class="review-item__excerpt">내인생은 이화붕어빵의 슈크림붕어빵을 만나기 전과후로 나뉜다. 이화붕어빵만나고나의성공시대시작</p>
-            <div class="review-item__footer">
-              <span class="review-item__more">··· 더 보기</span>
-              <time class="review-item__date" datetime="2026-10-09">2026.10.09</time>
-            </div>
+          <p class="review-item__title">팥 붕어빵 최고</p>
+          <p class="review-item__excerpt">
+            팥 붕어빵 역시 근본있네요. 너무 많이 달지 않고 고소해서 먹기
+            좋습니다.
+          </p>
+          <div class="review-item__footer">
+            <span class="review-item__more">··· 더 보기</span>
+            <time class="review-item__date" datetime="2026-10-09"
+              >2026.10.09</time
+            >
           </div>
-          <!-- 첫 번째 사진. 실제 사진은 <img class="review-photo" src="..."> 로 바꿔 넣으면 돼요 -->
-          <div class="review-item__thumb">
-            <span class="bungeo">
-              <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-              <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-choux.svg') }}" alt="">
+        </div>
+        <!-- 첫 번째 사진. 실제 사진은 <img class="review-photo" src="..."> 로 바꿔 넣으면 돼요 -->
+        <div class="review-item__thumb">
+          <span class="bungeo">
+            <img
+              class="bungeo__fish"
+              src="{{ url_for('static', filename='images/review/fish.png') }}"
+              alt=""
+            />
+            <img
+              class="bungeo__filling"
+              src="{{ url_for('static', filename='images/review/filling-pat.svg') }}"
+              alt=""
+            />
+          </span>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="review-item" href="/review_detail?id=2">
+        <span class="avatar avatar--brown"
+          ><img
+            src="{{ url_for('static', filename='images/review/fish.png') }}"
+            alt=""
+        /></span>
+        <div class="review-item__body">
+          <div class="review-item__meta">
+            <span class="review-item__user">juyeong</span>
+            <span class="review-item__flavor">구매: 슈크림 붕어빵</span>
+            <span class="stars">
+              <span class="sr-only">별점 5점</span>
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
             </span>
           </div>
-        </a>
-      </li>
-      <li>
-        <a class="review-item" href="/review_detail?id=3">
-          <span class="avatar avatar--purple"><img src="{{ url_for('static', filename='images/review/fish.png') }}" alt=""></span>
-          <div class="review-item__body">
-            <div class="review-item__meta">
-              <span class="review-item__user">uzinee</span>
-              <span class="review-item__flavor">구매: 고구마 붕어빵</span>
-              <span class="stars">
-                <span class="sr-only">별점 4점</span>
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-                <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-                <img src="{{ url_for('static', filename='images/review/star-empty.svg') }}" alt="">
-              </span>
-            </div>
-            <p class="review-item__title">이화 붕어빵을 모르는 사람들 안타까움...</p>
-            <p class="review-item__excerpt">겨울 간식 투탑 붕어빵과 군고구마의 만남 기쁘다</p>
-            <div class="review-item__footer">
-              <span class="review-item__more">··· 더 보기</span>
-              <time class="review-item__date" datetime="2026-10-09">2026.10.09</time>
-            </div>
+          <p class="review-item__title">내 인생 - 이화 붕어빵 슈붕 = 0</p>
+          <p class="review-item__excerpt">
+            내인생은 이화붕어빵의 슈크림붕어빵을 만나기 전과후로 나뉜다.
+            이화붕어빵만나고나의성공시대시작
+          </p>
+          <div class="review-item__footer">
+            <span class="review-item__more">··· 더 보기</span>
+            <time class="review-item__date" datetime="2026-10-09"
+              >2026.10.09</time
+            >
           </div>
-          <!-- 첫 번째 사진. 실제 사진은 <img class="review-photo" src="..."> 로 바꿔 넣으면 돼요 -->
-          <div class="review-item__thumb">
-            <span class="bungeo">
-              <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-              <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-sweetpotato.svg') }}" alt="">
+        </div>
+        <!-- 첫 번째 사진. 실제 사진은 <img class="review-photo" src="..."> 로 바꿔 넣으면 돼요 -->
+        <div class="review-item__thumb">
+          <span class="bungeo">
+            <img
+              class="bungeo__fish"
+              src="{{ url_for('static', filename='images/review/fish.png') }}"
+              alt=""
+            />
+            <img
+              class="bungeo__filling"
+              src="{{ url_for('static', filename='images/review/filling-choux.svg') }}"
+              alt=""
+            />
+          </span>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="review-item" href="/review_detail?id=3">
+        <span class="avatar avatar--purple"
+          ><img
+            src="{{ url_for('static', filename='images/review/fish.png') }}"
+            alt=""
+        /></span>
+        <div class="review-item__body">
+          <div class="review-item__meta">
+            <span class="review-item__user">uzinee</span>
+            <span class="review-item__flavor">구매: 고구마 붕어빵</span>
+            <span class="stars">
+              <span class="sr-only">별점 4점</span>
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
+              <img
+                src="{{ url_for('static', filename='images/review/star.svg') }}"
+                alt=""
+              />
+              <img
+                src="{{ url_for('static', filename='images/review/star-empty.svg') }}"
+                alt=""
+              />
             </span>
           </div>
-        </a>
-      </li>
+          <p class="review-item__title">
+            이화 붕어빵을 모르는 사람들 안타까움...
+          </p>
+          <p class="review-item__excerpt">
+            겨울 간식 투탑 붕어빵과 군고구마의 만남 기쁘다
+          </p>
+          <div class="review-item__footer">
+            <span class="review-item__more">··· 더 보기</span>
+            <time class="review-item__date" datetime="2026-10-09"
+              >2026.10.09</time
+            >
+          </div>
+        </div>
+        <!-- 첫 번째 사진. 실제 사진은 <img class="review-photo" src="..."> 로 바꿔 넣으면 돼요 -->
+        <div class="review-item__thumb">
+          <span class="bungeo">
+            <img
+              class="bungeo__fish"
+              src="{{ url_for('static', filename='images/review/fish.png') }}"
+              alt=""
+            />
+            <img
+              class="bungeo__filling"
+              src="{{ url_for('static', filename='images/review/filling-sweetpotato.svg') }}"
+              alt=""
+            />
+          </span>
+        </div>
+      </a>
+    </li>
   </ul>
 
   <!-- 페이지 번호: 5개씩 묶어서 보여줘요 (1~5 → 6~10 → ...)
        DB 연결 후에는 data-current-page, data-total-pages 값만 넣어 주면 돼요. -->
-  <nav class="pagination" aria-label="후기 페이지" data-current-page="1" data-total-pages="1">
-    <a class="pagination__arrow pagination__prev" href="#"><img src="{{ url_for('static', filename='images/review/page-prev.svg') }}" alt="이전 페이지"></a>
+  <nav
+    class="pagination"
+    aria-label="후기 페이지"
+    data-current-page="1"
+    data-total-pages="1"
+  >
+    <a class="pagination__arrow pagination__prev" href="#"
+      ><img
+        src="{{ url_for('static', filename='images/review/page-prev.svg') }}"
+        alt="이전 페이지"
+    /></a>
     <ol class="pagination__list">
-      <li><a class="pagination__link is-current" href="/review?page=1">1</a></li>
+      <li>
+        <a class="pagination__link is-current" href="/review?page=1">1</a>
+      </li>
       <li><a class="pagination__link" href="/review?page=2">2</a></li>
       <li><a class="pagination__link" href="/review?page=3">3</a></li>
       <li><a class="pagination__link" href="/review?page=4">4</a></li>
       <li><a class="pagination__link" href="/review?page=5">5</a></li>
     </ol>
-    <a class="pagination__arrow pagination__next" href="#"><img src="{{ url_for('static', filename='images/review/page-next.svg') }}" alt="다음 페이지"></a>
+    <a class="pagination__arrow pagination__next" href="#"
+      ><img
+        src="{{ url_for('static', filename='images/review/page-next.svg') }}"
+        alt="다음 페이지"
+    /></a>
   </nav>
-
 </div>
 
 <!-- 예시 후기 데이터: DB 연결 후에는 이 줄을 지우면 돼요 -->

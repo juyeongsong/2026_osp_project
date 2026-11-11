@@ -56,6 +56,15 @@ def reg_item():
 @app.route("/reg_reviews")
 def reg_review():
     return render_template("reg_reviews.html")
+    
+@app.route("/cart")
+def view_cart():
+    # 임시 데이터 (시안과 동일). 나중에 DB 연동 시 교체
+    items = [
+        {"name": "피자 붕어빵", "price": 1000, "qty": 1, "image": "pizza.png"},
+        {"name": "말차 붕어빵", "price": 500, "qty": 3, "image": "matcha.png"},
+    ]
+    return render_template("cart.html", items=items, fee=1500)
 
 @app.route("/submit_item_post", methods=["POST"])
 def reg_item_submit_post():

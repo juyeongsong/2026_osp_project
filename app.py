@@ -7,8 +7,23 @@ from database import DBhandler
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "helloosp"
-DB = DBhandler()
-STATUS_LABEL = {"on": "판매중", "ready": "준비중", "soldout": "품절"}
+DB = DBhandler() 
+STATUS_LABEL = {    
+    "on": "판매 중",
+    "ready": "준비 중",
+    "soldout": "품절",
+}
+
+def status_code(raw):
+    raw = (raw or "").strip()
+    if raw in ["판매 중", "판매중", "on"]:
+        return "on"
+    if raw in ["준비 중", "준비중", "ready"]:
+        return "ready"
+    if raw in ["품절", "soldout"]:
+        return "soldout"
+    return "ready"
+
 PER_PAGE = 6
 
 UPLOAD_DIR = os.path.join(app.root_path, "static", "images")
@@ -48,7 +63,7 @@ def normalize_item(name, info):
         "id": name,
         "name": name,
         "price": info.get("price", 0),
-        "status": status if status in STATUS_LABEL else "on",
+        "status": status_code(info.get("status")),
         "img": info.get("img_path", ""),
         "desc": info.get("desc", ""),
         "seller": info.get("seller", ""),
@@ -132,7 +147,7 @@ def logout():
 def login():
     return render_template("login.html")
 
-@app.route("/login_confirm", methods=["POST"])
+@app.route("/login_post", methods=["POST"])
 def login_confirm():
     id = request.form["id"]
     pw = request.form["pw"]

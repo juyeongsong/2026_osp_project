@@ -12,6 +12,7 @@
 
   <div class="cart__body">
     <div class="cart__list" aria-label="장바구니 상품">
+      <div class="cart__scroll">
       {% for item in items %}
       <div
         class="cart-row"
@@ -53,6 +54,7 @@
       </div>
       {% endfor %}
       <p class="cart__empty" id="cart-empty" hidden>장바구니가 비어 있어요.</p>
+      </div>
     </div>
 
     {% set ns = namespace(sum=0) %}

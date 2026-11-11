@@ -13,7 +13,12 @@ body {
   font-family: "Inter", sans-serif;
   background-color: #fff184;
   color: #000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
+
+body > section { flex: 1 0 auto; }
 
 a {
   text-decoration: none;
@@ -137,9 +142,8 @@ textarea:focus {
   font-weight: 600;
   margin-right: 8px;
 }
-/* ================================================
-   ▼ 상품 목록 / 상세 페이지용 추가 스타일 (v2)
-   ================================================ */
+
+/* 상품 목록 및 상세 페이지*/
 :root {
   --green: #00640f;
   --cream: #fbffe5;
@@ -167,20 +171,27 @@ button:disabled { cursor: not-allowed; }
   color: #000; -webkit-text-stroke: 0.14em #fff; paint-order: stroke fill;
 }
 
-.header-icons { right: 7%; top: 24px; transform: none; align-items: center; gap: 24px; }
-.icon-home img { width: clamp(52px, 6vw, 84px); height: auto; }
-.icon-cart img { width: clamp(48px, 5.4vw, 72px); height: auto; filter: drop-shadow(0 2px 3px rgba(0,0,0,.25)); }
+.header-icons {
+  position: absolute;
+  right: 40px;
+  top: 36px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 20;
+}
 
-/* 하위 페이지: 작은 로고(왼쪽) + 제목(가운데) */
-.page-sub .site-logo { left: 5%; top: 28px; width: clamp(150px, 19vw, 260px); transform: rotate(-8deg); }
+.icon-home img,
+.icon-cart img { width: 44px; height: auto; display: block; }
+.icon-cart img { filter: drop-shadow(0 2px 3px rgba(0,0,0,.25)); }
 
-/* 메인: 큰 로고(가운데), 홈 아이콘 숨김, 한 화면에 들어오도록 헤더 아래 여백 축소 */
+.page-sub .site-logo { left: 5%; top: 28px; width: clamp(150px, 19vw, 260px); transform: none; }
+
 .page-main .site-top { margin-bottom: 56px; }
 .page-main .page-heading,
 .page-main .icon-home { display: none; }
 .page-main .site-logo { left: 50%; top: 8px; width: clamp(240px, 36vw, 420px); transform: translateX(-50%); }
 
-/* ---------- 메인 레이아웃 ---------- */
 .main-layout {
   display: grid;
   grid-template-columns: minmax(300px, 400px) minmax(0, 500px);
@@ -190,7 +201,6 @@ button:disabled { cursor: not-allowed; }
 }
 .main-menu { display: flex; flex-direction: column; gap: 20px; }
 
-/* 메인 버튼: 이전보다 크게 (글자 22→30px, 세로 패딩 18→26px) */
 .pill-btn {
   display: block; text-align: center; padding: 26px 12px; border-radius: 999px;
   color: #fff; font-family: var(--font-title); font-size: 30px;
@@ -200,12 +210,10 @@ button:disabled { cursor: not-allowed; }
 }
 .pill-btn:hover { transform: translateY(-2px); filter: brightness(.92); }
 
-/* 회원가입 | 로그인 : 버튼과 같은 비율(×1.36)로 확대 (18→24px) */
 .auth-links { display: flex; justify-content: center; align-items: center; gap: 24px; margin-top: 6px; font-family: var(--font-title); font-size: 24px; }
 .auth-links a:hover { color: var(--green); text-decoration: underline; }
 .auth-links .hello { color: var(--green); }
 
-/* ---------- 상품 보드 (축소) ---------- */
 .menu-board { background: var(--yellow-deep); border-radius: 24px; padding: 16px 16px 10px; }
 .menu-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 
@@ -230,7 +238,6 @@ button:disabled { cursor: not-allowed; }
 .menu-card__price { font-family: var(--font-title); font-size: 9cqw; margin-top: 1cqw; }
 .menu-card .badge { position: absolute; top: 7%; left: 10%; font-size: 7cqw; }
 
-/* 상태 배지 (em 단위라 font-size 만 바꾸면 크기가 같이 변함) */
 .badge {
   display: inline-flex; align-items: center; gap: .5em; padding: .25em .8em .25em .6em;
   border-radius: 999px; background: var(--green); color: #fff;
@@ -246,7 +253,6 @@ button:disabled { cursor: not-allowed; }
 .pager__num { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; }
 .pager__num.is-current { background: var(--gold); font-weight: 700; }
 
-/* ---------- 관리자 메인 ---------- */
 .admin-chip {
   align-self: center; padding: 6px 16px; border-radius: 999px; background: #fff;
   color: var(--green); font-family: var(--font-title); font-size: 15px;
@@ -259,7 +265,6 @@ button:disabled { cursor: not-allowed; }
 .stat-row .s-soldout b { color: var(--red); }
 .admin-hint { margin-top: 8px; font-size: 12px; color: var(--gray); text-align: center; }
 
-/* ---------- 상품 상세 (PDF 시안 배치) ---------- */
 .detail-layout { width: 78%; max-width: 1040px; }
 
 .detail-card {
@@ -271,7 +276,6 @@ button:disabled { cursor: not-allowed; }
   box-shadow: 0 4px 10px rgba(68, 78, 63, .12);
 }
 
-/* 판매 상태: 초록 알약 + 흰 동그라미 + 흰 글자 (PDF) */
 .detail-badge {
   position: absolute; top: clamp(18px, 2.8vw, 40px); left: clamp(20px, 2.8vw, 40px);
   height: 2.4em; padding: 0 1.75em 0 1.1em; gap: .8em;
@@ -311,7 +315,6 @@ button:disabled { cursor: not-allowed; }
 }
 .seller-info b { color: var(--green); font-weight: 600; }
 
-/* 상세 안의 버튼: 기존 전역 button 스타일(초록 배경/패딩)을 덮어쓰기 위해 .detail-card 로 한정 */
 .detail-card .qty__btn {
   width: clamp(26px, 3vw, 32px); height: clamp(26px, 3vw, 32px); padding: 0; border-radius: 50%;
   background: #e9e9ec; color: #000; font-size: 16px; font-weight: 400; line-height: 1;
@@ -383,7 +386,6 @@ button:disabled { cursor: not-allowed; }
   .menu-board { width: min(500px, 100%); }
   .detail-layout { width: 92%; }
   .detail-card { grid-template-columns: 1fr; gap: 20px; }
-  .icon-cart img { width: 48px; }
 }
 @media (max-width: 520px) {
   .site-top { height: 90px; margin-bottom: 70px; }

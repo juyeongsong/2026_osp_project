@@ -2,17 +2,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const card = document.getElementById("detailCard");
     if (!card) return;
 
-    // ¼ö·®
+    const unitPrice = +card.dataset.price; 
     const qtyNum = document.getElementById("qtyNum");
+    const priceNum = document.getElementById("priceNum");
+
+    function renderPrice() {
+        const n = parseInt(qtyNum.textContent, 10);
+        priceNum.textContent = (unitPrice * n).toLocaleString("ko-KR") + "ì›";
+    }
+
     card.querySelectorAll(".qty__btn").forEach((btn) => {
         btn.addEventListener("click", () => {
             let n = parseInt(qtyNum.textContent, 10);
             n = btn.dataset.act === "plus" ? n + 1 : Math.max(1, n - 1);
             qtyNum.textContent = n;
+            renderPrice();
         });
     });
 
-    // Àå¹Ù±¸´Ï (ÀÓ½Ã: localStorage)
+    // ìž¥ë°”êµ¬ë‹ˆ (ìž„ì‹œ: localStorage)
     function addToCart() {
         let cart = {};
         try { cart = JSON.parse(localStorage.getItem("cart") || "{}"); } catch (e) { }
@@ -25,11 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
         try { localStorage.setItem("cart", JSON.stringify(cart)); } catch (e) { }
     }
     const addBtn = document.getElementById("addCartBtn");
-    if (addBtn) addBtn.addEventListener("click", () => { addToCart(); alert("Àå¹Ù±¸´Ï¿¡ ´ã¾Ò¾î¿ä!"); });
+    if (addBtn) addBtn.addEventListener("click", () => { addToCart(); alert("ìž¥ë°”êµ¬ë‹ˆì— ë‹´ì•˜ì–´ìš”!"); });
     const buyBtn = document.getElementById("buyBtn");
-    if (buyBtn) buyBtn.addEventListener("click", () => { addToCart(); alert("ÁÖ¹® ÆäÀÌÁö´Â ÁØºñ ÁßÀÌ¿¡¿ä."); });
+    if (buyBtn) buyBtn.addEventListener("click", () => { addToCart(); alert("ì£¼ë¬¸ íŽ˜ì´ì§€ëŠ” ì¤€ë¹„ ì¤‘ì´ì—ìš”."); });
 
-    // °ü¸®ÀÚ: ÄÉ¹ä ¸Þ´º / ¼öÁ¤ ¸ðµå
+    // ê´€ë¦¬ìž: ì¼€ë°¥ ë©”ë‰´ / ìˆ˜ì • ëª¨ë“œ
     const kebab = document.getElementById("kebabBtn");
     const menu = document.getElementById("kebabMenu");
     if (kebab && menu) {
@@ -41,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         document.getElementById("deleteBtn").addEventListener("click", () => {
             menu.hidden = true;
-            alert("»óÇ° »èÁ¦´Â »óÇ° DB ¿¬µ¿ ÈÄ ±¸Çö ¿¹Á¤ÀÌ¿¡¿ä."); // TODO
+            alert("ìƒí’ˆ ì‚­ì œëŠ” ìƒí’ˆ DB ì—°ë™ í›„ êµ¬í˜„ ì˜ˆì •ì´ì—ìš”."); // TODO
         });
     }
 });

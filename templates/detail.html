@@ -3,7 +3,7 @@
 {% block title %} · {{ p.name }}{% endblock %}
 {% block page_title %}상품 상세{% endblock %}
 {% block section_class %}detail-layout{% endblock %}
-{% block header_cart %}{% endblock %}   {# PDF 시안 상세 화면에는 장바구니 아이콘이 없음 #}
+
 
 {% block section %}
 <article class="detail-card" id="detailCard"
@@ -47,7 +47,7 @@
     </p>
 
     <div class="price-row">
-      <span class="price">{{ p.price|won }}원</span>
+      <span class="price" id="priceNum">{{ p.price|won }}원</span>
       <div class="qty">
         <button type="button" class="qty__btn" data-act="minus" aria-label="수량 감소">-</button>
         <span class="qty__num" id="qtyNum">1</span>

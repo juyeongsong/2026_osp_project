@@ -1,7 +1,7 @@
 import os
 import hashlib
 
-from flask import Flask, render_template, request, flash, redirect, url_for, session
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from database import DBhandler
 
 app = Flask(__name__)
@@ -18,6 +18,25 @@ def hello():
 @app.route("/login")
 def login():
     return render_template("login.html")
+
+@app.route("/login_confirm", methods=["POST"])
+def login_confirm():
+    id = request.form["id"]
+    pw = request.form["pw"]
+
+    user = DB.get_user_by_id(id)
+
+    pw_hash = hashlib.sha256(
+        pw.encode("utf-8")
+    ).hexdigest()
+
+    if user is not None and user["pw"] == pw_hash:
+        session["id"] = id
+        return redirect(url_for("hello"))
+
+    else:
+        flash("아이디 또는 비밀번호가 일치하지 않습니다!")
+        return redirect(url_for("login"))
 
 @app.route("/signup")
 def signup():
@@ -40,6 +59,16 @@ def register_user():
             "signup.html",
             error="User ID already exists!"
         )
+    
+@app.route("/check_id", methods=["POST"])
+def check_id():
+    id = request.form["id"]
+
+    available = DB.user_duplicate_check(id)
+
+    return jsonify({
+        "available": available
+    })
 
 @app.route("/list")
 def view_list():

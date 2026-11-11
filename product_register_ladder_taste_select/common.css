@@ -1,79 +1,102 @@
-/* ===========================================================
-   이화 붕어빵-상품 등록 / 맛 선택 / 사다리 타기 페이지 공용
-   =========================================================== */
-
 @font-face {
   font-family: "OkDanDan";
   src: url("fonts/OkDanDan-Bold.otf");
-  font-weight: 700;
+  font-weight: 700; 
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 :root {
-  --green: #00640F;       
-  --cream: #FBFFE5;        
-  --page-yellow: #FFF184;  
-  --cream-deep: #FBFFE5; 
-  --accent: #9ED4B1; 
-  --input-bg: #FFF9D0;     
-  --input-border: #7B95B7; 
+  --green: #00640F;
+  --cream: #FBFFE5;
+  --page-yellow: #FFF184;
+  --cream-deep: #FBFFE5;
+  --accent: #9ED4B1;
+  --input-bg: #FFF9D0;
+  --input-border: #7B95B7;
   --text: #123621;
   --line: #2B2B2B;
 }
 
-* { box-sizing: border-box; }
-
 body {
-  margin: 0;
   min-height: 100vh;
   background: var(--page-yellow);
   font-family: "OkDanDan", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   color: var(--text);
   display: flex;
-  justify-content: center;
-  padding: 0 16px 40px;
+  flex-direction: column;
 }
 
-.page-wrap {
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.site-top {
+  position: relative; 
   width: 100%;
-  max-width: 1440px;
 }
-
-.frame {
-  width: 100%;
-}
-
-
-.site-header { width: 100%; }
 
 .awning {
-  position: relative;
+  display: flex;
   width: 100%;
-  height: 240px;
+  height: 130px;
   overflow: visible;
+  margin-bottom: 70px;
 }
 
-.awning-stripes {
+.awning_piece {
+  flex: 1;
+  height: 130px;
+  position: relative;
+}
+
+.awning_piece::after {
+  content: "";
   position: absolute;
-  top: 0;
   left: 0;
+  bottom: -70px;
   width: 100%;
-  height: auto;
-  display: block;
+  height: 120px;
+  background: inherit;
+  border-radius: 0 0 100% 100%;
+  box-shadow: 0 8px 10px rgba(68, 78, 63, 0.2);
 }
 
-.awning .logo {
+.awning_piece:nth-child(odd) { background-color: var(--green); }
+.awning_piece:nth-child(even) { background-color: var(--cream); }
+
+.site-logo {
   position: absolute;
-  left: 19px;
-  top: 22px;
-  width: 430px;
-  height: auto;
-  display: block;
+  left: 95px;
+  top: 130px;
+  transform: translateY(-50%);
+  z-index: 10;
 }
+.site-logo img { width: 300px; height: auto; display: block; }
 
-.awning .page-title {
+.header-icons {
+  position: absolute;
+  right: 65px;
+  top: 80px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 60px;
+  z-index: 10;
+}
+.icon-btn { display: flex; align-items: center; justify-content: center; }
+.icon-btn img { width: 75px; height: auto; object-fit: contain; display: block; }
+.icon-btn.cart img { width: 90px; height: auto; }
+
+.page-title {
   position: absolute;
   left: 560px;
-  top: 50px;
+  top: 67px;
   margin: 0;
   font-size: 90px;
   font-weight: 900;
@@ -82,20 +105,59 @@ body {
   -webkit-text-stroke: 8px #fff;
   paint-order: stroke fill;
   white-space: nowrap;
+  z-index: 10;
 }
 
-.home-btn {
-  position: absolute;
-  left: 1240px;
-  top: 29px;
-  width: 80px;
-  height: 113px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.page-subtitle {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--green);
+  opacity: 0.8;
+  padding: 14px 16px 0;
+  margin: 0;
 }
-.home-btn img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+section {
+  flex: 1;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer {
+  width: 100%;
+  padding: 20px 20px 30px;
+  text-align: left;
+  font-size: 14px;
+}
+
+button,
+.btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 24px;
+  background-color: var(--green);
+  color: white;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+button:hover,
+.btn:hover { background-color: #013409; }
+
+input,
+select,
+textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  background-color: var(--input-bg);
+  font-family: "Inter", sans-serif;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--green);
+}

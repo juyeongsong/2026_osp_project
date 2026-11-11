@@ -88,11 +88,10 @@
     right: 14px;
     top: 50%;
     transform: translateY(-50%);
-    color: rgba(0,0,0,0.5);
+    color: rgba(0, 0, 0, 0.5);
    font-family: "Inter", "Pretendard", sans-serif;
    font-size: 25px;
   }
-
 
   .four-col { display: flex; }
   .four-col .field { flex: 0 0 292px; width: 292px; margin-bottom: 20px; }
@@ -100,13 +99,9 @@
   .four-col .field:nth-child(2) { margin-right: 53px; }
   .four-col .field:nth-child(3) { margin-right: 53px; }
 
-
   .two-col { display: flex; }
   .two-col .field { flex: 0 0 650px; width: 650px; margin-bottom: 20px; }
   .two-col .field:first-child { margin-right: 38px; }
-
-  
-
 
   .status-group {
     display: flex;
@@ -147,7 +142,7 @@
   }
 
   .upload-box {
-    height: 100px; 
+    height: 100px; /* Figma: 상품 사진 H:100, 상품 설명과 동일 높이로 맞춤 */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -183,7 +178,7 @@
     display: flex;
     justify-content: center;
     gap: 59px;
-    margin-top: 8px;
+    margin-top: 70px;
   }
 
   .cancel-btn {
@@ -229,7 +224,7 @@
 }
 .contact-info {
   position: absolute;
-  left: -21px; 
+  left: -21px;
   top: 50%;
   transform: translateY(-50%);
   font-family: "Inter", "Pretendard", sans-serif;
@@ -252,23 +247,41 @@
 </head>
 <body>
 
-<div class="page-wrap">
-  <div class="frame">
+<header class="site-top">
+  <div class="awning">
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+  </div>
 
-    <div class="site-header">
-      <div class="awning">
-        <img class="awning-stripes" src="images/awning-stripes.png" alt="">
-                <img class="logo" src="images/logo.png" alt="이화 붕어빵">
-        <h1 class="page-title">상품 등록</h1>
-        <button class="home-btn" aria-label="홈">
-          <img src="images/home-icon.png" alt="">
-        </button>
-      </div>
-    </div>
+  <div class="site-logo">
+    <a href="/">
+      <img src="images/logo.png" alt="이화 붕어빵">
+    </a>
+  </div>
 
-    <p class="page-subtitle">판매할 붕어빵 정보를 입력해주세요</p>
+  <h1 class="page-title">상품 등록</h1>
 
-    <div class="form-wrap">
+  <div class="header-icons">
+    <a href="/" class="icon-btn">
+      <img src="images/home.png" alt="홈">
+    </a>
+    <a href="#" class="icon-btn cart">
+      <img src="images/cart.png" alt="장바구니">
+    </a>
+  </div>
+</header>
+
+<section>
+  <p class="page-subtitle">판매할 붕어빵 정보를 입력해주세요</p>
+
+  <div class="form-wrap">
       <form>
 
         <div class="four-col">
@@ -328,16 +341,17 @@
           <button type="submit" class="submit-btn">등록하기</button>
         </div>
           <div class="bottom-row">
-          <div class="contact-info">문의 상담 | 이화 붕어빵 02) <span class="phone-num">2525-2523</span></div>
           <div class="hint-row">🌸 등록된 상품은 상품 목록 페이지에 바로 표시됩니다</div>
        </div>
 
       </form>
     </div>
 
+</section>
 
-  </div>
-</div>
+<footer class="site-footer">
+  <p><span style="color: #006b2d">문의 상담 | 이화 붕어빵 </span>02) 1886-0531</p>
+</footer>
 
 <script>
   document.querySelectorAll('.status-pill').forEach(pill => {

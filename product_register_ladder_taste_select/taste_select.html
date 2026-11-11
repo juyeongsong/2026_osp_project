@@ -8,7 +8,7 @@
 <style>
   .body-area { padding: 28px 48px 10px; }
 
-  .awning .page-title {
+  .page-title {
     left: 468px;
     top: 48px;
   }
@@ -27,8 +27,8 @@
   .lead .fish { width: 74px; height: 59.11px; display: block; } 
 
   .board-wrap {
-    width: 1135px; /* Figma 실측 W:1135 — 원래 .body-area 꽉 채우던 걸 수정 */
-    margin-left: 66px; /* Figma X:114 - .body-area 좌측 패딩 48px */
+    width: 1135px;
+    margin-left: 66px;
     background: rgba(255, 222, 121, 0.45);
     border-radius: 30px;
     padding: 24px 24px 28px;
@@ -36,7 +36,6 @@
   }
 
   .sub-lead {
-       Figma X:155 - 138 = 17 */
     margin: 0 0 20px 17px;
     font-family: "OkDanDan", "Pretendard", sans-serif;
     font-size: 30px;
@@ -128,21 +127,39 @@
 </head>
 <body>
 
-<div class="page-wrap">
-  <div class="frame">
+<header class="site-top">
+  <div class="awning">
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+  </div>
 
-    <div class="site-header">
-      <div class="awning">
-        <img class="awning-stripes" src="images/awning-stripes.png" alt="">
-        <img class="logo" src="images/logo.png" alt="이화 붕어빵">
-        <h1 class="page-title">오늘의 붕어빵은?</h1>
-        <button class="home-btn" aria-label="홈">
-          <img src="images/home-icon.png" alt="">
-        </button>
-      </div>
-    </div>
+  <div class="site-logo">
+    <a href="/">
+      <img src="images/logo.png" alt="이화 붕어빵">
+    </a>
+  </div>
 
-    <div class="body-area">
+  <h1 class="page-title">오늘의 붕어빵은?</h1>
+
+  <div class="header-icons">
+    <a href="/" class="icon-btn">
+      <img src="images/home.png" alt="홈">
+    </a>
+    <a href="#" class="icon-btn cart">
+      <img src="images/cart.png" alt="장바구니">
+    </a>
+  </div>
+</header>
+
+<section>
+  <div class="body-area">
       <div class="lead"><img class="fish" src="images/fish-base.png" alt="">뭐 먹을지 고민이 될 땐, 사다리를 타보세요~</div>
 
       <div class="board-wrap">
@@ -154,12 +171,15 @@
         <button class="start-btn" id="startBtn" disabled>사다리 타러 가기 →</button>
         <div class="picked-hint" id="pickedHint"></div>
       </div>
-      <div class="contact-info">문의 상담 | 이화 붕어빵 02) <span class="phone-num">2525-2523</span></div>
-    </div>
+         </div>
+
+</section>
+
+<footer class="site-footer">
+  <p><span style="color: #006b2d">문의 상담 | 이화 붕어빵 </span>02) 1886-0531</p>
+</footer>
 
 
-  </div>
-</div>
 
 <div class="toast" id="toast">사다리 타기 페이지로 이동합니다 🌸</div>
 

@@ -8,7 +8,7 @@
 <style>
   .body-area { padding: 28px 48px 10px; }
 
-  .awning .page-title {
+  .page-title {
     left: 468px;
     top: 48px;
   }
@@ -116,34 +116,43 @@
   .reagain-btn:hover { background: var(--cream); }
 
   .hint { text-align: center; font-size: 20px; color: #8a9e8e; padding-bottom: 14px; } /* 글자 크기 = 상품 등록 .page-subtitle과 동일 */
-
-  .contact-info {
-    margin-top: 4px;
-    margin-left: -9px; 
-    font-family: "Inter", "Pretendard", sans-serif;
-    font-size: 14px;
-    color: var(--green);
-  }
-  .contact-info .phone-num { color: rgba(0, 0, 0, 0.5); }
 </style>
 </head>
 <body>
 
-<div class="page-wrap">
-  <div class="frame">
+<header class="site-top">
+  <div class="awning">
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+  </div>
 
-    <div class="site-header">
-      <div class="awning">
-        <img class="awning-stripes" src="images/awning-stripes.png" alt="">
-                <img class="logo" src="images/logo.png" alt="이화 붕어빵">
-        <h1 class="page-title">오늘의 붕어빵은?</h1>
-        <button class="home-btn" aria-label="홈">
-          <img src="images/home-icon.png" alt="">
-        </button>
-      </div>
-    </div>
+  <div class="site-logo">
+    <a href="/">
+      <img src="images/logo.png" alt="이화 붕어빵">
+    </a>
+  </div>
 
-    <div class="body-area">
+  <h1 class="page-title">오늘의 붕어빵은?</h1>
+
+  <div class="header-icons">
+    <a href="/" class="icon-btn">
+      <img src="images/home.png" alt="홈">
+    </a>
+    <a href="#" class="icon-btn cart">
+      <img src="images/cart.png" alt="장바구니">
+    </a>
+  </div>
+</header>
+
+<section>
+  <div class="body-area">
       <div class="lead"><img class="fish" src="images/fish-base.png" alt="">뭐 먹을지 고민이 될 땐, 사다리를 타보세요~</div>
 
       <div class="board-wrap">
@@ -159,12 +168,13 @@
         <button class="reagain-btn" id="reagainBtn">다시 한 번</button>
       </div>
       <div class="hint">※ 먼저 "사다리 타기"를 누른 뒤, 위쪽 숫자 중 하나를 골라주세요</div>
-      <div class="contact-info">문의 상담 | 이화 붕어빵 02) <span class="phone-num">2525-2523</span></div>
     </div>
 
+</section>
 
-  </div>
-</div>
+<footer class="site-footer">
+  <p><span style="color: #006b2d">문의 상담 | 이화 붕어빵 </span>02) 1886-0531</p>
+</footer>
 
 <script>
 (function () {

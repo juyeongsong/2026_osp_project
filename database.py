@@ -15,7 +15,8 @@ class DBhandler:
             "price": data['price'],
             "status": data['status'],
             "email": data['email'],
-            "img_path": img_path
+            "img_path": img_path,
+            "desc": data.get('desc', '') 
         }
         self.db.child("item").child(name).set(item_info)
         return True
@@ -24,7 +25,8 @@ class DBhandler:
         user_info = {
             "id": data['id'],
             "pw": pw,
-            "nickname": data['nickname']
+            "email": data.get('email', ''),
+            "phnum": data.get('phnum', '')
         }
         if self.user_duplicate_check(str(data['id'])):
             self.db.child("user").push(user_info)
@@ -45,6 +47,10 @@ class DBhandler:
                     return False
                 
             return True
+    
+    def get_items(self):
+        data = self.db.child("item").get().val()
+        return dict(data) if data else {}
         
     def get_user_by_id(self, id_string):
         users = self.db.child("user").get()
@@ -60,3 +66,9 @@ class DBhandler:
             
         return None
 
+    def get_item(self, name):
+        return self.db.child("item").child(name).get().val()
+
+    def update_item_status(self, name, status):
+        self.db.child("item").child(name).update({"status": status})
+        return True

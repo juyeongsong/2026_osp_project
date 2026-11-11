@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이화 붕어빵 - 상품 등록</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+.page-title {
+  left: 560px;
+  top: 67px;
+  transform: none;
+  font-size: 90px;
+  font-weight: 900;
+  color: #2B2B2B;
+  text-shadow: none;
+  -webkit-text-stroke: 8px #fff;
+  paint-order: stroke fill;
+}
+
+:root {
+  --green: #00640F;
+  --cream: #FBFFE5;
+  --page-yellow: #FFF184;
+  --accent: #9ED4B1;
+  --input-bg: #FFF9D0;
+  --input-border: #7B95B7;
+  --text: #123621;
+  --line: #2B2B2B;
+}
+
+section {
+  flex: 1;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.awning {
+  margin-bottom: 70px;
+}
+
+  .page-subtitle {
+   text-align: center;
+   font-family: "OkDanDan", "Pretendard", sans-serif;
+   font-size: 20px;
+   font-weight: 700;
+   color: #6f7a63;
+   padding: 14px 16px 0;
+   margin: 0;
+  }
+
+  .form-wrap {
+    width: 100%;
+    max-width: 1440px;
+    margin: 32px auto 40px;
+    padding: 0 60px;
+  }
+
+  .field { margin-bottom: 20px; }
+
+  .field label {
+    display: block;
+    font-family: "OkDanDan", "Pretendard", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+  .field label .req { color: #d9534f; margin-left: 2px; }
+  .field label .icon { margin-right: 4px; }
+
+  .field input[type="text"],
+  .field input[type="number"],
+  .field select,
+  .field textarea {
+    width: 100%;
+    height: 60px; 
+    padding: 11px 14px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid var(--input-border);
+    border-radius: 14px;
+    font-family: "Inter", "Pretendard", sans-serif;
+    font-size: 25px;
+    color: var(--text);
+    background: var(--input-bg);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .field input::placeholder,
+  .field textarea::placeholder {
+    font-family: "Inter", "Pretendard", sans-serif;
+    font-size: 25px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(0, 100, 15, 0.12);
+  }
+
+  .field textarea { height: 100px; resize: vertical; } 
+
+  .price-row { position: relative; }
+  .price-row input { padding-right: 48px; }
+  .price-row input::-webkit-outer-spin-button,
+  .price-row input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .price-row input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  .price-row .unit {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.5);
+   font-family: "Inter", "Pretendard", sans-serif;
+   font-size: 25px;
+  }
+
+  .four-col { display: flex; }
+  .four-col .field { flex: 0 0 292px; width: 292px; margin-bottom: 20px; }
+  .four-col .field:nth-child(1) { margin-right: 46px; }
+  .four-col .field:nth-child(2) { margin-right: 53px; }
+  .four-col .field:nth-child(3) { margin-right: 53px; }
+
+  .two-col { display: flex; }
+  .two-col .field { flex: 0 0 650px; width: 650px; margin-bottom: 20px; }
+  .two-col .field:first-child { margin-right: 38px; }
+
+  .status-group {
+    display: flex;
+    justify-content: center;
+    gap: 116px;
+  }
+  .status-pill {
+   flex: 0 0 240px;
+   width: 240px;
+   height: 70px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 999px;
+   border: 1.5px solid var(--accent);
+   font-family: "OkDanDan", "Pretendard", sans-serif;
+   font-size: 30px;
+   font-weight: 700;
+   color: var(--green);
+   cursor: pointer;
+   background: #fff;
+   transition: all 0.15s ease;
+}
+  .status-pill input { display: none; }
+  .status-pill.selected {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+  .status-field { text-align: center; margin-bottom: 28px; }
+  .status-field label.group-label {
+    display: block;
+    font-family: "OkDanDan", "Pretendard", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+
+  .upload-box {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--accent);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 10px 16px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .upload-box:hover { border-color: var(--green); }
+  .upload-box .flower { font-size: 1.6rem; display: block; margin-bottom: 6px; }
+  .upload-box .txt { font-family: "Inter","Pretendard",sans-serif;font-size: 25px;color: rgba(0, 0, 0, 0.5);font-weight: 400;}
+  .upload-box .sub { font-size: 0.74rem; color: #8a9e8e; margin-top: 2px; }
+  .upload-box input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .preview-img {
+    display: none;
+    max-width: 100%;
+    max-height: 160px;
+    border-radius: 12px;
+    margin-top: 10px;
+  }
+
+  .action-row {
+    display: flex;
+    justify-content: center;
+    gap: 59px;
+    margin-top: 70px;
+  }
+
+  .cancel-btn {
+   width: 329px;
+   height: 83px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background: #fff;
+   color: var(--green);
+   border: 1.5px solid var(--accent);
+   border-radius: 999px;
+   font-family: "OkDanDan", "Pretendard", sans-serif;
+   font-size: 40px;
+   font-weight: 700;
+   cursor: pointer;
+   transition: background 0.15s ease;
+  }
+  .cancel-btn:hover { background: var(--cream); }
+
+  .submit-btn {
+   width: 329px;
+   height: 83px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background: var(--green);
+   color: #fff;
+   border: none;
+   border-radius: 999px;
+   font-family: "OkDanDan", "Pretendard", sans-serif;
+   font-size: 40px;
+   font-weight: 700;
+   cursor: pointer;
+   transition: background 0.15s ease, transform 0.1s ease;
+}
+  .submit-btn:hover { opacity: 0.88; }
+  .submit-btn:active { transform: scale(0.98); }
+
+ .bottom-row {
+  position: relative;
+  margin-top: 40px;
+}
+.contact-info {
+  position: absolute;
+  left: -21px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "Inter", "Pretendard", sans-serif;
+  font-size: 14px;
+  color: var(--green);
+}
+.contact-info .phone-num { color: rgba(0, 0, 0, 0.5); }
+
+.hint-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: "OkDanDan", "Pretendard", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.8);
+}
+</style>
+</head>
+<body>
+
+<header class="site-top">
+  <div class="awning">
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+  </div>
+
+  <div class="site-logo">
+    <a href="/">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="이화 붕어빵">
+    </a>
+  </div>
+
+  <h1 class="page-title">상품 등록</h1>
+
+  <div class="header-icons">
+    <a href="/" class="icon-btn">
+      <img src="{{ url_for('static', filename='images/home.png') }}" alt="홈">
+    </a>
+    <a href="#" class="icon-btn cart">
+      <img src="{{ url_for('static', filename='images/cart.png') }}" alt="장바구니">
+    </a>
+  </div>
+</header>
+
+<section>
+  <p class="page-subtitle">판매할 붕어빵 정보를 입력해주세요</p>
+
+  <div class="form-wrap">
+      <form>
+
+        <div class="four-col">
+          <div class="field">
+            <label><span class="icon">🧑‍🍳</span>판매자 아이디<span class="req">*</span></label>
+            <input type="text" placeholder="seller_id" required>
+          </div>
+          <div class="field">
+            <label><span class="icon">🏷️</span>상품명<span class="req">*</span></label>
+            <input type="text" placeholder="예) 팥붕어빵" required>
+          </div>
+          <div class="field">
+            <label><span class="icon">💰</span>가격<span class="req">*</span></label>
+            <div class="price-row">
+              <input type="number" placeholder="1500" required>
+              <span class="unit">원</span>
+            </div>
+          </div>
+          <div class="field">
+            <label><span class="icon">📍</span>주소<span class="req">*</span></label>
+            <input type="text" placeholder="이화여대 정문 앞" required>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="field">
+            <label><span class="icon">📝</span>상품 설명<span class="req">*</span></label>
+            <textarea placeholder="붕어빵에 대한 소개를 자유롭게 적어주세요"></textarea>
+          </div>
+          <div class="field">
+            <label><span class="icon">📷</span>상품 사진<span class="req">*</span></label>
+            <div class="upload-box" id="uploadBox">
+              <span class="txt">클릭해서 사진 업로드(JPG, PNG)</span>
+              <input type="file" accept="image/*" id="fileInput">
+            </div>
+            <img class="preview-img" id="previewImg" alt="미리보기">
+          </div>
+        </div>
+
+        <div class="status-field">
+          <label class="group-label"><span class="icon">📌</span>판매 상태<span class="req">*</span></label>
+          <div class="status-group">
+            <label class="status-pill selected">
+              <input type="radio" name="status" checked> 판매중
+            </label>
+            <label class="status-pill">
+              <input type="radio" name="status"> 준비중
+            </label>
+            <label class="status-pill">
+              <input type="radio" name="status"> 품절
+            </label>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button type="button" class="cancel-btn">취소</button>
+          <button type="submit" class="submit-btn">등록하기</button>
+        </div>
+          <div class="bottom-row">
+          <div class="hint-row">🌸 등록된 상품은 상품 목록 페이지에 바로 표시됩니다</div>
+       </div>
+
+      </form>
+    </div>
+
+</section>
+
+<footer class="site-footer">
+  <p><span style="color: #006b2d">문의 상담 | 이화 붕어빵 </span>02) 1886-0531</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.status-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.status-pill').forEach(p => p.classList.remove('selected'));
+      pill.classList.add('selected');
+      pill.querySelector('input').checked = true;
+    });
+  });
+
+  const fileInput = document.getElementById('fileInput');
+  const previewImg = document.getElementById('previewImg');
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        previewImg.src = e.target.result;
+        previewImg.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  document.querySelector('form').addEventListener('submit', e => e.preventDefault());
+</script>
+
+</body>
+</html>

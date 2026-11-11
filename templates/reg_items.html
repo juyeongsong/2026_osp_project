@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "index.html" %}
 {% block section %}
 <form action="/submit_item_post" method="post" enctype="multipart/form-data">
   <div>
@@ -17,17 +17,13 @@
     <label for="price">Price: </label>
     <input type="number" name="price" id="price" required>
   </div>
-   <div>
+  <div>
     <label for="status">Status? </label><br>
     <select id="status" name="status">
-      <option value="on" selected>판매중</option>
-      <option value="ready">준비중</option>
-      <option value="soldout">품절</option>
+      <option value="new">New</option>
+      <option value="lnew" selected>Likely New</option>
+      <option value="used">Used</option>
     </select>
-  </div>
-  <div>
-    <label for="desc">설명 (줄바꿈 위치에 &lt;br&gt; 입력): </label><br>
-    <textarea name="desc" id="desc" rows="4" cols="40"></textarea>
   </div>
   <div>
     <label for="email">Email: </label>

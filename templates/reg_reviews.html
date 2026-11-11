@@ -2,6 +2,11 @@
 {% block section %}
 <link rel="stylesheet" href="{{ url_for('static', filename='bungeo.css') }}" />
 
+<!-- 후기 작성 페이지에서만 헤더의 장바구니 아이콘 숨김 (공용 index.html은 수정하지 않음) -->
+<style>
+  .header-icons .icon-btn:last-child { display: none; }
+</style>
+
 <h1 class="page-title">후기 작성</h1>
 
 <div class="page-body">

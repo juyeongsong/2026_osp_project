@@ -257,10 +257,10 @@ section {
     pickedHint.textContent = `${count} / ${REQUIRED}개 선택됨`;
   }
 
-  startBtn.addEventListener("click", () => {
+ startBtn.addEventListener("click", () => {
     if (startBtn.disabled) return;
     toast.classList.add("show");
-    setTimeout(() => { window.location.href = "ladder.html"; }, 900);
+    setTimeout(() => { window.location.href = "{{ url_for('view_ladder') }}"; }, 900);
   });
 
   buildCards();

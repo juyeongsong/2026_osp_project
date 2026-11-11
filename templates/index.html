@@ -1,35 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이화 붕어빵</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
+  </head>
 
-{% extends "base.html" %}
+  <body>
+    <header class="site-top">
+      <div class="awning">
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+        <div class="awning_piece"></div>
+      </div>
 
-{% block body_class %}page-main{% endblock %}
-{% block section_class %}main-layout{% endblock %}
+      <div class="site-logo">
+        <a href="/">
+          <img
+            src="{{url_for('static', filename='images/logo.png')}}"
+            alt="이화붕어빵"
+          />
+        </a>
+      </div>
 
-{% block section %}
+      <div class="header-icons">
+        <a href="/" class="icon-btn">
+          <img
+            src="{{url_for('static', filename='images/home.png')}}"
+            alt="홈"
+          />
+        </a>
 
-<nav class="main-menu">
-  <a class="pill-btn" href="{{ url_for('detail', pid=products[0].id) if products else '#' }}">
-    오늘의 붕어빵은?
-  </a>
+        <a href="#" class="icon-btn">
+          <img
+            src="{{url_for('static', filename='images/cart.png')}}"
+            alt="장바구니"
+          />
+        </a>
+      </div>
+    </header>
 
-  <a class="pill-btn" href="{{ url_for('view_review') }}">
-    후기 보기
-  </a>
+    <section>{% block section %} {% endblock section %}</section>
 
-  {% if logged_in %}
-  <div class="auth-links">
-    <span class="hello">{{ user_id }}님</span>
-    <a href="{{ url_for('logout') }}">로그아웃</a>
-  </div>
-  {% else %}
-  <div class="auth-links">
-    <a href="{{ url_for('signup') }}">회원가입</a>
-    <span class="bar">|</span>
-    <a href="{{ url_for('login') }}">로그인</a>
-  </div>
-  {% endif %}
-
-</nav>
-
-{% include "_product_grid.html" %}
-
-{% endblock section %}
+    <footer class="site-footer">
+      <p>
+        <span style="color: #006b2d">문의 상담 | 이화 붕어빵 </span>
+        02) 1886-0531
+      </p>
+    </footer>
+  </body>
+</html>

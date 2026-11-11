@@ -1,19 +1,31 @@
-{% extends "index.html" %}
-{% block section %}
+{% extends "index.html" %} {% block section %}
 <!-- 후기 상세 페이지 (담당: 조소연) -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Sans+KR:wght@400;500&display=swap">
-<link rel="stylesheet" href="{{ url_for('static', filename='review.css') }}">
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Sans+KR:wght@400;500&display=swap"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/review.css') }}"
+/>
 
 <h1 class="page-title">후기</h1>
 
 <div class="review-main">
   <a class="back-link" href="/review">
-    <img src="{{ url_for('static', filename='images/review/arrow-left.svg') }}" alt="">
+    <img
+      src="{{ url_for('static', filename='images/review/arrow-left.svg') }}"
+      alt=""
+    />
     목록으로 돌아가기
   </a>
 
   <article class="review-detail">
-    <span class="avatar avatar--green"><img src="{{ url_for('static', filename='images/review/fish.png') }}" alt=""></span>
+    <span class="avatar avatar--green"
+      ><img
+        src="{{ url_for('static', filename='images/review/fish.png') }}"
+        alt=""
+    /></span>
 
     <div class="review-detail__meta">
       <span class="review-detail__user">chooo9</span>
@@ -23,52 +35,101 @@
     <div class="review-detail__sub">
       <span class="stars">
         <span class="sr-only">별점 5점</span>
-        <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-        <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-        <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-        <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
-        <img src="{{ url_for('static', filename='images/review/star.svg') }}" alt="">
+        <img
+          src="{{ url_for('static', filename='images/review/star.svg') }}"
+          alt=""
+        />
+        <img
+          src="{{ url_for('static', filename='images/review/star.svg') }}"
+          alt=""
+        />
+        <img
+          src="{{ url_for('static', filename='images/review/star.svg') }}"
+          alt=""
+        />
+        <img
+          src="{{ url_for('static', filename='images/review/star.svg') }}"
+          alt=""
+        />
+        <img
+          src="{{ url_for('static', filename='images/review/star.svg') }}"
+          alt=""
+        />
       </span>
       <time class="review-detail__date" datetime="2026-10-09">2026.10.09</time>
     </div>
 
     <!-- 후기 전체 내용 (줄바꿈 그대로 표시) -->
-    <p class="review-detail__content">팥 붕어빵 역시 근본있네요. 너무 많이 달지 않고 고소해서 먹기 좋습니다.
-붕어의 머리부터 꼬리까지 소가 꽉 차있어서 한 마리만 먹어도 든든합니다. 사장님 인심 최고!
-반죽도 바삭하게 넘 잘 구우시는 듯. 바삭 붕어빵 좋아하시면 이화 붕어빵 강력 추천합니다.
-저는 날이 추워지면 이화 붕어빵을 먹기 위해 매일 주머니에 현금 3천원을 들고 다닙니다.
-고물가 시대에 한 마리에 오백 원을 유지하는 이시대의 유일한 희망!
-오백원에 이 정도 퀄리티 정말 감동적입니다. 이화 붕어빵 번창하세요.</p>
+    <p class="review-detail__content">
+      팥 붕어빵 역시 근본있네요. 너무 많이 달지 않고 고소해서 먹기 좋습니다.
+      붕어의 머리부터 꼬리까지 소가 꽉 차있어서 한 마리만 먹어도 든든합니다.
+      사장님 인심 최고! 반죽도 바삭하게 넘 잘 구우시는 듯. 바삭 붕어빵
+      좋아하시면 이화 붕어빵 강력 추천합니다. 저는 날이 추워지면 이화 붕어빵을
+      먹기 위해 매일 주머니에 현금 3천원을 들고 다닙니다. 고물가 시대에 한
+      마리에 오백 원을 유지하는 이시대의 유일한 희망! 오백원에 이 정도 퀄리티
+      정말 감동적입니다. 이화 붕어빵 번창하세요.
+    </p>
 
     <!-- 첨부 사진 전체. 실제 사진은 <li><img class="review-photo" src="..." alt="후기 사진"></li> -->
     <ul class="review-detail__photos">
       <li>
         <span class="bungeo">
-          <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-          <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-pat.svg') }}" alt="">
+          <img
+            class="bungeo__fish"
+            src="{{ url_for('static', filename='images/review/fish.png') }}"
+            alt=""
+          />
+          <img
+            class="bungeo__filling"
+            src="{{ url_for('static', filename='images/review/filling-pat.svg') }}"
+            alt=""
+          />
         </span>
       </li>
       <li>
         <span class="bungeo">
-          <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-          <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-pat.svg') }}" alt="">
+          <img
+            class="bungeo__fish"
+            src="{{ url_for('static', filename='images/review/fish.png') }}"
+            alt=""
+          />
+          <img
+            class="bungeo__filling"
+            src="{{ url_for('static', filename='images/review/filling-pat.svg') }}"
+            alt=""
+          />
         </span>
       </li>
       <li>
         <span class="bungeo">
-          <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-          <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-pat.svg') }}" alt="">
+          <img
+            class="bungeo__fish"
+            src="{{ url_for('static', filename='images/review/fish.png') }}"
+            alt=""
+          />
+          <img
+            class="bungeo__filling"
+            src="{{ url_for('static', filename='images/review/filling-pat.svg') }}"
+            alt=""
+          />
         </span>
       </li>
       <li>
         <span class="bungeo">
-          <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="">
-          <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-pat.svg') }}" alt="">
+          <img
+            class="bungeo__fish"
+            src="{{ url_for('static', filename='images/review/fish.png') }}"
+            alt=""
+          />
+          <img
+            class="bungeo__filling"
+            src="{{ url_for('static', filename='images/review/filling-pat.svg') }}"
+            alt=""
+          />
         </span>
       </li>
     </ul>
   </article>
-
 </div>
 
 <!-- 예시 후기 데이터: DB 연결 후에는 이 줄을 지우면 돼요 -->

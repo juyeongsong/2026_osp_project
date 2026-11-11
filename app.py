@@ -206,6 +206,18 @@ def reg_item():
 @app.route("/reg_reviews")
 def reg_review():
     return render_template("reg_reviews.html")
+
+@app.route("/product_register")
+def view_product_register():
+    return render_template("product_register.html")
+
+@app.route("/taste_select")
+def view_taste_select():
+    return render_template("taste_select.html")
+
+@app.route("/ladder")
+def view_ladder():
+    return render_template("ladder.html")
     
 @app.route("/cart")
 def view_cart():

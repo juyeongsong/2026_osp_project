@@ -121,3 +121,71 @@ textarea:focus {
   outline: none;
   border-color: #00640f;
 }
+
+:root {
+  --green: #00640f;
+  --cream: #fbffe5;
+  --yellow-deep: #ffe970;
+  --gold: #ffd400;
+  --off: #e3e7d3;
+  --red: #ff4a1c;
+  --gray: #7d7d6a;
+  --font-title: "OKDanDan", "Jua", "Noto Sans KR", sans-serif;
+}
+
+[hidden] { display: none !important; }
+button:disabled { cursor: not-allowed; }
+.footer-label { color: var(--green); font-weight: 600; }
+
+/* ---------- 헤더 (기존 .site-logo / .header-icons 값 덮어쓰기) ---------- */
+.site-top { position: relative; height: 130px; margin-bottom: 84px; z-index: 5; }
+
+.site-logo img { width: 100%; }
+
+.page-heading {
+  position: absolute; z-index: 10; left: 50%; top: 38px;
+  transform: translateX(-50%) rotate(-1.5deg);
+  font-family: var(--font-title); font-weight: 400;
+  font-size: clamp(26px, 4.6vw, 52px); line-height: 1; white-space: nowrap;
+  color: #000; -webkit-text-stroke: 0.14em #fff; paint-order: stroke fill;
+}
+
+.header-icons { right: 4%; top: 22px; transform: none; align-items: center; gap: 24px; }
+.icon-home svg { width: 52px; height: auto; display: block; }
+.icon-home path { fill: var(--green); stroke: #fff; stroke-width: 4; stroke-linejoin: round; }
+.icon-home .door { fill: var(--cream); stroke: none; }
+.icon-cart img { width: 64px; height: auto; display: block; filter: drop-shadow(0 2px 3px rgba(0,0,0,.25)); }
+
+.page-sub .site-logo { left: 4%; top: 22px; width: clamp(110px, 16vw, 200px); transform: rotate(-8deg); }
+
+.page-main .page-heading { display: none; }
+.page-main .icon-home { display: none; }
+.page-main .site-logo { left: 50%; top: 8px; width: clamp(240px, 36vw, 420px); transform: translateX(-50%); }
+
+.main-layout { display: grid; grid-template-columns: minmax(240px, 330px) 1fr; gap: 48px; align-items: center; }
+.main-menu { display: flex; flex-direction: column; gap: 18px; }
+
+.pill-btn {
+  display: block; text-align: center; padding: 18px 12px; border-radius: 999px;
+  color: #fff; font-family: var(--font-title); font-size: 22px;
+  background: radial-gradient(ellipse at 50% 35%, #2f8a3c 0%, var(--green) 75%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  transition: transform .15s, filter .15s;
+}
+.pill-btn:hover { transform: translateY(-2px); filter: brightness(.92); }
+
+.auth-links { display: flex; justify-content: center; align-items: center; gap: 18px; margin-top: 4px; font-family: var(--font-title); font-size: 18px; }
+.auth-links a:hover { color: var(--green); text-decoration: underline; }
+.auth-links .hello { color: var(--green); }
+
+.menu-board { background: var(--yellow-deep); border-radius: 28px; padding: 22px 22px 14px; }
+.menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+.menu-card {
+  position: relative; display: flex; flex-direction: column; align-items: center;
+  padding: 34px 8px 30px; background: var(--cream);
+  border-radius: 18px 18px 0 0;
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
+  text-align: center; transition: transform .15s;
+}
+.menu-card:hover { transform:

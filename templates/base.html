@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이화 붕어빵{% block title %}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
+  </head>
+
+  <body class="{% block body_class %}page-sub{% endblock %}">
+    <header class="site-top">
+      <div class="awning">
+        {% for _ in range(9) %}<div class="awning_piece"></div>{% endfor %}
+      </div>
+
+      <a class="site-logo" href="{{ home_url }}">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="이화 붕어빵" />
+      </a>
+
+      <h1 class="page-heading">{% block page_title %}{% endblock %}</h1>
+
+      <div class="header-icons">
+        <a href="{{ home_url }}" class="icon-btn icon-home" aria-label="홈">
+          <svg viewBox="0 0 64 72" aria-hidden="true">
+            <path d="M32 6 L56 24 V60 a6 6 0 0 1 -6 6 H14 a6 6 0 0 1 -6 -6 V24 Z" />
+            <path class="door" d="M26 66 V46 a6 6 0 0 1 12 0 V66 Z" />
+          </svg>
+        </a>
+        <a href="#" class="icon-btn icon-cart" aria-label="장바구니" id="cartLink">
+          <img src="{{ url_for('static', filename='images/cart.png') }}" alt="장바구니" />
+        </a>
+      </div>
+    </header>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <div class="flash">{% for m in messages %}<p>{{ m }}</p>{% endfor %}</div>
+      {% endif %}
+    {% endwith %}
+
+    <section class="content {% block section_class %}{% endblock %}">
+      {% block section %}{% endblock section %}
+    </section>
+
+    <footer class="site-footer">
+      <p><span class="footer-label">문의 상담 | 이화 붕어빵</span> 02) 2525-2523</p>
+    </footer>
+  </body>
+</html>

@@ -1,20 +1,133 @@
 import os
 import hashlib
+from functools import wraps
 
-from flask import Flask, render_template, request, flash, redirect, url_for, session
+from flask import Flask, render_template, request, flash, redirect, url_for, session, abort
 from database import DBhandler
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "helloosp"
 DB = DBhandler()
+STATUS_LABEL = {"on": "판매중", "ready": "준비중", "soldout": "품절"}
+PER_PAGE = 6
 
 UPLOAD_DIR = os.path.join(app.root_path, "static", "images")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+
+@app.template_filter("won")
+def won(value):
+    return f"{int(value):,}"
+
+
+@app.context_processor
+def inject_common():
+    is_admin = bool(session.get("is_admin"))
+    return dict(
+        logged_in=bool(session.get("id")),
+        is_admin=is_admin,
+        user_id=session.get("id"),
+        status_label=STATUS_LABEL,
+        home_url=url_for("admin_main") if is_admin else url_for("hello"),
+    )
+
+
+def admin_required(view):
+    @wraps(view)
+    def wrapper(*args, **kwargs):
+        if not session.get("is_admin"):
+            flash("관리자만 접근할 수 있어요.")
+            return redirect(url_for("login"))
+        return view(*args, **kwargs)
+    return wrapper
+
+
+def normalize_item(name, info):
+    status = info.get("status")
+    return {
+        "id": name,
+        "name": name,
+        "price": info.get("price", 0),
+        "status": status if status in STATUS_LABEL else "on",
+        "img": info.get("img_path", ""),
+        "desc": info.get("desc", ""),
+        "seller": info.get("seller", ""),
+        "addr": info.get("addr", ""),
+    }
+
+
+def load_items():
+    try:
+        data = DB.get_items()
+    except Exception:
+        data = {}
+    items = [normalize_item(k, v) for k, v in data.items()]
+    items.sort(key=lambda p: (data[p["id"]].get("order", 999), p["name"]))
+    return items
+
+
+def paginate(items, page):
+    total = max(1, -(-len(items) // PER_PAGE))
+    page = min(max(page, 1), total)
+    start = (page - 1) * PER_PAGE
+    return items[start:start + PER_PAGE], page, total
+
+
 @app.route("/")
 def hello():
-    return render_template("index.html")
-    
+    page = request.args.get("page", 1, type=int)
+    items, page, total = paginate(load_items(), page)
+    return render_template("index.html", products=items, page=page,
+                           total_pages=total, page_endpoint="hello")
+
+
+@app.route("/admin")
+@admin_required
+def admin_main():
+    page = request.args.get("page", 1, type=int)
+    all_items = load_items()
+    items, page, total = paginate(all_items, page)
+    stats = {
+        "total": len(all_items),
+        "on": sum(1 for p in all_items if p["status"] == "on"),
+        "ready": sum(1 for p in all_items if p["status"] == "ready"),
+        "soldout": sum(1 for p in all_items if p["status"] == "soldout"),
+    }
+    return render_template("admin.html", products=items, page=page,
+                           total_pages=total, page_endpoint="admin_main", stats=stats)
+
+
+@app.route("/admin/orders")
+@admin_required
+def admin_orders():
+    return render_template("admin_orders.html")
+
+
+@app.route("/detail/<pid>")
+def detail(pid):
+    info = DB.get_item(pid)
+    if not info:
+        abort(404)
+    return render_template("detail.html", p=normalize_item(pid, info))
+
+
+@app.route("/admin/product/<pid>/status", methods=["POST"])
+@admin_required
+def admin_update_status(pid):
+    status = request.form.get("status")
+    if status not in STATUS_LABEL or not DB.get_item(pid):
+        abort(400)
+    DB.update_item_status(pid, status)
+    flash("상품 상태를 저장했어요.")
+    return redirect(url_for("detail", pid=pid))
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("hello"))
+
+
 @app.route("/login")
 def login():
     return render_template("login.html")

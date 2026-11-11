@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %} · {{ p.name }}{% endblock %}
+{% block page_title %}상품 상세{% endblock %}
+{% block section_class %}detail-layout{% endblock %}
+
+{% block section %}
+<a class="back-link" href="{{ home_url }}">◀ 목록으로 돌아가기</a>
+
+<article class="detail-card" id="detailCard"
+         data-id="{{ p.id }}" data-name="{{ p.name }}" data-price="{{ p.price }}">
+
+  <span class="badge badge--{{ p.status }} detail-badge view-only">
+    <i class="dot"></i>{{ status_label[p.status] }}
+  </span>
+
+  {% if is_admin %}
+  <form id="statusForm" class="status-pills edit-only" method="post"
+        action="{{ url_for('admin_update_status', pid=p.id) }}">
+    {% for key, label in status_label.items() %}
+    <label class="pill-radio">
+      <input type="radio" name="status" value="{{ key }}" {% if p.status == key %}checked{% endif %} />
+      <span><i class="dot"></i>{{ label }}</span>
+    </label>
+    {% endfor %}
+  </form>
+
+  <button type="button" class="kebab view-only" id="kebabBtn" aria-label="메뉴">⋮</button>
+  <div class="kebab-menu" id="kebabMenu" hidden>
+    <button type="button" id="editBtn">✎ 수정</button>
+    <button type="button" id="deleteBtn">✕ 삭제</button>
+  </div>
+  <button type="submit" form="statusForm" class="save-btn edit-only">저장</button>
+  {% endif %}
+
+  <div class="detail-img">
+    <img src="{{ url_for('static', filename='images/' ~ p.img) }}" alt="{{ p.name }}" />
+    <a class="review-link" href="{{ url_for('view_review') }}">후기 보기</a>
+  </div>
+
+  <div class="detail-info">
+    <h2 class="detail-name">{{ p.name }}</h2>
+    <p class="detail-desc">{{ p.desc|safe }}</p>
+
+    <div class="price-row">
+      <span class="price">{{ p.price|won }}원</span>
+      <div class="qty">
+        <button type="button" class="qty__btn" data-act="minus" aria-label="수량 감소">-</button>
+        <span class="qty__num" id="qtyNum">1</span>
+        <button type="button" class="qty__btn" data-act="plus" aria-label="수량 증가">+</button>
+      </div>
+    </div>
+
+    <div class="buy-row">
+      <button type="button" class="btn-outline" id="addCartBtn" {% if p.status != 'on' %}disabled{% endif %}>장바구니</button>
+      <button type="button" class="btn-solid" id="buyBtn" {% if p.status != 'on' %}disabled{% endif %}>구매하기</button>
+    </div>
+    {% if p.status != 'on' %}
+    <p class="soldout-note">현재 {{ status_label[p.status] }} 상품이에요.</p>
+    {% endif %}
+  </div>
+
+  <p class="seller-info">
+    <b>판매처</b> | <b>이화 붕어빵</b> 서울특별시 서대문구 이화여대길52
+  </p>
+</article>
+{% endblock section %}

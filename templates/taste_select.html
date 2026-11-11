@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이화 붕어빵 - 맛 선택</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+:root {
+  --green: #00640F;
+  --cream: #FBFFE5;
+  --page-yellow: #FFF184;
+  --accent: #9ED4B1;
+  --input-bg: #FFF9D0;
+  --input-border: #7B95B7;
+  --text: #123621;
+  --line: #2B2B2B;
+}
+
+section {
+  flex: 1;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.awning {
+  margin-bottom: 70px;
+}
+  .body-area { padding: 28px 48px 10px; }
+
+  .page-title {
+    left: 468px;
+    top: 48px;
+  }
+
+  .lead {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: 4px; 
+    font-family: "OkDanDan", "Pretendard", sans-serif;
+    font-size: 50px;
+    font-weight: 700;
+    color: var(--line);
+    margin-bottom: 18px;
+  }
+  .lead .fish { width: 74px; height: 59.11px; display: block; } 
+
+  .board-wrap {
+    width: 1135px;
+    margin-left: 66px;
+    background: rgba(255, 222, 121, 0.45);
+    border-radius: 30px;
+    padding: 24px 24px 28px;
+    margin-bottom: 20px;
+  }
+
+  .sub-lead {
+    margin: 0 0 20px 17px;
+    font-family: "OkDanDan", "Pretendard", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--line);
+  }
+
+  .flavor-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 31px 168px;
+    margin-bottom: 4px;
+  }
+
+  .flavor-card {
+    width: 140px;
+    height: 169px; 
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.15s ease;
+  }
+  .flavor-card img {
+    position: relative;
+    z-index: 1;
+    width: 100%; height: 100%; display: block;
+  }
+  .flavor-card.picked { transform: translateY(-3px); }
+  .flavor-card.picked::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='169' viewBox='0 0 140 169'%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Cpath d='M58.7824 166.645C65.0343 168.82 71.8302 168.867 78.1114 166.778L119.47 153.019C131.729 148.941 140 137.473 140 124.553V30C140 13.4314 126.569 0 110 0H30C13.4315 0 0 13.4315 0 30V124.865C0 137.633 8.0816 149.002 20.1405 153.198L58.7824 166.645Z'/%3E%3C/clipPath%3E%3C/defs%3E%3Cpath d='M58.7824 166.645C65.0343 168.82 71.8302 168.867 78.1114 166.778L119.47 153.019C131.729 148.941 140 137.473 140 124.553V30C140 13.4314 126.569 0 110 0H30C13.4315 0 0 13.4315 0 30V124.865C0 137.633 8.0816 149.002 20.1405 153.198L58.7824 166.645Z' fill='none' stroke='%2300640F' stroke-width='6' clip-path='url(%23c)'/%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  .flavor-card:not(.picked)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.1); 
+    clip-path: path('M58.7824 166.645C65.0343 168.82 71.8302 168.867 78.1114 166.778L119.47 153.019C131.729 148.941 140 137.473 140 124.553V30C140 13.4314 126.569 0 110 0H30C13.4315 0 0 13.4315 0 30V124.865C0 137.633 8.0816 149.002 20.1405 153.198L58.7824 166.645Z');
+    pointer-events: none;
+  }
+
+  .action-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 0;
+  }
+
+  .start-btn {
+    width: 469px;
+    height: 83px;
+    margin-left: 385px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--green); color: #fff; border: none;
+    border-radius: 999px;
+    font-family: "OkDanDan", "Pretendard", sans-serif;
+    font-size: 40px; font-weight: 700; cursor: pointer;
+    transition: background 0.15s ease, opacity 0.15s ease;
+  }
+  .start-btn:disabled { background: #c9c9b8; cursor: default; }
+  .start-btn:not(:disabled):hover { opacity: 0.85; }
+
+  .picked-hint { margin-left: auto; font-size: 0.9rem; font-weight: 700; color: var(--green); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%) translateY(20px);
+    background: var(--green); color: #fff; padding: 14px 28px; border-radius: 999px;
+    font-weight: 700; font-size: 0.95rem; opacity: 0; pointer-events: none; transition: all 0.25s ease;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .contact-info {
+    margin-top: 14px;
+    margin-left: -9px; 
+    font-family: "Inter", "Pretendard", sans-serif;
+    font-size: 14px;
+    color: var(--green);
+  }
+  .contact-info .phone-num { color: rgba(0, 0, 0, 0.5); }
+</style>
+</head>
+<body>
+
+<header class="site-top">
+  <div class="awning">
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+    <div class="awning_piece"></div>
+  </div>
+
+  <div class="site-logo">
+    <a href="/">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="이화 붕어빵">
+    </a>
+  </div>
+
+  <h1 class="page-title">오늘의 붕어빵은?</h1>
+
+  <div class="header-icons">
+    <a href="/" class="icon-btn">
+      <img src="{{ url_for('static', filename='images/home.png') }}" alt="홈">
+    </a>
+    <a href="#" class="icon-btn cart">
+      <img src="{{ url_for('static', filename='images/cart.png') }}" alt="장바구니">
+    </a>
+  </div>
+</header>
+
+<section>
+  <div class="body-area">
+      <div class="lead"><img class="fish" src="{{ url_for('static', filename='images/fish-base.png') }}" alt="">뭐 먹을지 고민이 될 땐, 사다리를 타보세요~</div>
+
+      <div class="board-wrap">
+        <p class="sub-lead">원하는 붕어빵 맛 6개를 선택하세요</p>
+        <div class="flavor-grid" id="flavorGrid"></div>
+      </div>
+
+      <div class="action-row">
+        <button class="start-btn" id="startBtn" disabled>사다리 타러 가기 →</button>
+        <div class="picked-hint" id="pickedHint"></div>
+      </div>
+         </div>
+
+</section>
+
+<footer class="site-footer">
+  <p><span style="color: #006b2d">문의 상담 | 이화 붕어빵 </span>02) 1886-0531</p>
+</footer>
+
+
+
+<div class="toast" id="toast">사다리 타기 페이지로 이동합니다 🌸</div>
+
+<script>
+(function () {
+  const REQUIRED = 6;
+  const flavors = [
+    { name: "초코 붕어빵",        img: "{{ url_for('static', filename='images/card-choco.png') }}",        default: false },
+    { name: "슈크림 붕어빵",      img: "{{ url_for('static', filename='images/card-cream.png') }}",        default: true },
+    { name: "딸기슈크림 붕어빵",  img: "{{ url_for('static', filename='images/card-strawberry.png') }}",   default: true },
+    { name: "팥 붕어빵",          img: "{{ url_for('static', filename='images/card-red-bean.png') }}",     default: true },
+    { name: "고구마 붕어빵",      img: "{{ url_for('static', filename='images/card-sweet-potato.png') }}", default: true },
+    { name: "피자 붕어빵",        img: "{{ url_for('static', filename='images/card-pizza.png') }}",        default: true },
+    { name: "말차 붕어빵",        img: "{{ url_for('static', filename='images/card-matcha.png') }}",       default: true }
+  ];
+
+  const grid = document.getElementById("flavorGrid");
+  const startBtn = document.getElementById("startBtn");
+  const pickedHint = document.getElementById("pickedHint");
+  const toast = document.getElementById("toast");
+
+  let pickedFlavors = new Set(flavors.filter(f => f.default).map(f => f.name));
+
+  function buildCards() {
+    grid.innerHTML = "";
+    flavors.forEach(f => {
+      const card = document.createElement("div");
+      card.className = "flavor-card";
+      card.dataset.name = f.name;
+      card.innerHTML = `<img src="${f.img}" alt="${f.name}">`;
+      card.style.setProperty("--mask-src", `url(${f.img})`);
+      card.addEventListener("click", () => {
+        if (pickedFlavors.has(f.name)) {
+          pickedFlavors.delete(f.name);
+        } else {
+          if (pickedFlavors.size >= REQUIRED) return; 
+          pickedFlavors.add(f.name);
+        }
+        render();
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  function render() {
+    document.querySelectorAll(".flavor-card").forEach(card => {
+      card.classList.toggle("picked", pickedFlavors.has(card.dataset.name));
+    });
+
+    const count = pickedFlavors.size;
+    startBtn.disabled = count !== REQUIRED;
+    pickedHint.textContent = `${count} / ${REQUIRED}개 선택됨`;
+  }
+
+  startBtn.addEventListener("click", () => {
+    if (startBtn.disabled) return;
+    toast.classList.add("show");
+    setTimeout(() => { window.location.href = "{{ url_for('ladder') }}"; }, 900);
+  });
+
+  buildCards();
+  render();
+})();
+</script>
+
+</body>
+</html>

@@ -50,6 +50,20 @@ class DBhandler:
     def get_items(self):
         data = self.db.child("item").get().val()
         return dict(data) if data else {}
+        
+    def get_user_by_id(self, id_string):
+        users = self.db.child("user").get()
+
+        if str(users.val()) == "None":
+            return None
+        
+        for res in users.each():
+            value = res.val()
+
+            if value["id"] == id_string:
+                return value
+            
+        return None
 
     def get_item(self, name):
         return self.db.child("item").child(name).get().val()

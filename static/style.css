@@ -1,6 +1,6 @@
 @font-face {
   font-family: "okdandan";
-  src: url("/static/fonts/okdandan.otf") format("opentype");
+  src: url("/static/font/okdandan.otf") format("opentype");
 }
 
 * {
@@ -9,13 +9,47 @@
   padding: 0;
 }
 
+.page-title {
+  position: absolute;
+  top: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+
+  font-family: "okdandan", sans-serif;
+  font-size: 80px;
+  font-weight: normal;
+  color: #000;
+
+  text-shadow: -3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff,
+    3px 3px 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff,
+    4px 5px 5px rgba(0, 0, 0, 0.18);
+}
+
 body {
   font-family: "Inter", sans-serif;
   background-color: #fff184;
   color: #000;
+
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+section {
+  flex: 1;
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.site-footer {
+  width: 90%;
+  padding: 20px 20px 30px;
+
+  text-align: left;
+  font-size: 14px;
 }
 
 body > section { flex: 1 0 auto; }
@@ -27,30 +61,46 @@ a {
 
 .site-logo {
   position: absolute;
-  left: 80px;
+  left: 95px;
   top: 130px;
   transform: translateY(-50%);
   z-index: 10;
 }
 
 .site-logo img {
-  width: 250px;
+  width: 300px;
   height: auto;
   display: block;
 }
 
-.home-btn {
+.header-icons {
   position: absolute;
-  right: 140px;
-  top: 50px;
-  transform: traslateY(-50%);
+  right: 65px;
+  top: 80px;
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: flex-end;
+  gap: 60px;
   z-index: 10;
 }
 
-.home-btn img {
-  width: 55px;
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn img {
+  width: 75px;
   height: auto;
+  object-fit: contain;
   display: block;
+}
+
+.icon-btn.cart img {
+  width: 90px;
+  height: auto;
 }
 
 .awning {
@@ -86,13 +136,6 @@ a {
   background-color: #fbffe5;
 }
 
-section {
-  width: 90%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 30px 20px;
-}
-
 button,
 .btn {
   padding: 10px 24px;
@@ -106,7 +149,7 @@ button,
 }
 
 button:hover,
-.bun::hover {
+.btn:hover {
   background-color: #013409;
 }
 
@@ -118,6 +161,7 @@ textarea {
   border-radius: 8px;
   background-color: #fff9d0;
   font-family: "Inter", sans-serif;
+  font-size: 18px;
 }
 
 input:focus,
@@ -393,4 +437,91 @@ button:disabled { cursor: not-allowed; }
   .awning_piece::after { height: 90px; bottom: -50px; }
   .page-main .site-logo { top: 2px; }
   .page-heading { top: 44px; }
+}
+.auth-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 140px auto 60px;
+}
+
+.auth-container.signup-container {
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-group label {
+  font-family: "okdandan", sans-serif;
+  font-size: 28px;
+}
+
+.form-group input {
+  width: 100%;
+  height: 55px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 14px;
+  background-color: #fffce8;
+}
+
+.id-check-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.id-check-row input {
+  flex: 1;
+}
+
+.id-check-btn {
+  width: 120px;
+  height: 55px;
+  border: none;
+  border-radius: 14px;
+  background-color: #00640f;
+  color: white;
+  font-size: 18px;
+}
+
+.auth-btn {
+  width: 100%;
+  height: 60px;
+  border: none;
+  border-radius: 14px;
+  background-color: #00640f;
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.signup-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.signup-link a {
+  text-decoration: underline;
+}
+
+#id-check-message {
+  margin-top: 5px;
+  margin-left: 10px;
+  font-size: 15px;
 }

@@ -2,7 +2,7 @@ import os
 import hashlib
 from functools import wraps
 
-from flask import Flask, render_template, request, flash, redirect, url_for, session, abort
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify, abort
 from database import DBhandler
 
 app = Flask(__name__)
@@ -132,6 +132,25 @@ def logout():
 def login():
     return render_template("login.html")
 
+@app.route("/login_confirm", methods=["POST"])
+def login_confirm():
+    id = request.form["id"]
+    pw = request.form["pw"]
+
+    user = DB.get_user_by_id(id)
+
+    pw_hash = hashlib.sha256(
+        pw.encode("utf-8")
+    ).hexdigest()
+
+    if user is not None and user["pw"] == pw_hash:
+        session["id"] = id
+        return redirect(url_for("hello"))
+
+    else:
+        flash("아이디 또는 비밀번호가 일치하지 않습니다!")
+        return redirect(url_for("login"))
+
 @app.route("/signup")
 def signup():
     return render_template("signup.html")
@@ -153,6 +172,16 @@ def register_user():
             "signup.html",
             error="User ID already exists!"
         )
+    
+@app.route("/check_id", methods=["POST"])
+def check_id():
+    id = request.form["id"]
+
+    available = DB.user_duplicate_check(id)
+
+    return jsonify({
+        "available": available
+    })
 
 @app.route("/list")
 def view_list():
@@ -162,6 +191,14 @@ def view_list():
 def view_review():
     return render_template("review.html")
 
+@app.route("/mypage")
+def view_mypage():
+    return render_template("mypage.html")
+
+@app.route("/review_detail")
+def view_review_detail():
+    return render_template("review_detail.html")
+
 @app.route("/reg_items")
 def reg_item():
     return render_template("reg_items.html")
@@ -169,6 +206,15 @@ def reg_item():
 @app.route("/reg_reviews")
 def reg_review():
     return render_template("reg_reviews.html")
+    
+@app.route("/cart")
+def view_cart():
+    # 임시 데이터 (시안과 동일). 나중에 DB 연동 시 교체
+    items = [
+        {"name": "피자 붕어빵", "price": 1000, "qty": 1, "image": "pizza.png"},
+        {"name": "말차 붕어빵", "price": 500, "qty": 3, "image": "matcha.png"},
+    ]
+    return render_template("cart.html", items=items, fee=1500)
 
 @app.route("/submit_item_post", methods=["POST"])
 def reg_item_submit_post():

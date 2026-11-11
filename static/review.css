@@ -1,0 +1,467 @@
+/* =========================================================
+   후기 조회 페이지 (후기 목록 / 후기 상세) 전용 스타일 - 조소연
+   공통 부분(천막, 로고, 홈 버튼, 기본 글꼴·배경)은 style.css를 그대로 써요.
+   ========================================================= */
+
+:root {
+  --review-green: #00640f;
+  --review-cream: #fbffe5;
+  --review-gray: #d9d9d9;
+  --review-yellow: #ffd400;
+  --review-text-sub: rgba(0, 0, 0, 0.5);
+  --review-radius: 30px;
+  --review-font-display: "okdandan", "Jua", sans-serif;
+  --review-font-body: "Inter", "Noto Sans KR", sans-serif;
+}
+
+/* ---------- 페이지 제목 (천막 위 가운데, 흰 테두리 손글씨) ----------
+   공통 style.css에서 .page-title이 빠져서 후기·마이페이지용으로 여기 둬요.
+   (예전 공통 스타일과 같은 값. 다시 공통으로 들어가면 이 블록은 지워도 돼요) */
+.page-title {
+  position: absolute;
+  z-index: 10;
+  top: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--review-font-display);
+  font-size: 72px;
+  font-weight: 700;
+  color: #000;
+  white-space: nowrap;
+  text-shadow: -3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff,
+    3px 3px 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff, -3px 0 0 #fff,
+    3px 0 0 #fff, 4px 5px 5px rgba(0, 0, 0, 0.18);
+}
+
+/* 내용 폭은 공통 section(최대 1100px)을 그대로 따라요 */
+.review-main {
+  width: 100%;
+  padding-bottom: 40px;
+  font-family: var(--review-font-body);
+}
+
+.review-main ul,
+.review-main ol {
+  list-style: none;
+}
+
+/* ---------- 붕어빵 그림 (빵 + 속 색깔) ---------- */
+.bungeo {
+  position: relative;
+  display: inline-block;
+  aspect-ratio: 1.25;
+}
+
+.bungeo__fish {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.bungeo__filling {
+  position: absolute;
+  top: 23.4%;
+  left: 9.4%;
+  width: 50%;
+}
+
+/* ---------- 프로필 동그라미 ---------- */
+.avatar {
+  position: relative;
+  flex: 0 0 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.avatar img {
+  position: absolute;
+  top: 10px;
+  left: 6px;
+  width: 39px;
+  height: 31px;
+}
+
+.avatar--green  { background: #00640f; }
+.avatar--brown  { background: #893620; }
+.avatar--purple { background: #824792; }
+.avatar--pink   { background: #d28787; }
+.avatar--navy   { background: #444292; }
+
+/* ---------- 별점 ---------- */
+.stars {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.stars img {
+  width: 25px;
+  height: 25px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ===================== 후기 목록 ===================== */
+
+/* ---------- 상단 줄: 맛 필터 + 후기 작성 버튼 ---------- */
+.review-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 70px;
+}
+
+.flavor-filter {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.flavor-filter__label {
+  min-width: 110px;
+  font-family: var(--review-font-display);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 30px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* style.css의 공통 button 모양(초록 배경)이 화살표에 묻지 않도록 되돌림 */
+.flavor-filter__arrow,
+.flavor-filter__arrow:hover {
+  flex: 0 0 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.flavor-filter__arrow img {
+  display: block;
+  width: 30px;
+  height: 35px;
+}
+
+.flavor-filter__list {
+  display: flex;
+  gap: 30px;
+  margin: 0 16px;
+}
+
+/* JS가 켜지기 전에는 앞의 3개만 보여주기 */
+.flavor-filter__list li:nth-child(n + 4) {
+  display: none;
+}
+
+.flavor-filter__list.is-ready li {
+  display: block;
+}
+
+.flavor-filter__list.is-ready li[hidden] {
+  display: none;
+}
+
+/* 맛 버튼 */
+.flavor-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 108px;
+  height: 69px;
+  border-radius: var(--review-radius);
+  background: var(--review-cream);
+}
+
+.flavor-chip .bungeo {
+  width: 74px;
+}
+
+/* 맛을 하나 골랐을 때: 고른 버튼은 초록 실선, 나머지는 어둡게 */
+.flavor-filter--active .flavor-chip {
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), var(--review-cream);
+}
+
+.flavor-filter--active .flavor-chip.is-selected {
+  background: var(--review-cream);
+  box-shadow: inset 0 0 0 2px var(--review-green);
+}
+
+/* 후기 작성하기 버튼 */
+.write-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 286px;
+  height: 80px;
+  margin-left: auto;
+  border-radius: 80px;
+  background: var(--review-green);
+  box-shadow:
+    0 0 10px rgba(0, 0, 0, 0.25),
+    inset 4px 10px 30px 10px rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-family: var(--review-font-display);
+  font-size: 45px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ---------- 후기 카드 목록 ---------- */
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  margin-top: 15px;
+}
+
+.review-item {
+  display: flex;
+  min-height: 151px;
+  padding: 10px 28px;
+  border-radius: var(--review-radius);
+  background: var(--review-cream);
+}
+
+.review-item__body {
+  flex: 1;
+  min-width: 0; /* 긴 글이 말줄임 되도록 */
+  margin: 0 25px 0 13px;
+  padding-top: 6px;
+}
+
+.review-item__meta {
+  display: flex;
+  align-items: center;
+  height: 30px;
+}
+
+.review-item__user {
+  font-size: 25px;
+}
+
+.review-item__flavor {
+  margin: 3px 10px 0;
+  font-size: 20px;
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+.review-item__title {
+  margin-top: 5px;
+  overflow: hidden;
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 30px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.review-item__excerpt {
+  margin-top: 6px;
+  overflow: hidden;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--review-text-sub);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.review-item__footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.review-item__more {
+  color: var(--review-text-sub);
+}
+
+.review-item__date {
+  opacity: 0.6;
+}
+
+/* 첫 번째 사진 */
+.review-item__thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 144px;
+  height: 120px;
+  margin-top: 6px;
+  overflow: hidden;
+  border-radius: var(--review-radius);
+  background: var(--review-gray);
+}
+
+.review-item__thumb .bungeo {
+  width: 121.25px;
+}
+
+/* 실제 사진을 넣을 때는 이 클래스를 쓰면 칸에 꽉 차게 잘려 들어가요 */
+.review-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.review-list__empty {
+  padding: 56px 0;
+  border-radius: var(--review-radius);
+  background: var(--review-cream);
+  color: var(--review-text-sub);
+  font-size: 20px;
+  text-align: center;
+}
+
+/* ---------- 페이지 번호 ---------- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.pagination__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 34px;
+}
+
+/* 첫 페이지의 ◀, 마지막 페이지의 ▶ 는 흐리게 */
+.pagination__arrow.is-disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.pagination__arrow img {
+  width: 24px;
+  height: 30px;
+}
+
+.pagination__list {
+  display: flex;
+  margin: 0 3px 0 10px;
+}
+
+.pagination__link {
+  display: block;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  color: var(--review-green);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 35px;
+  text-align: center;
+}
+
+.pagination__link.is-current {
+  background: var(--review-yellow);
+}
+
+/* ===================== 후기 상세 ===================== */
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 90px;
+  color: var(--review-green);
+  font-family: var(--review-font-display);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 43px;
+  white-space: nowrap;
+}
+
+.back-link img {
+  width: 30px;
+  height: 35px;
+}
+
+.review-detail {
+  position: relative;
+  margin-top: 28px;
+  padding: 46px 54px 48px 103px;
+  border-radius: var(--review-radius);
+  background: var(--review-cream);
+}
+
+.review-detail .avatar {
+  position: absolute;
+  top: 36px;
+  left: 53px;
+}
+
+.review-detail__meta {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  margin-left: 13px;
+}
+
+.review-detail__user {
+  font-size: 25px;
+}
+
+.review-detail__flavor {
+  margin: 3px 0 0 10px;
+  font-size: 20px;
+  opacity: 0.6;
+}
+
+.review-detail__sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 25px;
+  margin-top: 1px;
+}
+
+.review-detail__date {
+  font-size: 20px;
+  opacity: 0.6;
+}
+
+.review-detail__content {
+  margin-top: 12px;
+  font-size: 20px;
+  line-height: 26px;
+  white-space: pre-line; /* DB에 저장된 줄바꿈을 그대로 보여줌 */
+}
+
+.review-detail__photos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-top: 12px;
+}
+
+.review-detail__photos li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 204px;
+  overflow: hidden;
+  border-radius: var(--review-radius);
+  background: var(--review-gray);
+}
+
+.review-detail__photos .bungeo {
+  width: 70%;
+  max-width: 161px;
+}

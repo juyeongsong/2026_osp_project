@@ -78,6 +78,14 @@ def view_list():
 def view_review():
     return render_template("review.html")
 
+@app.route("/mypage")
+def view_mypage():
+    return render_template("mypage.html")
+
+@app.route("/review_detail")
+def view_review_detail():
+    return render_template("review_detail.html")
+
 @app.route("/reg_items")
 def reg_item():
     return render_template("reg_items.html")

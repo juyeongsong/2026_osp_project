@@ -24,6 +24,13 @@
         toast.timer = setTimeout(() => el.classList.remove("is-show"), 1800);
     };
 
+    // FormData(사진 포함)를 보낼 때 사용
+    const postForm = async (url, formData) => {
+        const res = await fetch(url, { method: "POST", body: formData });
+        const data = await res.json().catch(() => ({}));
+        return { ok: res.ok && data.ok, data };
+    };
+
     const post = async (url, body = {}) => {
         const res = await fetch(url, {
             method: "POST",
@@ -101,6 +108,36 @@
 
     $("cancel-btn").addEventListener("click", () => location.reload());
 
+    // 사진 바꾸기: 수정 모드에서 그림 클릭 → 파일 선택 → 미리보기
+    const mediaImg = $("media-img");
+    const imgInput = $("img-input");
+    const imgEl = mediaImg.querySelector(".bungeo-img");
+    const MAX_MB = 5;
+    let newImage = null;
+
+    mediaImg.addEventListener("click", (e) => {
+        if (!card.classList.contains("is-editing")) return;
+        if (e.target === imgInput) return;
+        imgInput.click();
+    });
+
+    imgInput.addEventListener("change", () => {
+        const file = imgInput.files[0];
+        if (!file) return;
+        if (!file.type.startsWith("image/")) {
+            imgInput.value = "";
+            return toast("이미지 파일만 올릴 수 있어요.");
+        }
+        if (file.size > MAX_MB * 1024 * 1024) {
+            imgInput.value = "";
+            return toast(`${MAX_MB}MB 이하 사진만 올릴 수 있어요.`);
+        }
+        newImage = file;
+        if (imgEl.dataset.preview) URL.revokeObjectURL(imgEl.dataset.preview);
+        imgEl.dataset.preview = URL.createObjectURL(file);
+        imgEl.src = imgEl.dataset.preview;
+    });
+
     // 상태 선택
     pills.forEach((pill) => {
         pill.addEventListener("click", () => {
@@ -117,12 +154,15 @@
         if (!name) return toast("상품명을 입력해 주세요.");
         if (!Number.isFinite(price) || price < 0) return toast("가격을 확인해 주세요.");
 
-        const { ok, data } = await post(`/item/${encodeURIComponent(itemName)}/update`, {
-            name,
-            desc: $("desc-input").value,
-            price,
-            status: selectedStatus,
-        });
+        // 사진까지 같이 보내야 해서 JSON 대신 FormData 사용
+        const form = new FormData();
+        form.append("name", name);
+        form.append("desc", $("desc-input").value);
+        form.append("price", price);
+        form.append("status", selectedStatus);
+        if (newImage) form.append("img", newImage);
+
+        const { ok, data } = await postForm(`/item/${encodeURIComponent(itemName)}/update`, form);
         if (ok) location.href = data.url; // 이름이 바뀌었을 수 있으니 새 주소로
         else toast(data.message || "저장하지 못했어요.");
     });

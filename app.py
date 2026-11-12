@@ -7,6 +7,7 @@ from database import DBhandler, to_int
 from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from database import DBhandler
 from datetime import datetime
+import uuid
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "helloosp"
@@ -19,6 +20,7 @@ ADMIN_IDS = {"admin"} #관리자 아이디
 PER_PAGE = 6
 
 STATUS_LIST = ["판매중", "준비중", "품절"]
+ALLOWED_IMG_EXT = {"png", "jpg", "jpeg", "gif", "webp"}
 
 def is_admin():
     return session.get("id") in ADMIN_IDS
@@ -53,7 +55,8 @@ def update_item(name):
     if not is_admin():
         abort(403)
 
-    data = request.get_json(silent=True) or {}
+    # 사진이 있으면 FormData(request.form), 없으면 JSON 둘 다 받을 수 있게
+    data = request.get_json(silent=True) or request.form
     new_name = (data.get("name") or "").strip() or name
     status = data.get("status")
     if status not in STATUS_LIST:
@@ -64,6 +67,18 @@ def update_item(name):
         "price": to_int(data.get("price")),
         "status": status,
     }
+
+    # 새 사진이 올라왔으면 static/images에 저장하고 경로 교체
+    image_file = request.files.get("img")
+    if image_file and image_file.filename:
+        ext = image_file.filename.rsplit(".", 1)[-1].lower() if "." in image_file.filename else ""
+        if ext not in ALLOWED_IMG_EXT:
+            return jsonify({"ok": False, "message": "png, jpg, gif, webp 사진만 올릴 수 있어요."}), 400
+        # 한글 파일명·같은 이름 덮어쓰기를 피하려고 랜덤 이름으로 저장
+        filename = f"item_{uuid.uuid4().hex[:12]}.{ext}"
+        image_file.save(os.path.join(UPLOAD_DIR, filename))
+        fields["img_path"] = filename
+
     result = DB.update_item(name, fields, new_name)
 
     if result == "not_found":

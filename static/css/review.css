@@ -1,7 +1,4 @@
-/* =========================================================
-   후기 조회 페이지 (후기 목록 / 후기 상세) 전용 스타일 - 조소연
-   공통 부분(천막, 로고, 홈 버튼, 기본 글꼴·배경)은 style.css를 그대로 써요.
-   ========================================================= */
+/* 후기 조회 페이지 */
 
 :root {
   --review-green: #00640f;
@@ -14,9 +11,6 @@
   --review-font-body: "Inter", "Noto Sans KR", sans-serif;
 }
 
-/* 페이지 제목(.page-title)은 공통 style.css 것을 써요 */
-
-/* 내용 폭은 공통 section(최대 1100px)을 그대로 따라요 */
 .review-main {
   width: 100%;
   padding-bottom: 40px;
@@ -28,7 +22,6 @@
   list-style: none;
 }
 
-/* ---------- 붕어빵 그림 (빵 + 속 색깔) ---------- */
 .bungeo {
   position: relative;
   display: inline-block;
@@ -48,7 +41,6 @@
   width: 50%;
 }
 
-/* ---------- 프로필 동그라미 ---------- */
 .avatar {
   position: relative;
   flex: 0 0 40px;
@@ -65,13 +57,22 @@
   height: 25px;
 }
 
-.avatar--green  { background: #00640f; }
-.avatar--brown  { background: #893620; }
-.avatar--purple { background: #824792; }
-.avatar--pink   { background: #d28787; }
-.avatar--navy   { background: #444292; }
+.avatar--green {
+  background: #00640f;
+}
+.avatar--brown {
+  background: #893620;
+}
+.avatar--purple {
+  background: #824792;
+}
+.avatar--pink {
+  background: #d28787;
+}
+.avatar--navy {
+  background: #444292;
+}
 
-/* ---------- 별점 ---------- */
 .stars {
   display: flex;
   flex: 0 0 auto;
@@ -93,7 +94,6 @@
 
 /* ===================== 후기 목록 ===================== */
 
-/* ---------- 상단 줄: 맛 필터 + 후기 작성 버튼 ---------- */
 .review-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -118,7 +118,6 @@
   white-space: nowrap;
 }
 
-/* style.css의 공통 button 모양(초록 배경)이 화살표에 묻지 않도록 되돌림 */
 .flavor-filter__arrow,
 .flavor-filter__arrow:hover {
   flex: 0 0 30px;
@@ -141,7 +140,6 @@
   margin: 0 10px;
 }
 
-/* JS가 켜지기 전에는 앞의 3개만 보여주기 */
 .flavor-filter__list li:nth-child(n + 4) {
   display: none;
 }
@@ -169,9 +167,9 @@
   width: 54px;
 }
 
-/* 맛을 하나 골랐을 때: 고른 버튼은 초록 실선, 나머지는 어둡게 */
 .flavor-filter--active .flavor-chip {
-  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), var(--review-cream);
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+    var(--review-cream);
 }
 
 .flavor-filter--active .flavor-chip.is-selected {
@@ -189,8 +187,7 @@
   margin-left: auto;
   border-radius: 50px;
   background: var(--review-green);
-  box-shadow:
-    0 0 10px rgba(0, 0, 0, 0.25),
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25),
     inset 4px 10px 30px 10px rgba(255, 255, 255, 0.3);
   color: #ffffff;
   font-family: var(--review-font-display);
@@ -217,7 +214,7 @@
 
 .review-item__body {
   flex: 1;
-  min-width: 0; /* 긴 글이 말줄임 되도록 */
+  min-width: 0;
   margin: 0 20px 0 12px;
   padding-top: 4px;
 }
@@ -275,7 +272,6 @@
   opacity: 0.6;
 }
 
-/* 첫 번째 사진 */
 .review-item__thumb {
   display: flex;
   align-items: center;
@@ -292,7 +288,6 @@
   width: 96px;
 }
 
-/* 실제 사진을 넣을 때는 이 클래스를 쓰면 칸에 꽉 차게 잘려 들어가요 */
 .review-photo {
   width: 100%;
   height: 100%;
@@ -324,7 +319,6 @@
   height: 28px;
 }
 
-/* 첫 페이지의 ◀, 마지막 페이지의 ▶ 는 흐리게 */
 .pagination__arrow.is-disabled {
   opacity: 0.3;
   pointer-events: none;
@@ -424,7 +418,7 @@
   margin-top: 12px;
   font-size: 16px;
   line-height: 25px;
-  white-space: pre-line; /* DB에 저장된 줄바꿈을 그대로 보여줌 */
+  white-space: pre-line;
 }
 
 .review-detail__photos {

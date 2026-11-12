@@ -1,192 +1,192 @@
-      :root {
-        --green: #00640f;
-        --cream: #fbffe5;
-        --page-yellow: #fff184;
-        --accent: #9ed4b1;
-        --input-bg: #fff9d0;
-        --input-border: #7b95b7;
-        --text: #123621;
-        --line: #2b2b2b;
-      }
+:root {
+  --green: #00640f;
+  --cream: #fbffe5;
+  --page-yellow: #fff184;
+  --accent: #9ed4b1;
+  --input-bg: #fff9d0;
+  --input-border: #7b95b7;
+  --text: #123621;
+  --line: #2b2b2b;
+}
 
-      section {
-        flex: 1;
-        width: 100%;
-        max-width: none;
-        margin: 0;
-        padding: 0;
-      }
+section {
+  flex: 1;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
 
-      .awning {
-        margin-bottom: 70px;
-      }
-      .body-area {
-        padding: 10px 48px 4px;
-      }
+.awning {
+  margin-bottom: 70px;
+}
+.body-area {
+  padding: 10px 48px 4px;
+}
 
-      .lead {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-left: 4px;
-        font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 30px;
-        font-weight: 700;
-        color: var(--line);
-        margin-bottom: 6px;
-      }
-      .lead .fish {
-        width: 54px;
-        height: 43px;
-        display: block;
-      }
+.lead {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 4px;
+  font-family: "OkDanDan", "Pretendard", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--line);
+  margin-bottom: 6px;
+}
+.lead .fish {
+  width: 54px;
+  height: 43px;
+  display: block;
+}
 
-      .board-wrap {
-        background: rgba(255, 222, 121, 0.45);
-        border-radius: 30px;
-        padding: 10px 16px 12px;
-        margin-bottom: 8px;
-      }
+.board-wrap {
+  background: rgba(255, 222, 121, 0.45);
+  border-radius: 30px;
+  padding: 10px 16px 12px;
+  margin-bottom: 8px;
+}
 
-      .start-row,
-      .bottom-row {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        justify-items: center;
-      }
+.start-row,
+.bottom-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  justify-items: center;
+}
 
-      .start-btn-dot {
-        width: 50px;
-        height: 45px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 30px;
-        background: #fbffe5;
-        color: #000000;
-        border: none;
-        font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-weight: 700;
-        font-size: 22px;
-        cursor: pointer;
-        transition: transform 0.15s ease, background 0.15s ease,
-          opacity 0.15s ease;
-      }
-      .start-btn-dot:disabled {
-        background: #fbffe5;
-        cursor: default;
-      }
-      .start-btn-dot:hover:not(:disabled) {
-        background: #fbffe5;
-        opacity: 0.85;
-        transform: scale(1.08);
-      }
-      .start-btn-dot.used {
-        opacity: 0.35;
-      }
+.start-btn-dot {
+  width: 50px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  background: #fbffe5;
+  color: #000000;
+  border: none;
+  font-family: "OkDanDan", "Pretendard", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+}
+.start-btn-dot:disabled {
+  background: #fbffe5;
+  cursor: default;
+}
+.start-btn-dot:hover:not(:disabled) {
+  background: #fbffe5;
+  opacity: 0.85;
+  transform: scale(1.08);
+}
+.start-btn-dot.used {
+  opacity: 0.35;
+}
 
-      svg {
-        display: block;
-        margin: 2px 0;
-        width: 100%;
-        height: auto;
-      }
-      .path-line {
-        stroke: #000000;
-        stroke-width: 4;
-        fill: none;
-      }
-      .highlight-line {
-        stroke: #ffcc00;
-        stroke-width: 5;
-        stroke-linecap: round;
-        fill: none;
-      }
+svg {
+  display: block;
+  margin: 2px 0;
+  width: 100%;
+  height: auto;
+}
+.path-line {
+  stroke: #000000;
+  stroke-width: 4;
+  fill: none;
+}
+.highlight-line {
+  stroke: #ffcc00;
+  stroke-width: 5;
+  stroke-linecap: round;
+  fill: none;
+}
 
-      .flavor-card-mini {
-        width: 82px;
-        height: 99px;
-        text-align: center;
-      }
-      .card-mini-img {
-        width: 100%;
-        height: 100%;
-        display: block;
-        transition: filter 0.2s ease, transform 0.2s ease;
-      }
-      .card-mini-img.winner {
-        filter: drop-shadow(0 0 3px var(--accent))
-          drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 8px var(--accent));
-        transform: scale(1.06);
-      }
+.flavor-card-mini {
+  width: 82px;
+  height: 99px;
+  text-align: center;
+}
+.card-mini-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+.card-mini-img.winner {
+  filter: drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 3px var(--accent))
+    drop-shadow(0 0 8px var(--accent));
+  transform: scale(1.06);
+}
 
-      .result-box {
-        margin-top: 4px;
-        min-height: 18px;
-        text-align: center;
-        font-size: 1.1rem;
-        font-weight: 800;
-        color: var(--green);
-      }
+.result-box {
+  margin-top: 4px;
+  min-height: 18px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--green);
+}
 
-      .action-row {
-        display: flex;
-        align-items: center;
-        gap: 93.68px;
-        margin-left: 469px;
-        padding-bottom: 6px;
-      }
+.action-row {
+  display: flex;
+  align-items: center;
+  gap: 93.68px;
+  margin-left: 469px;
+  padding-bottom: 6px;
+}
 
-      .ladder-btn {
-        width: 180px;
-        height: 52px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--green);
-        color: #fff;
-        border: none;
-        border-radius: 50px;
-        font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 20px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: background 0.15s ease;
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
-      }
-      .ladder-btn:hover {
-        background: var(--green);
-        opacity: 0.85;
-      }
-      .ladder-btn.started {
-        background: var(--green);
-        opacity: 0.6;
-      }
+.ladder-btn {
+  width: 180px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-family: "OkDanDan", "Pretendard", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+.ladder-btn:hover {
+  background: var(--green);
+  opacity: 0.85;
+}
+.ladder-btn.started {
+  background: var(--green);
+  opacity: 0.6;
+}
 
-      .reagain-btn {
-        width: 180px;
-        height: 52px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #fff;
-        color: var(--line);
-        border: none;
-        border-radius: 50px;
-        font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 20px;
-        font-weight: 700;
-        cursor: pointer;
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3), inset 4px 10px 30px 10px rgba(255, 255, 255, 0.3);
-      }
-      .reagain-btn:hover {
-        background: var(--cream);
-      }
+.reagain-btn {
+  width: 180px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: var(--line);
+  border: none;
+  border-radius: 50px;
+  font-family: "OkDanDan", "Pretendard", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3),
+    inset 4px 10px 30px 10px rgba(255, 255, 255, 0.3);
+}
+.reagain-btn:hover {
+  background: var(--cream);
+}
 
-      .hint {
-        text-align: center;
-        font-size: 20px;
-        font-family: "OkDanDan", "Pretendard", sans-serif;
-        color: #8a9e8e;
-        padding-bottom: 4px;
-      } /* 글자 크기 = 상품 등록 .page-subtitle과 동일 */
+.hint {
+  text-align: center;
+  font-size: 20px;
+  font-family: "OkDanDan", "Pretendard", sans-serif;
+  color: #8a9e8e;
+  padding-bottom: 4px;
+}

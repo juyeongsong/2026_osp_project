@@ -1,8 +1,5 @@
 {% extends "index.html" %} {% block section %}
-<!-- 마이페이지 (담당: 조소연)
-     공통 style.css가 모든 <section>에 폭·여백을 주기 때문에, 안쪽 묶음은 <div>로 만들었어요.
-     공통 부분(천막, 로고, 푸터)은 index.html, 붕어빵 그림·페이지 번호는 review.css를 같이 써요.
-     지금은 예시 데이터라서, DB 연결 후 Flask가 실제 회원·주문 정보로 채우면 돼요. -->
+<!-- 마이페이지  -->
 <link
   rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600&display=swap"
@@ -19,7 +16,7 @@
 <h1 class="page-title">마이페이지</h1>
 
 <div class="mypage">
-  <!-- 1. 내 정보 (전화번호는 선택 항목이라 표시하지 않아요) -->
+  <!-- 1. 내 정보  -->
   <div class="mypage-card profile" role="region" aria-label="내 정보">
     <span class="avatar avatar--green avatar--lg"
       ><img
@@ -42,7 +39,7 @@
     </div>
   </div>
 
-  <!-- 2. 배송 현황 (관리자 화면에서 바꾼 상태가 여기 숫자로 보여요) -->
+  <!-- 2. 배송 현황  -->
   <ol class="mypage-card delivery-summary" aria-label="배송 현황">
     <li>
       <span class="delivery-summary__count is-zero">0</span>
@@ -62,8 +59,7 @@
     </li>
   </ol>
 
-  <!-- 3. 주문·배송 내역: 최신 주문부터 한 화면에 하나씩 (static/mypage.js)
-       카드는 내용만큼 늘고 줄지만, 페이지 번호는 맛 3개 카드 기준 자리에 고정돼요 -->
+  <!-- 3. 주문·배송 내역 -->
   <div role="region" aria-labelledby="orders-heading">
     <h2 class="mypage-heading" id="orders-heading">주문·배송 내역</h2>
     <ul class="order-list">

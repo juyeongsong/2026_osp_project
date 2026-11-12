@@ -1,6 +1,4 @@
-/* ===== 후기 작성 / 장바구니 전용 스타일 =====
-   공용 style.css(차양 헤더, body, footer)는 그대로 쓰고,
-   이 파일은 두 페이지 안쪽만 담당합니다. */
+/* 후기 작성 / 장바구니 전용 스타일  */
 :root {
   --green: #00640f;
   --cream: #fbffe5;
@@ -23,7 +21,9 @@
 }
 
 /* 차양이 아래로 튀어나온 만큼 본문을 내려 줌 */
-.page-body { padding-top: 90px; }
+.page-body {
+  padding-top: 90px;
+}
 
 /* ===== 버튼 ===== */
 .btn {
@@ -37,14 +37,19 @@
   color: var(--green);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
-.btn--ghost:hover { background: #eef0dc; }
+.btn--ghost:hover {
+  background: #eef0dc;
+}
 .btn--primary {
   color: #fff;
   background: radial-gradient(ellipse at 50% 35%, #2f8a3c 0%, var(--green) 75%);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 }
-.btn--primary:disabled { opacity: 0.45; cursor: not-allowed; }
-/* 큰 알약 버튼: 배송 정보 입력 페이지의 결제하기(.btn-big/.btn-pay)와 동일 */
+.btn--primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .btn-big {
   display: inline-flex;
   align-items: center;
@@ -61,7 +66,11 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25),
     inset 4px 10px 30px 10px rgba(255, 255, 255, 0.3);
 }
-.btn-pay { width: 100%; height: 66px; font-size: 36px; }
+.btn-pay {
+  width: 100%;
+  height: 66px;
+  font-size: 36px;
+}
 
 .btn:focus-visible,
 .check:focus-visible,
@@ -72,7 +81,7 @@
   outline-offset: 3px;
 }
 
-/* ===== 후기 작성 ===== */
+/* 후기 작성 */
 .review-card {
   width: 100%;
   max-width: 760px;
@@ -84,11 +93,21 @@
   grid-template-columns: repeat(12, 1fr);
   gap: 18px 22px;
 }
-.span-4 { grid-column: span 4; }
-.span-5 { grid-column: span 5; }
-.span-7 { grid-column: span 7; }
-.span-8 { grid-column: span 8; }
-.span-12 { grid-column: span 12; }
+.span-4 {
+  grid-column: span 4;
+}
+.span-5 {
+  grid-column: span 5;
+}
+.span-7 {
+  grid-column: span 7;
+}
+.span-8 {
+  grid-column: span 8;
+}
+.span-12 {
+  grid-column: span 12;
+}
 
 .field {
   display: flex;
@@ -105,7 +124,11 @@
   color: var(--green);
   padding-left: 10px;
 }
-.field legend { float: left; width: 100%; margin-bottom: 8px; }
+.field legend {
+  float: left;
+  width: 100%;
+  margin-bottom: 8px;
+}
 
 .field input[type="text"],
 .field textarea {
@@ -116,14 +139,24 @@
   background: transparent;
   font: 400 14px "Inter", sans-serif;
 }
-.field input[type="text"] { height: 52px; }
-.field textarea { height: 118px; padding-top: 14px; resize: none; }
+.field input[type="text"] {
+  height: 52px;
+}
+.field textarea {
+  height: 118px;
+  padding-top: 14px;
+  resize: none;
+}
 .field input::placeholder,
-.field textarea::placeholder { color: var(--gray-text); }
+.field textarea::placeholder {
+  color: var(--gray-text);
+}
 .field input[type="text"]:focus,
-.field textarea:focus { outline: 3px solid rgba(0, 100, 15, 0.3); }
+.field textarea:focus {
+  outline: 3px solid rgba(0, 100, 15, 0.3);
+}
 
-/* 별점: DOM은 5→1 순서, row-reverse로 1→5 표시 */
+/* 별점 */
 .stars__row {
   display: flex;
   flex-direction: row-reverse;
@@ -138,7 +171,7 @@
   border: 0;
   opacity: 0;
 }
-/* .field label 규칙(15px, 초록)보다 우선하도록 선택자를 더 구체적으로 */
+
 .field.stars .stars__row label {
   padding: 0 2px 0 0;
   font-family: inherit;
@@ -149,7 +182,9 @@
 }
 .field.stars .stars__row input:checked ~ label,
 .field.stars .stars__row label:hover,
-.field.stars .stars__row label:hover ~ label { color: #f5b301; }
+.field.stars .stars__row label:hover ~ label {
+  color: #f5b301;
+}
 
 .dropzone {
   position: relative;
@@ -166,7 +201,9 @@
   cursor: pointer;
   overflow: hidden;
 }
-.dropzone:focus-within { outline: 3px solid rgba(0, 100, 15, 0.3); }
+.dropzone:focus-within {
+  outline: 3px solid rgba(0, 100, 15, 0.3);
+}
 .dropzone__preview {
   position: absolute;
   inset: 0;
@@ -174,7 +211,9 @@
   height: 100%;
   object-fit: cover;
 }
-.dropzone__preview[hidden] { display: none; }
+.dropzone__preview[hidden] {
+  display: none;
+}
 
 .actions {
   display: flex;
@@ -183,8 +222,11 @@
   margin-top: 2px;
 }
 
-/* ===== 장바구니 ===== */
-.cart { max-width: 920px; margin: 0 auto; }
+/* 장바구니 */
+.cart {
+  max-width: 920px;
+  margin: 0 auto;
+}
 
 .select-all {
   display: inline-flex;
@@ -227,8 +269,7 @@
   border-radius: 24px;
   padding: 24px 16px 24px 26px;
 }
-/* 상품이 많아지면 이 영역 안에서만 스크롤 (오른쪽 막대기).
-   max-height는 상품 카드 2개가 보이는 높이 기준 */
+
 .cart__scroll {
   max-height: 296px;
   overflow-y: auto;
@@ -237,16 +278,27 @@
   flex-direction: column;
   gap: 24px;
 }
-.cart__scroll::-webkit-scrollbar { width: 5px; }
-.cart__scroll::-webkit-scrollbar-track { background: transparent; }
+.cart__scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.cart__scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
 .cart__scroll::-webkit-scrollbar-thumb {
   background: #d3d3d3;
   border-radius: 999px;
 }
 @supports not selector(::-webkit-scrollbar) {
-  .cart__scroll { scrollbar-width: thin; scrollbar-color: #d3d3d3 transparent; }
+  .cart__scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #d3d3d3 transparent;
+  }
 }
-.cart-row { display: flex; align-items: center; gap: 16px; }
+.cart-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
 .cart-item {
   position: relative;
@@ -269,16 +321,34 @@
   color: #333;
   cursor: pointer;
 }
-.cart-item__remove:hover { background: none; color: #000; }
-.cart-item__head { display: flex; align-items: center; gap: 14px; }
+.cart-item__remove:hover {
+  background: none;
+  color: #000;
+}
+.cart-item__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 
-.thumb { width: 44px; height: 44px; flex: none; object-fit: contain; }
+.thumb {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  object-fit: contain;
+}
 .thumb--placeholder {
   border-radius: 50%;
   background: radial-gradient(circle at 40% 40%, #f08a3c 0 30%, var(--tan) 31%);
 }
-.cart-item__name { font-size: 16px; font-weight: 400; }
-.cart-item__price { margin-top: 2px; font-size: 13px; }
+.cart-item__name {
+  font-size: 16px;
+  font-weight: 400;
+}
+.cart-item__price {
+  margin-top: 2px;
+  font-size: 13px;
+}
 
 .qty-bar {
   margin-top: 6px;
@@ -291,7 +361,11 @@
   border: 1px solid #7a7a6c;
   border-radius: 999px;
 }
-.qty { display: flex; align-items: center; gap: 8px; }
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .qty__btn {
   width: 36px;
   height: 26px;
@@ -301,9 +375,15 @@
   line-height: 1;
   color: #fff;
 }
-.qty__btn--minus { background: var(--tan); }
-.qty__btn--minus:hover { background: #c4912f; }
-.qty__btn--plus { background: var(--green); }
+.qty__btn--minus {
+  background: var(--tan);
+}
+.qty__btn--minus:hover {
+  background: #c4912f;
+}
+.qty__btn--plus {
+  background: var(--green);
+}
 .qty__num {
   min-width: 30px;
   height: 30px;
@@ -314,12 +394,19 @@
   font-size: 13px;
   font-weight: 500;
 }
-.line-total { font-size: 14px; white-space: nowrap; }
+.line-total {
+  font-size: 14px;
+  white-space: nowrap;
+}
 
-.cart__empty { text-align: center; color: var(--gray-text); }
-.cart__empty[hidden] { display: none; }
+.cart__empty {
+  text-align: center;
+  color: var(--gray-text);
+}
+.cart__empty[hidden] {
+  display: none;
+}
 
-/* 주문예상금액: 배송 정보 입력 페이지의 .order-card / .order-summary와 같은 스타일 (그림자 없음) */
 .summary {
   display: flex;
   flex-direction: column;
@@ -345,9 +432,19 @@
   flex-direction: column;
   gap: 12px;
 }
-.summary__list li { display: flex; align-items: baseline; font-size: 15px; }
-.summary__list .summary__qty { margin-left: 8px; color: var(--gray-text); }
-.summary__list .summary__amount { margin-left: auto; font-weight: 500; }
+.summary__list li {
+  display: flex;
+  align-items: baseline;
+  font-size: 15px;
+}
+.summary__list .summary__qty {
+  margin-left: 8px;
+  color: var(--gray-text);
+}
+.summary__list .summary__amount {
+  margin-left: auto;
+  font-weight: 500;
+}
 
 .summary__row {
   display: flex;
@@ -360,8 +457,14 @@
   border-top: 1px solid rgba(0, 0, 0, 0.12);
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
-.summary__row--fee dt { color: rgba(0, 0, 0, 0.5); }
-.summary__row--total dt { font-size: 18px; font-weight: 600; color: #000; }
+.summary__row--fee dt {
+  color: rgba(0, 0, 0, 0.5);
+}
+.summary__row--total dt {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+}
 .summary__row--total dd {
   font: 700 21px "Inter", sans-serif; /* okdandan은 숫자 0이 네모로 보여서 일반 폰트 사용 */
   color: var(--green);
@@ -369,13 +472,31 @@
 
 /* ===== 반응형 ===== */
 @media (max-width: 860px) {
-  .cart__body { grid-template-columns: 1fr; }
-  .cart__list { padding: 24px 14px; }
-  .cart-row { gap: 10px; }
-  .cart-item { padding: 16px 18px 14px; }
-  .qty-bar { padding: 6px 14px; }
+  .cart__body {
+    grid-template-columns: 1fr;
+  }
+  .cart__list {
+    padding: 24px 14px;
+  }
+  .cart-row {
+    gap: 10px;
+  }
+  .cart-item {
+    padding: 16px 18px 14px;
+  }
+  .qty-bar {
+    padding: 6px 14px;
+  }
 }
 @media (max-width: 720px) {
-  .review-card { padding: 28px 22px 24px; gap: 16px; }
-  .span-4, .span-5, .span-7, .span-8 { grid-column: span 12; }
+  .review-card {
+    padding: 28px 22px 24px;
+    gap: 16px;
+  }
+  .span-4,
+  .span-5,
+  .span-7,
+  .span-8 {
+    grid-column: span 12;
+  }
 }

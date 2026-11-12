@@ -44,12 +44,19 @@
       .board-wrap {
         background: rgba(255, 222, 121, 0.45);
         border-radius: 30px;
-        padding: 10px 20px 12px;
-        margin-bottom: 12px;
+        max-width: 660px;
+        padding: 10px 24px 12px;
+        margin: 0 auto 12px;
       }
 
-      .sub-lead {
+      .sub-lead-row {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
         margin: 0 0 12px 17px;
+      }
+      .sub-lead {
+        margin: 0;
         font-family: "OkDanDan", "Pretendard", sans-serif;
         font-size: 24px;
         font-weight: 700;
@@ -60,14 +67,14 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        max-width: 610px;
+        max-width: 520px;
         margin: 0 auto 4px;
-        gap: 10px 70px;
+        gap: 10px 40px;
       }
 
       .flavor-card {
-        width: 100px;
-        height: 121px;
+        width: 95px;
+        height: 114.7px;
         cursor: pointer;
         position: relative;
         transition: transform 0.15s ease;
@@ -105,18 +112,15 @@
       .action-row {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 16px;
         padding: 6px 0;
-        position: relative;
+        margin-top: 20px;
       }
 
       .start-btn {
-        width: 200px;
-        height: 48px;
-        position: absolute;
-        top: 70%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        width: 220px;
+        height: 54px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -125,10 +129,11 @@
         border: none;
         border-radius: 999px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 700;
         cursor: pointer;
         transition: background 0.15s ease, opacity 0.15s ease;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
       }
       .start-btn:disabled {
         background: #c9c9b8;
@@ -139,7 +144,7 @@
       }
 
       .picked-hint {
-        margin-left: auto;
+        font-family: "OkDanDan", "Pretendard", sans-serif;
         font-size: 0.9rem;
         font-weight: 700;
         color: var(--green);

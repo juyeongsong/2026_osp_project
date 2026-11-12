@@ -203,14 +203,14 @@
 .review-list {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   margin-top: 14px;
 }
 
 .review-item {
   display: flex;
-  min-height: 118px;
-  padding: 10px 22px;
+  min-height: 110px;
+  padding: 6px 22px;
   border-radius: var(--review-radius);
   background: var(--review-cream);
 }
@@ -313,7 +313,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 36px;
+  margin-top: 22px;
 }
 
 .pagination__arrow {

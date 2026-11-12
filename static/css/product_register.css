@@ -19,7 +19,7 @@
       }
 
       .awning {
-        margin-bottom: 70px;
+        margin-bottom: 80px;
       }
 
       .page-subtitle {
@@ -28,28 +28,28 @@
         font-size: 20px;
         font-weight: 700;
         color: #6f7a63;
-        padding: 14px 16px 0;
+        padding: 4px 16px 0;
         margin: 0;
       }
 
       .form-wrap {
         width: 100%;
         max-width: 1440px;
-        margin: 32px auto 40px;
+        margin: 0 auto 10px;
         padding: 0 60px;
       }
 
       .field {
-        margin-bottom: 20px;
+        margin-bottom: 18px;
       }
 
       .field label {
         display: block;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 30px;
+        font-size: 23px;
         font-weight: 700;
         color: var(--green);
-        margin-bottom: 6px;
+        margin-bottom: 4px;
       }
       .field label .req {
         color: #d9534f;
@@ -63,16 +63,17 @@
       .field input[type="number"],
       .field select,
       .field textarea {
+        box-sizing: border-box;
         width: 100%;
-        height: 60px;
-        padding: 11px 14px;
+        height: 47px;
+        padding: 8px 13px;
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
         border: 1px solid var(--input-border);
         border-radius: 14px;
         font-family: "Inter", "Pretendard", sans-serif;
-        font-size: 25px;
+        font-size: 20px;
         color: var(--text);
         background: var(--input-bg);
         outline: none;
@@ -82,7 +83,7 @@
       .field input::placeholder,
       .field textarea::placeholder {
         font-family: "Inter", "Pretendard", sans-serif;
-        font-size: 25px;
+        font-size: 20px;
         color: rgba(0, 0, 0, 0.5);
       }
 
@@ -94,7 +95,7 @@
       }
 
       .field textarea {
-        height: 100px;
+        height: 77px;
         resize: vertical;
       }
 
@@ -102,7 +103,7 @@
         position: relative;
       }
       .price-row input {
-        padding-right: 48px;
+        padding-right: 44px;
       }
       .price-row input::-webkit-outer-spin-button,
       .price-row input::-webkit-inner-spin-button {
@@ -119,55 +120,47 @@
         transform: translateY(-50%);
         color: rgba(0, 0, 0, 0.5);
         font-family: "Inter", "Pretendard", sans-serif;
-        font-size: 25px;
+        font-size: 20px;
       }
 
       .four-col {
         display: flex;
+        justify-content: center;
+        gap: 18px;
       }
       .four-col .field {
-        flex: 0 0 292px;
-        width: 292px;
-        margin-bottom: 20px;
-      }
-      .four-col .field:nth-child(1) {
-        margin-right: 46px;
-      }
-      .four-col .field:nth-child(2) {
-        margin-right: 53px;
-      }
-      .four-col .field:nth-child(3) {
-        margin-right: 53px;
+        flex: 0 0 241px;
+        width: 241px;
+        margin-bottom: 12px;
       }
 
       .two-col {
         display: flex;
+        justify-content: center;
+        gap: 18px;
       }
       .two-col .field {
-        flex: 0 0 650px;
-        width: 650px;
-        margin-bottom: 20px;
-      }
-      .two-col .field:first-child {
-        margin-right: 38px;
+        flex: 0 0 500px;
+        width: 500px;
+        margin-bottom: 12px;
       }
 
       .status-group {
         display: flex;
         justify-content: center;
-        gap: 116px;
+        gap: 100px;
       }
       .status-pill {
-        flex: 0 0 240px;
-        width: 240px;
-        height: 70px;
+        flex: 0 0 150px;
+        width: 150px;
+        height: 42px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 999px;
         border: 1.5px solid var(--accent);
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 30px;
+        font-size: 19px;
         font-weight: 700;
         color: var(--green);
         cursor: pointer;
@@ -184,19 +177,21 @@
       }
       .status-field {
         text-align: center;
-        margin-bottom: 28px;
+        margin-bottom: 10px;
       }
       .status-field label.group-label {
         display: block;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 30px;
+        font-size: 26px;
         font-weight: 700;
         color: var(--green);
-        margin-bottom: 10px;
+        margin-bottom: 6px;
       }
 
       .upload-box {
-        height: 100px; /* Figma: 상품 사진 H:100, 상품 설명과 동일 높이로 맞춤 */
+        box-sizing: border-box;
+        width: 100%;
+        height: 77px; /* Figma 비율 유지, 상품 설명과 동일 높이로 축소 */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -205,7 +200,7 @@
         border-radius: 16px;
         background: rgba(255, 255, 255, 0.5);
         text-align: center;
-        padding: 10px 16px;
+        padding: 9px 14px;
         cursor: pointer;
         position: relative;
         overflow: hidden;
@@ -220,7 +215,7 @@
       }
       .upload-box .txt {
         font-family: "Inter", "Pretendard", sans-serif;
-        font-size: 25px;
+        font-size: 22px;
         color: rgba(0, 0, 0, 0.5);
         font-weight: 400;
       }
@@ -246,13 +241,13 @@
       .action-row {
         display: flex;
         justify-content: center;
-        gap: 59px;
-        margin-top: 70px;
+        gap: 50px;
+        margin-top: 20px;
       }
 
       .cancel-btn {
-        width: 180px;
-        height: 60px;
+        width: 155px;
+        height: 52px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -261,18 +256,19 @@
         border: 1.5px solid var(--accent);
         border-radius: 999px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 22px;
+        font-size: 19px;
         font-weight: 700;
         cursor: pointer;
         transition: background 0.15s ease;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.25), inset 4px 10px 30px 10px rgba(255, 255, 255, 0.3);
       }
       .cancel-btn:hover {
         background: var(--cream);
       }
 
       .submit-btn {
-        width: 180px;
-        height: 60px;
+        width: 155px;
+        height: 52px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -281,10 +277,11 @@
         border: none;
         border-radius: 999px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 22px;
+        font-size: 19px;
         font-weight: 700;
         cursor: pointer;
         transition: background 0.15s ease, transform 0.1s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
       }
       .submit-btn:hover {
         opacity: 0.88;
@@ -295,7 +292,7 @@
 
       .bottom-row {
         position: relative;
-        margin-top: 40px;
+        margin-top: 10px;
       }
       .contact-info {
         position: absolute;

@@ -7,12 +7,12 @@
 <h1 class="page-title">배송 정보 입력</h1>
 
 <div class="order-page">
-  <a class="back-link" href="/cart">
+  <a class="back-link" href="href="{{ request.referrer or '/cart' }}>
     <img
       src="{{ url_for('static', filename='images/review/arrow-left.svg') }}"
       alt=""
     />
-    상품으로 돌아가기
+    이전으로
   </a>
 
   <form class="order-body" action="/order_complete" method="post">

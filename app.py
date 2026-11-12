@@ -136,7 +136,7 @@ def register_user():
     ).hexdigest()
 
     if DB.insert_user(data, pw_hash):
-        return render_template("login.html")
+        return redirect(url_for("login"))
     else: 
         return render_template(
             "signup.html",

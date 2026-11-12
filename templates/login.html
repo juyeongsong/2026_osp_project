@@ -7,13 +7,16 @@
 <h2 class="page-title">로그인</h2>
 
 <div class="auth-container">
-  {% if error %}
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
   <script>
-    alert("{{ error }}");
+    alert("{{ messages[0] }}");
   </script>
   {% endif %}
+  {% endwith %}
 
-  <form class="auth-form" action="/login_post" method="post">
+ <form class="auth-form" action="/login_confirm" method="post">
+
     <div class="form-group">
       <label for="id">아이디</label>
       <input type="text" id="id" name="id" required />

@@ -8,7 +8,7 @@
 /* 내용 폭은 공통 section(최대 1100px)을 그대로 따라요 */
 .mypage {
   width: 100%;
-  padding: 54px 0 20px; /* 천막 아래로 (후기 목록과 같은 시작 높이) */
+  padding: 80px 0 20px; /* 천막 아래로 (후기 목록과 같은 시작 높이) */
   font-family: var(--review-font-body);
 }
 
@@ -69,7 +69,7 @@
   gap: 2px 18px;
   margin-top: 4px;
   font-size: 15px;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
 .profile__list dt {
@@ -92,7 +92,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   margin-top: 12px;
-  padding: 6px 0;
+  padding: 4px 0;
 }
 
 .delivery-summary li {
@@ -133,7 +133,7 @@
 
 /* ---------------- 3. 주문·배송 내역 ---------------- */
 .mypage-heading {
-  margin-top: 12px;
+  margin-top: 10px;
   color: var(--review-green);
   font-family: var(--review-font-display);
   font-size: 26px;
@@ -144,8 +144,8 @@
 /* 주문 영역 높이는 맛 3개 카드 기준으로 고정.
    카드는 내용만큼 늘고 줄고, 아래 페이지 번호는 늘 같은 자리에 있어요 */
 .order-list {
-  min-height: 222px;
-  margin-top: 8px;
+  min-height: 206px;
+  margin-top: 6px;
 }
 
 /* JS가 켜지기 전에는 첫 주문만 */
@@ -211,8 +211,8 @@
 }
 
 .order__items .bungeo {
-  flex: 0 0 42px;
-  width: 42px;
+  flex: 0 0 36px;
+  width: 36px;
 }
 
 .order__item-name {
@@ -240,7 +240,7 @@
 }
 
 .order__review {
-  padding: 8px 0;
+  padding: 5px 0;
   font-size: 14px;
   text-align: center;
 }
@@ -278,5 +278,5 @@
 
 /* 주문 페이지 번호: 후기 목록과 같은 모양 (review.css) */
 .mypage .pagination {
-  margin-top: 10px;
+  margin-top: 8px;
 }

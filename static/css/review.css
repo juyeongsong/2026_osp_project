@@ -99,7 +99,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  margin-top: 60px;
+  margin-top: 82px;
 }
 
 .flavor-filter {
@@ -159,14 +159,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 84px;
-  height: 54px;
+  width: 78px;
+  height: 50px;
   border-radius: var(--review-radius);
   background: var(--review-cream);
 }
 
 .flavor-chip .bungeo {
-  width: 58px;
+  width: 54px;
 }
 
 /* 맛을 하나 골랐을 때: 고른 버튼은 초록 실선, 나머지는 어둡게 */
@@ -185,16 +185,16 @@
   align-items: center;
   justify-content: center;
   width: 210px;
-  height: 58px;
+  height: 50px;
   margin-left: auto;
-  border-radius: 58px;
+  border-radius: 50px;
   background: var(--review-green);
   box-shadow:
     0 0 10px rgba(0, 0, 0, 0.25),
     inset 4px 10px 30px 10px rgba(255, 255, 255, 0.3);
   color: #ffffff;
   font-family: var(--review-font-display);
-  font-size: 32px;
+  font-size: 29px;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -204,7 +204,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
 .review-item {
@@ -240,7 +240,7 @@
 }
 
 .review-item__title {
-  margin-top: 4px;
+  margin-top: 2px;
   overflow: hidden;
   font-size: 20px;
   font-weight: 500;
@@ -250,7 +250,7 @@
 }
 
 .review-item__excerpt {
-  margin-top: 4px;
+  margin-top: 2px;
   overflow: hidden;
   font-size: 16px;
   line-height: 20px;
@@ -262,7 +262,7 @@
 .review-item__footer {
   display: flex;
   justify-content: space-between;
-  margin-top: 4px;
+  margin-top: 2px;
   font-size: 15px;
   line-height: 20px;
 }
@@ -313,7 +313,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 22px;
+  margin-top: 18px;
 }
 
 .pagination__arrow {
@@ -362,7 +362,7 @@
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  margin-top: 58px;
+  margin-top: 80px;
   color: var(--review-green);
   font-family: var(--review-font-display);
   font-size: 30px;

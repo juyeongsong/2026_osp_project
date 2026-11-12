@@ -195,5 +195,26 @@ function update(nextParams) {
   renderPagination();
 }
 
+/* ---------------- 4) 새로고침 없이 바꾸기 ----------------
+   맛·페이지 번호를 눌러도 페이지 전체를 다시 불러오지 않고 후기 부분만 바꿔요.
+   주소창 주소는 똑같이 바뀌어서 뒤로가기·주소 공유도 그대로 돼요.
+   (JS가 꺼져 있으면 원래대로 링크로 이동해요) */
+document.addEventListener('click', (event) => {
+  const link = event.target.closest('a.flavor-chip, .pagination a');
+  if (!link || !link.getAttribute('href')) return;
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return; // 새 탭 열기는 그대로
+  event.preventDefault();
+  const href = link.getAttribute('href');
+  history.pushState(null, '', href);
+  update(new URLSearchParams(href.split('?')[1] || ''));
+});
+
+// 뒤로가기·앞으로가기 할 때도 주소에 맞게 다시 그리기
+window.addEventListener('popstate', () => {
+  const next = new URLSearchParams(location.search);
+  start = (Number(next.get('start')) || 0) % flavorItems.length;
+  update(next);
+});
+
 document.querySelector('.flavor-filter__list').classList.add('is-ready');
 update(params);

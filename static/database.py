@@ -48,7 +48,7 @@ class DBhandler:
             return True
         
 
-        def get_status_overrides(self):
+    def get_status_overrides(self):
         data = self.db.child("product_status").get().val()
         return dict(data) if data else {}
 

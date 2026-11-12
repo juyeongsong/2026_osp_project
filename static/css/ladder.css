@@ -44,7 +44,7 @@
       .board-wrap {
         background: rgba(255, 222, 121, 0.45);
         border-radius: 30px;
-        padding: 10px 16px 12px;
+        padding: 10px 16px 6px;
         margin-bottom: 2px;
       }
 
@@ -134,7 +134,7 @@
         align-items: center;
         gap: 93.68px;
         margin-left: 469px;
-        margin-top: -12px;
+        margin-top: -2px;
         padding-bottom: 6px;
       }
 
@@ -189,5 +189,5 @@
         font-size: 20px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
         color: #8a9e8e;
-        padding-bottom: 4px;
+        padding-bottom: 0px;
       } /* 글자 크기 = 상품 등록 .page-subtitle과 동일 */

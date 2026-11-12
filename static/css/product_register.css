@@ -19,7 +19,7 @@
       }
 
       .awning {
-        margin-bottom: 36px;
+        margin-bottom: 70px;
       }
 
       .page-subtitle {
@@ -28,19 +28,19 @@
         font-size: 16px;
         font-weight: 700;
         color: #6f7a63;
-        padding: 8px 16px 0;
+        padding: 14px 16px 0;
         margin: 0;
       }
 
       .form-wrap {
         width: 100%;
         max-width: 1440px;
-        margin: 16px auto 20px;
+        margin: 16px auto 4px;
         padding: 0 60px;
       }
 
       .field {
-        margin-bottom: 12px;
+        margin-bottom: 8px;
       }
 
       .field label {
@@ -94,7 +94,7 @@
       }
 
       .field textarea {
-        height: 60px;
+        height: 80px;
         resize: vertical;
       }
 
@@ -123,7 +123,7 @@
       }
 
       .four-col {
-        display: flex;
+        display: flex; justify-content: center;
       }
       .four-col .field {
         flex: 0 0 250px;
@@ -131,25 +131,25 @@
         margin-bottom: 12px;
       }
       .four-col .field:nth-child(1) {
-        margin-right: 38px;
+        margin-right: 42px;
       }
       .four-col .field:nth-child(2) {
-        margin-right: 44px;
+        margin-right: 42px;
       }
       .four-col .field:nth-child(3) {
-        margin-right: 44px;
+        margin-right: 42px;
       }
 
       .two-col {
-        display: flex;
+        display: flex; justify-content: center;
       }
       .two-col .field {
-        flex: 0 0 560px;
-        width: 560px;
+        flex: 0 0 542px;
+        width: 542px;
         margin-bottom: 12px;
       }
       .two-col .field:first-child {
-        margin-right: 30px;
+        margin-right: 42px;
       }
 
       .status-group {
@@ -184,7 +184,8 @@
       }
       .status-field {
         text-align: center;
-        margin-bottom: 18px;
+        margin-top: 10px;
+        margin-bottom: 8px;
       }
       .status-field label.group-label {
         display: block;
@@ -196,7 +197,7 @@
       }
 
       .upload-box {
-        height: 70px; /* Figma: 상품 사진 H:100, 상품 설명과 동일 높이로 맞춤 → 전체 축소에 맞춰 70px로 조정 */
+        height: 80px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -247,7 +248,7 @@
         display: flex;
         justify-content: center;
         gap: 40px;
-        margin-top: 36px;
+        margin-top: 16px;
       }
 
       .cancel-btn {
@@ -295,7 +296,7 @@
 
       .bottom-row {
         position: relative;
-        margin-top: 24px;
+        margin-top: 8px;
       }
       .contact-info {
         position: absolute;

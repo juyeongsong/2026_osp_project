@@ -21,7 +21,7 @@
         margin-bottom: 70px;
       }
       .body-area {
-        padding: 28px 48px 10px;
+        padding: 10px 48px 4px;
       }
 
       .lead {
@@ -30,22 +30,22 @@
         gap: 16px;
         margin-left: 4px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 50px;
+        font-size: 30px;
         font-weight: 700;
         color: var(--line);
-        margin-bottom: 18px;
+        margin-bottom: 6px;
       }
       .lead .fish {
-        width: 74px;
-        height: 59.11px;
+        width: 54px;
+        height: 43px;
         display: block;
       }
 
       .board-wrap {
         background: rgba(255, 222, 121, 0.45);
         border-radius: 30px;
-        padding: 20px 18px 24px;
-        margin-bottom: 20px;
+        padding: 10px 16px 12px;
+        margin-bottom: 8px;
       }
 
       .start-row,
@@ -87,7 +87,7 @@
 
       svg {
         display: block;
-        margin: 8px 0;
+        margin: 2px 0;
         width: 100%;
         height: auto;
       }
@@ -104,8 +104,8 @@
       }
 
       .flavor-card-mini {
-        width: 140px;
-        height: 170px;
+        width: 82px;
+        height: 99px;
         text-align: center;
       }
       .card-mini-img {
@@ -121,8 +121,8 @@
       }
 
       .result-box {
-        margin-top: 16px;
-        min-height: 30px;
+        margin-top: 4px;
+        min-height: 18px;
         text-align: center;
         font-size: 1.1rem;
         font-weight: 800;
@@ -134,12 +134,12 @@
         align-items: center;
         gap: 93.68px;
         margin-left: 469px;
-        padding-bottom: 20px;
+        padding-bottom: 6px;
       }
 
       .ladder-btn {
         width: 156px;
-        height: 60px;
+        height: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -148,7 +148,7 @@
         border: none;
         border-radius: 50px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 22px;
+        font-size: 18px;
         font-weight: 700;
         cursor: pointer;
         transition: background 0.15s ease;
@@ -164,7 +164,7 @@
 
       .reagain-btn {
         width: 156px;
-        height: 60px;
+        height: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -173,7 +173,7 @@
         border: none;
         border-radius: 50px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 22px;
+        font-size: 18px;
         font-weight: 700;
         cursor: pointer;
       }
@@ -186,5 +186,5 @@
         font-size: 20px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
         color: #8a9e8e;
-        padding-bottom: 14px;
+        padding-bottom: 4px;
       } /* 글자 크기 = 상품 등록 .page-subtitle과 동일 */

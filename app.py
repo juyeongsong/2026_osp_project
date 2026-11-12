@@ -156,10 +156,6 @@ def check_id():
         "available": available
     })
 
-@app.route("/list")
-def view_list():
-    return render_template("list.html")
-
 @app.route("/review")
 def view_review():
     return render_template("review.html")

@@ -1,0 +1,56 @@
+{% extends "index.html" %} {% block section %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/order.css') }}"
+/>
+
+<h1 class="page-title">결제 완료</h1>
+
+<div class="order-page complete">
+  <div class="complete-card">
+    <span class="complete-card__icon" aria-hidden="true"></span>
+    <h2 class="complete-card__title">주문이 완료됐어요!</h2>
+    <p class="complete-card__desc">
+      따끈한 붕어빵이 곧 출발해요. 배송 현황은 마이페이지에서 볼 수 있어요.
+    </p>
+
+    <hr class="divider" />
+    <dl class="order-info">
+      <div>
+        <dt>주문번호</dt>
+        <dd>{{ order.id }}</dd>
+      </div>
+      <div>
+        <dt>결제 일시</dt>
+        <dd>{{ order.paid_at }}</dd>
+      </div>
+      <div>
+        <dt>받는 분</dt>
+        <dd>{{ order.receiver }} · {{ order.phone }}</dd>
+      </div>
+      <div>
+        <dt>배송지</dt>
+        <dd>{{ order.address }}</dd>
+      </div>
+      <div>
+        <dt>주문 상품</dt>
+        <dd>
+          {% for item in order.products %}{{ item.name }} × {{ item.qty }}{% if
+          not loop.last %}, {% endif %}{% endfor %}
+        </dd>
+      </div>
+    </dl>
+    <hr class="divider" />
+
+    <dl class="price-row price-row--total">
+      <dt>총 결제 금액</dt>
+      <dd>{{ "{:,}".format(order.total) }}원</dd>
+    </dl>
+  </div>
+
+  <div class="complete-actions">
+    <a href="/mypage" class="btn btn-big btn-big--white">주문 내역 보기</a>
+    <a href="/list" class="btn btn-big btn-big--green">쇼핑 계속하기</a>
+  </div>
+</div>
+{% endblock section %}

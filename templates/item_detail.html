@@ -56,8 +56,13 @@
     <div class="detail-body">
       <!-- 왼쪽: 그림 + 후기 보기 -->
       <div class="detail-media">
-        <div class="detail-media__img">
+        <div class="detail-media__img" id="media-img">
           {{ m.bungeo_img(item) }}
+          {% if is_admin %}
+          <!-- [관리자] 수정 모드에서 그림을 클릭하면 파일 선택 창이 열림 → static/item_detail.js -->
+          <span class="img-hint edit-only" aria-hidden="true">클릭해서 사진 바꾸기</span>
+          <input type="file" id="img-input" class="img-input" accept="image/*" aria-label="상품 사진 바꾸기" />
+          {% endif %}
         </div>
         <a class="review-link" href="{{ url_for('view_review', item=item.name) }}">후기 보기</a>
       </div>

@@ -8,6 +8,10 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+   <link
+     rel="stylesheet"
+     href="{{ url_for('static', filename='css/header_nav.css') }}"
+     />
     <script src="{{ url_for('static', filename='main.js') }}" defer></script>
   </head>
 
@@ -25,10 +29,12 @@
         <div class="awning_piece"></div>
       </div>
 
+      <a href="{{ url_for('view_mypage') }}" class="my-btn">MY</a>
+
       <div class="site-logo">
         <a href="/">
           <img
-            src="{{url_for('static', filename='images/logo.png')}}"
+            src="{{url_for('static', filename='images/logo2.png')}}"
             alt="이화붕어빵"
           />
         </a>

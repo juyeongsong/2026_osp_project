@@ -2,13 +2,13 @@
    마이페이지 전용 스타일 - 조소연
    공통(천막, 로고, 홈·장바구니 아이콘, 푸터, .btn)은 style.css,
    제목(.page-title), 붕어빵 그림, 프로필 동그라미, 페이지 번호는 review.css를 같이 써요.
-   Figma 화면(1440×1024) 한 장에 들어가도록 구성했어요.
+   노트북 화면(1440×750)에서 스크롤 없이 페이지 번호까지 보이도록 맞췄어요.
    ========================================================= */
 
 /* 내용 폭은 공통 section(최대 1100px)을 그대로 따라요 */
 .mypage {
   width: 100%;
-  padding: 70px 0 20px; /* 천막 아래로 (후기 목록과 같은 시작 높이) */
+  padding: 80px 0 20px; /* 천막 아래로 (후기 목록과 같은 시작 높이) */
   font-family: var(--review-font-body);
 }
 
@@ -27,22 +27,22 @@
 .profile {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 22px 36px;
+  gap: 20px;
+  padding: 10px 30px;
 }
 
 /* 큰 프로필 동그라미 */
 .avatar--lg {
-  flex: 0 0 80px;
-  width: 80px;
-  height: 80px;
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
 }
 
 .avatar--lg img {
-  top: 16px;
-  left: 10px;
-  width: 62px;
-  height: 50px;
+  top: 13px;
+  left: 8px;
+  width: 49px;
+  height: 39px;
 }
 
 .profile__info {
@@ -51,13 +51,14 @@
 }
 
 .profile__name {
-  font-size: 28px;
+  font-size: 22px;
+  line-height: 1.3;
   font-weight: 500;
 }
 
 .profile__name small {
   margin-left: 8px;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 400;
   color: var(--review-text-sub);
 }
@@ -65,9 +66,10 @@
 .profile__list {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 4px 20px;
-  margin-top: 8px;
-  font-size: 17px;
+  gap: 2px 18px;
+  margin-top: 4px;
+  font-size: 15px;
+  line-height: 1.4;
 }
 
 .profile__list dt {
@@ -89,8 +91,8 @@
 .delivery-summary {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin-top: 16px;
-  padding: 14px 0;
+  margin-top: 12px;
+  padding: 4px 0;
 }
 
 .delivery-summary li {
@@ -114,9 +116,9 @@
 .delivery-summary__count {
   display: block;
   color: var(--review-green);
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .delivery-summary__count.is-zero {
@@ -124,24 +126,26 @@
 }
 
 .delivery-summary__label {
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 1.4;
   color: var(--review-text-sub);
 }
 
 /* ---------------- 3. 주문·배송 내역 ---------------- */
 .mypage-heading {
-  margin-top: 26px;
+  margin-top: 10px;
   color: var(--review-green);
   font-family: var(--review-font-display);
-  font-size: 34px;
+  font-size: 26px;
+  line-height: 1.2;
   font-weight: 700;
 }
 
 /* 주문 영역 높이는 맛 3개 카드 기준으로 고정.
    카드는 내용만큼 늘고 줄고, 아래 페이지 번호는 늘 같은 자리에 있어요 */
 .order-list {
-  min-height: 295px;
-  margin-top: 10px;
+  min-height: 206px;
+  margin-top: 6px;
 }
 
 /* JS가 켜지기 전에는 첫 주문만 */
@@ -158,33 +162,33 @@
 }
 
 .order {
-  padding: 18px 32px;
+  padding: 12px 28px;
 }
 
 .order__head {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
   border-bottom: 1px dashed rgba(0, 100, 15, 0.3);
 }
 
 .order__date {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 500;
 }
 
 .order__number {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--review-text-sub);
 }
 
 /* 배송 상태 표시 */
 .status {
   margin-left: auto;
-  padding: 5px 16px;
+  padding: 3px 14px;
   border-radius: 999px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -199,7 +203,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 7px 0;
+  padding: 3px 0;
 }
 
 .order__items li + li {
@@ -207,14 +211,14 @@
 }
 
 .order__items .bungeo {
-  flex: 0 0 54px;
-  width: 54px;
+  flex: 0 0 36px;
+  width: 36px;
 }
 
 .order__item-name {
   flex: 1;
   min-width: 0;
-  font-size: 19px;
+  font-size: 16px;
 }
 
 .order__item-qty {
@@ -224,7 +228,7 @@
 
 .order__item-price {
   min-width: 80px;
-  font-size: 17px;
+  font-size: 15px;
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
@@ -236,7 +240,7 @@
 }
 
 .order__review {
-  padding: 8px 0;
+  padding: 5px 0;
   font-size: 14px;
   text-align: center;
 }
@@ -252,9 +256,10 @@
   justify-content: space-between;
   align-items: baseline;
   gap: 8px 24px;
-  padding-top: 10px;
+  padding-top: 8px;
   border-top: 1px dashed rgba(0, 100, 15, 0.3);
-  font-size: 15px;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 .order__address {
@@ -268,10 +273,10 @@
 .order__total strong {
   margin-left: 8px;
   color: var(--review-green);
-  font-size: 22px;
+  font-size: 18px;
 }
 
 /* 주문 페이지 번호: 후기 목록과 같은 모양 (review.css) */
 .mypage .pagination {
-  margin-top: 16px;
+  margin-top: 8px;
 }

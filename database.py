@@ -75,7 +75,8 @@ class DBhandler:
         user_info = {
             "id": data['id'],
             "pw": pw,
-            "nickname": data['nickname']
+            "email": data['email'],
+            "phnum": data.get('phnum', '')
         }
         if self.user_duplicate_check(str(data['id'])):
             self.db.child("user").push(user_info)
@@ -92,7 +93,7 @@ class DBhandler:
             for res in users.each():
                 value = res.val()
                     
-                if value['id'] == id_string:
+                if value.get('id') == id_string:
                     return False
                 
             return True
@@ -106,7 +107,7 @@ class DBhandler:
         for res in users.each():
             value = res.val()
 
-            if value["id"] == id_string:
+            if value.get('id') == id_string:
                 return value
             
         return None

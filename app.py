@@ -4,6 +4,10 @@ import hashlib
 
 from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify, abort
 from database import DBhandler, to_int
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
+from database import DBhandler
+from datetime import datetime
+import uuid
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "helloosp"
@@ -16,6 +20,7 @@ ADMIN_IDS = {"admin"} #관리자 아이디
 PER_PAGE = 6
 
 STATUS_LIST = ["판매중", "준비중", "품절"]
+ALLOWED_IMG_EXT = {"png", "jpg", "jpeg", "gif", "webp"}
 
 def is_admin():
     return session.get("id") in ADMIN_IDS
@@ -50,7 +55,8 @@ def update_item(name):
     if not is_admin():
         abort(403)
 
-    data = request.get_json(silent=True) or {}
+    # 사진이 있으면 FormData(request.form), 없으면 JSON 둘 다 받을 수 있게
+    data = request.get_json(silent=True) or request.form
     new_name = (data.get("name") or "").strip() or name
     status = data.get("status")
     if status not in STATUS_LIST:
@@ -61,6 +67,18 @@ def update_item(name):
         "price": to_int(data.get("price")),
         "status": status,
     }
+
+    # 새 사진이 올라왔으면 static/images에 저장하고 경로 교체
+    image_file = request.files.get("img")
+    if image_file and image_file.filename:
+        ext = image_file.filename.rsplit(".", 1)[-1].lower() if "." in image_file.filename else ""
+        if ext not in ALLOWED_IMG_EXT:
+            return jsonify({"ok": False, "message": "png, jpg, gif, webp 사진만 올릴 수 있어요."}), 400
+        # 한글 파일명·같은 이름 덮어쓰기를 피하려고 랜덤 이름으로 저장
+        filename = f"item_{uuid.uuid4().hex[:12]}.{ext}"
+        image_file.save(os.path.join(UPLOAD_DIR, filename))
+        fields["img_path"] = filename
+
     result = DB.update_item(name, fields, new_name)
 
     if result == "not_found":
@@ -136,7 +154,7 @@ def register_user():
     ).hexdigest()
 
     if DB.insert_user(data, pw_hash):
-        return render_template("login.html")
+        return redirect(url_for("login"))
     else: 
         return render_template(
             "signup.html",
@@ -152,10 +170,6 @@ def check_id():
     return jsonify({
         "available": available
     })
-
-@app.route("/list")
-def view_list():
-    return render_template("list.html")
 
 @app.route("/review")
 def view_review():
@@ -189,6 +203,12 @@ def view_taste_select():
 def view_ladder():
     return render_template("ladder.html")
     
+# 레이아웃 확인용 임시 데이터 (제출 후 기능 연결되면 삭제)
+SAMPLE_CART_ITEMS = [
+    {"name": "피자 붕어빵", "price": 1000, "qty": 1, "image": "pizza.png"},
+    {"name": "말차 붕어빵", "price": 500, "qty": 3, "image": "matcha.png"},
+]
+
 @app.route("/cart")
 def view_cart():
     items = []
@@ -201,7 +221,10 @@ def view_cart():
                 "qty": qty,
                 "image": item.get("img_path") or "",
             })
-    return render_template("cart.html", items=items, fee=1500 if items else 0)
+    # 담은 상품이 없으면 임시 데이터로 레이아웃을 보여 줌
+    if not items:
+        items = SAMPLE_CART_ITEMS
+    return render_template("cart.html", items=items, fee=1500)
 
 @app.route("/submit_item_post", methods=["POST"])
 def reg_item_submit_post():
@@ -211,6 +234,31 @@ def reg_item_submit_post():
     DB.insert_item(data['name'], data, image_file.filename)
     return render_template("result.html", data=data,
                            img_path="images/" + image_file.filename)
+
+# 주문·결제 임시 데이터 (시안과 동일). 나중에 DB 연동 시 교체
+ORDER_ITEMS = [
+    {"name": "피자 붕어빵", "price": 1000, "qty": 1, "image": "pizza.png"},
+]
+ORDER_FEE = 1500
+
+@app.route("/order")
+def view_order():
+    return render_template("order.html", items=ORDER_ITEMS, fee=ORDER_FEE)
+
+@app.route("/order_complete", methods=["POST"])
+def order_complete():
+    now = datetime.now()
+    form = request.form
+    order = {
+        "id": now.strftime("%Y%m%d") + "-0042",
+        "paid_at": now.strftime("%Y.%m.%d %H:%M"),
+        "receiver": form.get("receiver", ""),
+        "phone": form.get("phone", ""),
+        "address": f'{form.get("address1", "")} {form.get("address2", "")}'.strip(),
+        "products": ORDER_ITEMS,  # "items"라고 쓰면 Jinja에서 dict.items()랑 겹쳐서 에러 남
+        "total": sum(i["price"] * i["qty"] for i in ORDER_ITEMS) + ORDER_FEE,
+    }
+    return render_template("order_complete.html", order=order)
 
 if __name__ == "__main__":
     app.run(debug=True)

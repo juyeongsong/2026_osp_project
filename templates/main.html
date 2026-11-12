@@ -19,6 +19,8 @@
     <p class="menu-auth">
       {% if user_id %}
       <a href="{{ url_for('logout') }}">로그아웃</a>
+      <span class="menu-auth__bar" aria-hidden="true"></span>
+      <a href="{{ url_for('view_mypage') }}">마이페이지</a>
       {% else %}
       <a href="{{ url_for('signup') }}">회원가입</a>
       <span class="menu-auth__bar" aria-hidden="true"></span>

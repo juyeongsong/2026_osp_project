@@ -21,7 +21,7 @@
         margin-bottom: 70px;
       }
       .body-area {
-        padding: 28px 48px 10px;
+        padding: 8px 48px 4px;
       }
 
       .lead {
@@ -30,30 +30,28 @@
         gap: 16px;
         margin-left: 4px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 50px;
+        font-size: 30px;
         font-weight: 700;
         color: var(--line);
-        margin-bottom: 18px;
+        margin-bottom: 6px;
       }
       .lead .fish {
-        width: 74px;
-        height: 59.11px;
+        width: 54px;
+        height: 43px;
         display: block;
       }
 
       .board-wrap {
-        width: 1135px;
-        margin-left: 66px;
         background: rgba(255, 222, 121, 0.45);
         border-radius: 30px;
-        padding: 24px 24px 28px;
-        margin-bottom: 20px;
+        padding: 10px 20px 12px;
+        margin-bottom: 12px;
       }
 
       .sub-lead {
-        margin: 0 0 20px 17px;
+        margin: 0 0 12px 17px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 30px;
+        font-size: 24px;
         font-weight: 700;
         color: var(--line);
       }
@@ -62,13 +60,14 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 31px 168px;
-        margin-bottom: 4px;
+        max-width: 610px;
+        margin: 0 auto 4px;
+        gap: 10px 70px;
       }
 
       .flavor-card {
-        width: 140px;
-        height: 169px;
+        width: 100px;
+        height: 121px;
         cursor: pointer;
         position: relative;
         transition: transform 0.15s ease;
@@ -97,10 +96,9 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0, 0, 0, 0.1);
-        clip-path: path(
-          "M58.7824 166.645C65.0343 168.82 71.8302 168.867 78.1114 166.778L119.47 153.019C131.729 148.941 140 137.473 140 124.553V30C140 13.4314 126.569 0 110 0H30C13.4315 0 0 13.4315 0 30V124.865C0 137.633 8.0816 149.002 20.1405 153.198L58.7824 166.645Z"
-        );
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='169' viewBox='0 0 140 169'%3E%3Cpath d='M58.7824 166.645C65.0343 168.82 71.8302 168.867 78.1114 166.778L119.47 153.019C131.729 148.941 140 137.473 140 124.553V30C140 13.4314 126.569 0 110 0H30C13.4315 0 0 13.4315 0 30V124.865C0 137.633 8.0816 149.002 20.1405 153.198L58.7824 166.645Z' fill='%23000000' fill-opacity='0.1'/%3E%3C/svg%3E");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
         pointer-events: none;
       }
 
@@ -108,13 +106,17 @@
         display: flex;
         align-items: center;
         gap: 16px;
-        padding: 20px 0;
+        padding: 6px 0;
+        position: relative;
       }
 
       .start-btn {
-        width: 260px;
-        height: 60px;
-        margin-left: 490px;
+        width: 200px;
+        height: 48px;
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -123,7 +125,7 @@
         border: none;
         border-radius: 999px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 22px;
+        font-size: 18px;
         font-weight: 700;
         cursor: pointer;
         transition: background 0.15s ease, opacity 0.15s ease;

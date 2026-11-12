@@ -1,5 +1,3 @@
-
-
 class _FakeQuery:
     def set(self, value):
         return True

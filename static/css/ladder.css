@@ -97,7 +97,7 @@
         fill: none;
       }
       .highlight-line {
-        stroke: var(--green);
+        stroke: #ffcc00;
         stroke-width: 5;
         stroke-linecap: round;
         fill: none;
@@ -138,8 +138,8 @@
       }
 
       .ladder-btn {
-        width: 156px;
-        height: 44px;
+        width: 180px;
+        height: 52px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -148,10 +148,11 @@
         border: none;
         border-radius: 50px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 700;
         cursor: pointer;
         transition: background 0.15s ease;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
       }
       .ladder-btn:hover {
         background: var(--green);
@@ -163,8 +164,8 @@
       }
 
       .reagain-btn {
-        width: 156px;
-        height: 44px;
+        width: 180px;
+        height: 52px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -173,9 +174,10 @@
         border: none;
         border-radius: 50px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 700;
         cursor: pointer;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3), inset 4px 10px 30px 10px rgba(255, 255, 255, 0.3);
       }
       .reagain-btn:hover {
         background: var(--cream);

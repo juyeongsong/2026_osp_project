@@ -66,7 +66,10 @@
           />뭐 먹을지 고민이 될 땐, 사다리를 타보세요~
         </div>
         <div class="board-wrap">
-          <p class="sub-lead">원하는 붕어빵 맛 6개를 선택하세요</p>
+          <div class="sub-lead-row">
+            <p class="sub-lead">원하는 붕어빵 맛 6개를 선택하세요</p>
+            <div class="picked-hint" id="pickedHint"></div>
+          </div>
           <div class="flavor-grid" id="flavorGrid"></div>
         </div>
 
@@ -74,7 +77,6 @@
           <button class="start-btn" id="startBtn" disabled>
             사다리 타러 가기 →
           </button>
-          <div class="picked-hint" id="pickedHint"></div>
         </div>
       </div>
     </section>
@@ -167,7 +169,7 @@
 
     const count = pickedFlavors.size;
     startBtn.disabled = count !== REQUIRED;
-    pickedHint.textContent = `${count} / ${REQUIRED}개 선택됨`;
+    pickedHint.textContent = `(${count} / ${REQUIRED}개 선택됨)`;
   }
 
  startBtn.addEventListener("click", () => {

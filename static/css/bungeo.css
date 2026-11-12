@@ -44,7 +44,24 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 }
 .btn--primary:disabled { opacity: 0.45; cursor: not-allowed; }
-.btn--wide { width: 100%; padding: 16px 0; font-size: 22px; }
+/* 큰 알약 버튼: 배송 정보 입력 페이지의 결제하기(.btn-big/.btn-pay)와 동일 */
+.btn-big {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 83px;
+  padding: 0 20px;
+  border-radius: 50px;
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.btn-big--green {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25),
+    inset 4px 10px 30px 10px rgba(255, 255, 255, 0.3);
+}
+.btn-pay { width: 100%; height: 66px; font-size: 36px; }
 
 .btn:focus-visible,
 .check:focus-visible,
@@ -181,8 +198,8 @@
 
 .cart__body {
   display: grid;
-  grid-template-columns: minmax(0, 1.85fr) minmax(240px, 1fr);
-  gap: 26px;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
   align-items: start;
   margin-top: 16px;
 }
@@ -207,15 +224,15 @@
 
 .cart__list {
   background: var(--cream);
-  border-radius: 26px;
-  padding: 32px 16px 32px 28px;
+  border-radius: 24px;
+  padding: 24px 16px 24px 26px;
 }
 /* 상품이 많아지면 이 영역 안에서만 스크롤 (오른쪽 막대기).
    max-height는 상품 카드 2개가 보이는 높이 기준 */
 .cart__scroll {
   max-height: 296px;
   overflow-y: auto;
-  padding-right: 20px;
+  padding-right: 12px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -302,50 +319,53 @@
 .cart__empty { text-align: center; color: var(--gray-text); }
 .cart__empty[hidden] { display: none; }
 
-/* 주문예상금액 */
+/* 주문예상금액: 배송 정보 입력 페이지의 .order-card / .order-summary와 같은 스타일 (그림자 없음) */
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 .summary__card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px 26px;
   background: var(--cream);
-  border-radius: 22px;
-  padding: 22px 22px 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 24px;
 }
 .summary__title {
-  margin-bottom: 16px;
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 400;
   color: var(--green);
 }
 .summary__list {
   list-style: none;
-  padding-bottom: 24px;
-  min-height: 90px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-.summary__list li { display: flex; align-items: baseline; font-size: 14px; }
+.summary__list li { display: flex; align-items: baseline; font-size: 15px; }
 .summary__list .summary__qty { margin-left: 8px; color: var(--gray-text); }
-.summary__list .summary__amount { margin-left: auto; }
+.summary__list .summary__amount { margin-left: auto; font-weight: 500; }
 
 .summary__row {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
+  font-size: 14px;
 }
 .summary__row--fee {
   padding: 14px 0;
-  border-top: 2px dotted #1d1d1d;
-  border-bottom: 2px dotted #1d1d1d;
-  font-size: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
-.summary__row--total { padding-top: 14px; }
-.summary__row--total dt { font-family: var(--font-display); font-size: 20px; }
+.summary__row--fee dt { color: rgba(0, 0, 0, 0.5); }
+.summary__row--total dt { font-size: 18px; font-weight: 600; color: #000; }
 .summary__row--total dd {
-  font: 700 22px "Inter", sans-serif; /* okdandan은 숫자 0이 네모로 보여서 일반 폰트 사용 */
+  font: 700 21px "Inter", sans-serif; /* okdandan은 숫자 0이 네모로 보여서 일반 폰트 사용 */
   color: var(--green);
 }
-.summary .btn--wide { margin-top: 22px; }
 
 /* ===== 반응형 ===== */
 @media (max-width: 860px) {

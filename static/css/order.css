@@ -1,6 +1,4 @@
-/* ===== 주문·결제 (배송 정보 입력 / 결제 완료) 전용 스타일 =====
-   공용 style.css(차양 헤더, body, footer, .btn, input)는 그대로 쓰고,
-   이 파일은 두 페이지 안쪽만 담당합니다. */
+/*  주문·결제 (배송 정보 입력 / 결제 완료) */
 :root {
   --green: #00640f;
   --cream: #fbffe5;
@@ -9,7 +7,6 @@
   --font-display: "okdandan", sans-serif;
 }
 
-/* 차양이 아래로 튀어나온 만큼 본문을 내려 줌 */
 .order-page {
   max-width: 920px;
   margin: 0 auto;
@@ -30,7 +27,6 @@
   height: 26px;
 }
 
-/* ===== 2단 레이아웃 (배송지 : 주문 요약 340) ===== */
 .order-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 340px;
@@ -39,7 +35,6 @@
   margin-top: 16px;
 }
 
-/* ===== 카드 공통 ===== */
 .order-card {
   display: flex;
   flex-direction: column;
@@ -60,7 +55,6 @@
   color: var(--green);
 }
 
-/* 테두리만 있는 버튼 (기본 배송지 불러오기) */
 .btn--outline {
   padding: 6px 16px;
   border: 2px solid var(--green);
@@ -73,7 +67,6 @@
   color: #fff;
 }
 
-/* ===== 입력 폼 ===== */
 .field-row {
   display: flex;
   gap: 12px;
@@ -209,7 +202,6 @@ select.order-input {
   background: var(--line);
 }
 
-/* 금액 행 (okdandan은 숫자 0이 네모로 보여서 금액은 Inter 사용) */
 .price-row {
   display: flex;
   align-items: center;
@@ -229,7 +221,7 @@ select.order-input {
   font-weight: 700;
   color: var(--green);
 }
-/* 배송 정보 입력 페이지의 금액 행만 작게 (결제 완료 페이지는 그대로) */
+
 .order-summary .price-row {
   font-size: 14px;
 }

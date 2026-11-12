@@ -1,0 +1,19 @@
+/* ===== 메인 / 상품 상세 공용 스타일 ===== */
+:root {
+  --green: #00640f;
+  --cream: #fbffe5;
+  --board: #ffe681;
+  --coin: #f9cb00;
+  --font-display: "okdandan", sans-serif;
+}
+
+
+.header-icons .icon-btn:last-child img {
+  width: 90px;
+}
+
+.bungeo-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}

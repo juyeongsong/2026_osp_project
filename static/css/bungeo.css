@@ -22,9 +22,6 @@
   white-space: nowrap;
 }
 
-/* 장바구니 페이지에서만 헤더의 장바구니 아이콘 숨김 (후기 작성 페이지는 표시) */
-body:has(.page-body.cart) .header-icons .icon-btn:last-child { display: none; }
-
 /* 차양이 아래로 튀어나온 만큼 본문을 내려 줌 */
 .page-body { padding-top: 90px; }
 

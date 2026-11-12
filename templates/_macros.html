@@ -1,0 +1,9 @@
+{% macro status_key(status) -%}
+{{ {'판매중': 'on', '준비중': 'prep', '품절': 'out'}.get(status, 'prep') }}
+{%- endmacro %}
+
+{% macro bungeo_img(item) -%}
+<img class="bungeo-img"
+     src="{{ url_for('static', filename='images/' ~ (item.img_path or 'fish-base.png')) }}"
+     alt="{{ item.name }}" />
+{%- endmacro %}

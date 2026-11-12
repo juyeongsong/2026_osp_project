@@ -1,0 +1,115 @@
+{% extends "index.html" %}
+{% import "_macros.html" as m %}
+{% block section %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/shop_common.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/item_detail.css') }}" />
+
+<h1 class="page-title">상품 상세</h1>
+
+<div class="detail-wrap">
+  <!-- [사용자/관리자 공통] 목록으로 돌아가기 -->
+  <a class="back-link" href="{{ url_for('hello') }}">
+    <img src="{{ url_for('static', filename='images/review/arrow-left.svg') }}" alt="" />
+    <span>목록으로 돌아가기</span>
+  </a>
+
+  <article class="detail-card" id="detail-card"
+           data-name="{{ item.name }}"
+           data-unit-price="{{ item.price }}"
+           data-status="{{ item.status }}">
+
+    <!-- 판매 상태: 보기 모드에선 현재 상태 1개만, 수정 모드에선 3개 중 선택 -->
+    <div class="status-group" id="status-group">
+      {% for s in status_list %}
+      <button type="button"
+              class="status-pill{% if s == item.status %} is-selected{% endif %}"
+              data-status="{{ s }}" tabindex="-1">
+        <i class="status-pill__dot"></i>{{ s }}
+      </button>
+      {% endfor %}
+    </div>
+
+    {# [관리자 전용] 점 3개 메뉴 + 저장/취소 #}
+    {% if is_admin %}
+    <div class="admin-tools">
+      <button type="button" class="kebab view-only" id="kebab-btn" aria-label="관리 메뉴" aria-expanded="false">
+        <i></i><i></i><i></i>
+      </button>
+      <div class="edit-actions edit-only">
+        <button type="button" class="text-btn" id="cancel-btn">취소</button>
+        <button type="button" class="text-btn text-btn--strong" id="save-btn">저장</button>
+      </div>
+    </div>
+
+    <div class="kebab-menu" id="kebab-menu" hidden>
+      <button type="button" id="edit-btn">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 14l1-3.6 8-8 2.6 2.6-8 8L2 14zm9.6-11.4l1-1a1 1 0 011.4 0l1.2 1.2a1 1 0 010 1.4l-1 1-2.6-2.6z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        수정
+      </button>
+      <button type="button" id="delete-btn">
+        <span class="kebab-menu__x" aria-hidden="true">X</span>
+        삭제
+      </button>
+    </div>
+    {% endif %}
+
+    <div class="detail-body">
+      <!-- 왼쪽: 그림 + 후기 보기 -->
+      <div class="detail-media">
+        <div class="detail-media__img">
+          {{ m.bungeo_img(item) }}
+        </div>
+        <a class="review-link" href="{{ url_for('view_review', item=item.name) }}">후기 보기</a>
+      </div>
+
+      <!-- 오른쪽: 이름 / 설명 / 가격·수량 / 버튼 -->
+      <div class="detail-info">
+        <h2 class="detail-name view-only" id="name-view">{{ item.name }}</h2>
+        <p class="detail-desc view-only" id="desc-view">{{ item.desc }}</p>
+
+        {% if is_admin %}
+        <input type="text" class="edit-field edit-only edit-name" id="name-input"
+               value="{{ item.name }}" maxlength="30" aria-label="상품명" />
+        <textarea class="edit-field edit-only edit-desc" id="desc-input"
+                  rows="3" aria-label="상품 설명">{{ item.desc }}</textarea>
+        {% endif %}
+
+        <div class="price-row">
+          <!-- 수량을 바꾸면 이 값(단가 × 수량)이 같이 바뀜 → static/js/item_detail.js -->
+          <span class="price view-only" id="total-price">{{ "{:,}".format(item.price) }}원</span>
+          {% if is_admin %}
+          <span class="price-edit edit-only">
+            <input type="number" id="price-input" min="0" step="100" value="{{ item.price }}" aria-label="가격" />원
+          </span>
+          {% endif %}
+
+          <div class="qty">
+            <button type="button" class="qty__btn" id="qty-minus" aria-label="수량 줄이기">-</button>
+            <span class="qty__num" id="qty-num" aria-live="polite">1</span>
+            <button type="button" class="qty__btn" id="qty-plus" aria-label="수량 늘리기">+</button>
+          </div>
+        </div>
+
+        <div class="detail-buttons">
+          <button type="button" class="detail-btn detail-btn--ghost" id="cart-btn"
+                  {% if item.status != '판매중' %}disabled{% endif %}>장바구니</button>
+          <button type="button" class="detail-btn detail-btn--primary" id="buy-btn"
+                  {% if item.status != '판매중' %}disabled{% endif %}>구매하기</button>
+        </div>
+        {% if item.status != '판매중' %}
+        <p class="detail-notice view-only">지금은 {{ item.status }}이라 담을 수 없어요.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <p class="detail-seller">
+      <b>판매자 |</b> <b>{{ item.seller or '이화 붕어빵' }}</b>
+      <span>{{ item.addr or '서울특별시 서대문구 이화여대길52' }}</span>
+    </p>
+  </article>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="{{ url_for('static', filename='item_detail.js') }}" defer></script>
+{% endblock section %}

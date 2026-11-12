@@ -1,0 +1,401 @@
+.detail-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 100px auto 0; 
+}
+
+/* ----- 목록으로 돌아가기 ----- */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  color: var(--green);
+  font-family: var(--font-display);
+  font-size: 20px;
+}
+.back-link img {
+  height: 20px;
+  width: auto;
+}
+.back-link:hover span {
+  text-decoration: underline;
+}
+
+/* ----- 카드 ----- */
+.detail-card {
+  position: relative;
+  padding: 64px 40px 18px;
+  border-radius: 28px;
+  background: var(--cream);
+}
+.detail-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ----- 판매 상태 pill ----- */
+.status-group {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  gap: 6px;
+}
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px 6px 10px;
+  border-radius: 999px;
+  background: #8a8d7c;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 15px;
+  line-height: 1.2;
+  cursor: default;
+}
+.status-pill:hover {
+  background: #8a8d7c;
+}
+.status-pill__dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+}
+.status-pill.is-selected,
+.status-pill.is-selected:hover {
+  background: var(--green);
+}
+/* 보기 모드: 현재 상태만 / 수정 모드: 세 개 모두 클릭 가능 */
+.detail-card:not(.is-editing) .status-pill:not(.is-selected) {
+  display: none;
+}
+.detail-card.is-editing .status-pill {
+  cursor: pointer;
+}
+.detail-card.is-editing .status-pill:not(.is-selected):hover {
+  background: #6f7262;
+}
+
+/* ----- 왼쪽: 그림 ----- */
+.detail-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.detail-media__img {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 10px;
+  border-radius: 18px;
+}
+.detail-media .bungeo-img {
+  width: 100%;
+  max-width: 270px;
+}
+.detail-card.is-editing .detail-media__img {
+  background: #fff8c4;
+}
+.review-link {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: #555;
+  text-decoration: underline;
+}
+.review-link:hover {
+  color: var(--green);
+}
+
+/* ----- 오른쪽: 정보 ----- */
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-width: 0;
+  text-align: center;
+}
+.detail-name {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: normal;
+  line-height: 1.2;
+}
+.detail-desc {
+  font-family: var(--font-display);
+  font-size: 17px;
+  line-height: 1.7;
+  white-space: pre-line;
+  word-break: keep-all;
+}
+
+/* ----- 가격 + 수량 ----- */
+.price-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+.price {
+  min-width: 78px;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: right;
+}
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.qty__btn {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 50%;
+  background: #e4e7d2;
+  color: #000;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+}
+.qty__btn:hover {
+  background: #d3d7bd;
+}
+.qty__num {
+  display: grid;
+  place-items: center;
+  min-width: 40px;
+  height: 26px;
+  border-radius: 999px;
+  background: #fffce8;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.detail-buttons {
+  display: flex;
+  gap: 14px;
+}
+.detail-btn {
+  min-width: 110px;
+  padding: 12px 22px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+}
+.detail-btn--ghost {
+  background: #fff;
+  color: var(--green);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+.detail-btn--ghost:hover {
+  background: #eef0dc;
+}
+.detail-btn--primary {
+  background: radial-gradient(ellipse at 50% 35%, #2f8a3c 0%, var(--green) 75%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+.detail-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.detail-notice {
+  font-size: 13px;
+  color: #7d7d6a;
+}
+
+.detail-seller {
+  margin-top: 22px;
+  font-size: 11px;
+  color: #777;
+}
+.detail-seller b {
+  color: var(--green);
+}
+
+/* 관리자 전용 */
+.admin-tools {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+}
+
+/* 점 3개 */
+.kebab {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 8px;
+  background: transparent;
+}
+.kebab:hover,
+.kebab[aria-expanded="true"] {
+  background: #e4e7d2;
+}
+.kebab i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #111;
+}
+
+.kebab-menu {
+  position: absolute;
+  top: 12px;
+  left: calc(100% + 10px);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+}
+.kebab-menu[hidden] {
+  display: none;
+}
+.kebab-menu button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 2px;
+  border-radius: 0;
+  background: none;
+  color: #111;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+}
+.kebab-menu button:hover {
+  background: none;
+  color: var(--green);
+}
+.kebab-menu svg {
+  width: 12px;
+  height: 12px;
+}
+.kebab-menu__x {
+  width: 12px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.edit-actions {
+  gap: 14px;
+}
+.text-btn {
+  padding: 4px 2px;
+  border-radius: 0;
+  background: none;
+  color: #555;
+  font-size: 14px;
+  font-weight: 500;
+}
+.text-btn:hover {
+  background: none;
+  color: #000;
+}
+.text-btn--strong {
+  color: #000;
+  font-weight: 700;
+}
+
+.edit-only {
+  display: none;
+}
+.detail-card.is-editing .view-only {
+  display: none;
+}
+.detail-card.is-editing .edit-actions {
+  display: flex;
+}
+.detail-card.is-editing .edit-name,
+.detail-card.is-editing .edit-desc {
+  display: block;
+}
+.detail-card.is-editing .price-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.edit-field {
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  background: #fff8c4;
+  text-align: center;
+}
+.edit-name {
+  height: 54px;
+  font-family: var(--font-display);
+  font-size: 30px;
+}
+.edit-desc {
+  padding: 12px 14px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.6;
+  resize: none;
+}
+.price-edit input {
+  width: 100px;
+  height: 36px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 999px;
+  background: #fff8c4;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 40px;
+  z-index: 50;
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.82);
+  color: #fff;
+  font-size: 15px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 12px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toast.is-show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ===== 좁은 화면 ===== */
+@media (max-width: 760px) {
+  .detail-body {
+    grid-template-columns: 1fr;
+  }
+  .detail-card {
+    padding: 64px 22px 18px;
+  }
+  .kebab-menu {
+    left: auto;
+    right: 10px;
+    top: 52px;
+  }
+}

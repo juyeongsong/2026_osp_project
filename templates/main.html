@@ -1,0 +1,85 @@
+{% extends "index.html" %}
+{% import "_macros.html" as m %}
+{% block section %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/shop_common.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main_page.css') }}" />
+
+<div class="main-body">
+  <!-- 왼쪽: 메뉴 버튼 -->
+  <nav class="main-menu" aria-label="메뉴">
+    <a href="{{ url_for('view_taste_select') }}" class="menu-btn">오늘의 붕어빵은?</a>
+
+    {# [관리자 전용] 상품 등록하기 #}
+    {% if is_admin %}
+    <a href="{{ url_for('view_product_register') }}" class="menu-btn">상품 등록하기</a>
+    {% endif %}
+
+    <a href="{{ url_for('view_review') }}" class="menu-btn">후기 보기</a>
+
+    <p class="menu-auth">
+      {% if user_id %}
+      <a href="{{ url_for('logout') }}">로그아웃</a>
+      {% else %}
+      <a href="{{ url_for('signup') }}">회원가입</a>
+      <span class="menu-auth__bar" aria-hidden="true"></span>
+      <a href="{{ url_for('login') }}">로그인</a>
+      {% endif %}
+    </p>
+  </nav>
+
+  <!-- 오른쪽: 상품 목록 -->
+  <div class="main-board">
+    <ul class="menu-grid">
+      {% for item in items %}
+      {% set key = m.status_key(item.status) %}
+      <li>
+        <a class="menu-card menu-card--{{ key }}"
+           href="{{ url_for('view_item_detail', name=item.name) }}">
+          <span class="menu-card__shape">
+            <span class="status-tag status-tag--{{ key }}">
+              <i class="status-tag__dot"></i>{{ item.status }}
+            </span>
+
+            {{ m.bungeo_img(item) }}
+
+            <span class="menu-card__name">{{ item.name }}</span>
+            <span class="menu-card__price">{{ "{:,}".format(item.price) }}원</span>
+          </span>
+        </a>
+      </li>
+      {% else %}
+      <li class="menu-grid__empty">등록된 상품이 없어요.</li>
+      {% endfor %}
+    </ul>
+
+    <!-- 페이지 이동 -->
+    <nav class="pager" aria-label="페이지 이동">
+      {% if page > 1 %}
+      <a class="pager__arrow" href="{{ url_for('hello', page=page - 1) }}" aria-label="이전 페이지">
+        <img src="{{ url_for('static', filename='images/review/page-prev.svg') }}" alt="" />
+      </a>
+      {% else %}
+      <span class="pager__arrow is-disabled">
+        <img src="{{ url_for('static', filename='images/review/page-prev.svg') }}" alt="" />
+      </span>
+      {% endif %}
+
+      {% for p in range(1, total_pages + 1) %}
+      <a class="pager__num{% if p == page %} is-current{% endif %}"
+         href="{{ url_for('hello', page=p) }}"
+         {% if p == page %}aria-current="page"{% endif %}>{{ p }}</a>
+      {% endfor %}
+
+      {% if page < total_pages %}
+      <a class="pager__arrow" href="{{ url_for('hello', page=page + 1) }}" aria-label="다음 페이지">
+        <img src="{{ url_for('static', filename='images/review/page-next.svg') }}" alt="" />
+      </a>
+      {% else %}
+      <span class="pager__arrow is-disabled">
+        <img src="{{ url_for('static', filename='images/review/page-next.svg') }}" alt="" />
+      </span>
+      {% endif %}
+    </nav>
+  </div>
+</div>
+{% endblock section %}

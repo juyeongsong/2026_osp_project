@@ -1,8 +1,9 @@
 import os
+import math
 import hashlib
 
-from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
-from database import DBhandler
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify, abort
+from database import DBhandler, to_int
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "helloosp"
@@ -11,9 +12,91 @@ DB = DBhandler()
 UPLOAD_DIR = os.path.join(app.root_path, "static", "images")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+ADMIN_IDS = {"admin"} #관리자 아이디
+PER_PAGE = 6
+
+STATUS_LIST = ["판매중", "준비중", "품절"]
+
+def is_admin():
+    return session.get("id") in ADMIN_IDS
+
+@app.context_processor
+def inject_user():
+    return {"is_admin": is_admin(), "user_id": session.get("id")}
+
 @app.route("/")
 def hello():
-    return render_template("index.html")
+    items = DB.get_items()
+    total_pages = max(1, math.ceil(len(items) / PER_PAGE))
+    page = min(max(request.args.get("page", 1, type=int), 1), total_pages)
+    start = (page - 1) * PER_PAGE
+    return render_template(
+        "main.html",
+        items=items[start:start + PER_PAGE],
+        page=page,
+        total_pages=total_pages,
+    )
+
+@app.route("/item/<name>")
+def view_item_detail(name):
+    item = DB.get_item(name)
+    if item is None:
+        abort(404)
+    return render_template("item_detail.html", item=item, status_list=STATUS_LIST)
+
+
+@app.route("/item/<name>/update", methods=["POST"])
+def update_item(name):
+    if not is_admin():
+        abort(403)
+
+    data = request.get_json(silent=True) or {}
+    new_name = (data.get("name") or "").strip() or name
+    status = data.get("status")
+    if status not in STATUS_LIST:
+        return jsonify({"ok": False, "message": "판매 상태가 올바르지 않아요."}), 400
+
+    fields = {
+        "desc": (data.get("desc") or "").strip(),
+        "price": to_int(data.get("price")),
+        "status": status,
+    }
+    result = DB.update_item(name, fields, new_name)
+
+    if result == "not_found":
+        return jsonify({"ok": False, "message": "상품을 찾을 수 없어요."}), 404
+    if result == "duplicate":
+        return jsonify({"ok": False, "message": "같은 이름의 상품이 이미 있어요."}), 409
+    return jsonify({"ok": True, "url": url_for("view_item_detail", name=new_name)})
+
+
+@app.route("/item/<name>/delete", methods=["POST"])
+def delete_item(name):
+    if not is_admin():
+        abort(403)
+    DB.delete_item(name)
+    return jsonify({"ok": True, "url": url_for("hello")})
+
+@app.route("/cart/add", methods=["POST"])
+def cart_add():
+    data = request.get_json(silent=True) or {}
+    name = data.get("name", "")
+    qty = max(1, min(to_int(data.get("qty"), 1), 99))
+
+    item = DB.get_item(name)
+    if item is None or item.get("status") != "판매중":
+        return jsonify({"ok": False, "message": "지금은 담을 수 없는 상품이에요."}), 400
+
+    cart = session.get("cart", {})
+    cart[name] = min(cart.get(name, 0) + qty, 99)
+    session["cart"] = cart
+    return jsonify({"ok": True, "count": sum(cart.values())})
+
+
+@app.route("/logout")
+def logout():
+    session.pop("id", None)
+    return redirect(url_for("hello"))
     
 @app.route("/login")
 def login():
@@ -108,12 +191,17 @@ def view_ladder():
     
 @app.route("/cart")
 def view_cart():
-    # 임시 데이터 (시안과 동일). 나중에 DB 연동 시 교체
-    items = [
-        {"name": "피자 붕어빵", "price": 1000, "qty": 1, "image": "pizza.png"},
-        {"name": "말차 붕어빵", "price": 500, "qty": 3, "image": "matcha.png"},
-    ]
-    return render_template("cart.html", items=items, fee=1500)
+    items = []
+    for name, qty in session.get("cart", {}).items():
+        item = DB.get_item(name)
+        if item:
+            items.append({
+                "name": name,
+                "price": item["price"],
+                "qty": qty,
+                "image": item.get("img_path") or "",
+            })
+    return render_template("cart.html", items=items, fee=1500 if items else 0)
 
 @app.route("/submit_item_post", methods=["POST"])
 def reg_item_submit_post():

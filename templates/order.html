@@ -1,0 +1,151 @@
+{% extends "index.html" %} {% block section %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/order.css') }}"
+/>
+
+<h1 class="page-title">배송 정보 입력</h1>
+
+<div class="order-page">
+  <a class="back-link" href="/cart">
+    <img
+      src="{{ url_for('static', filename='images/review/arrow-left.svg') }}"
+      alt=""
+    />
+    상품으로 돌아가기
+  </a>
+
+  <form class="order-body" action="/order_complete" method="post">
+    <!-- 배송지 입력 -->
+    <div class="order-card">
+      <div class="order-card__head">
+        <h2 class="order-card__title">배송지</h2>
+        <button type="button" class="btn btn--outline">
+          기본 배송지 불러오기
+        </button>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label class="field__label" for="receiver"
+            >받는 분 <span class="req">*</span></label
+          >
+          <input
+            class="order-input"
+            type="text"
+            id="receiver"
+            name="receiver"
+            placeholder="이름"
+            required
+          />
+        </div>
+        <div class="field">
+          <label class="field__label" for="phone"
+            >연락처 <span class="req">*</span></label
+          >
+          <input
+            class="order-input"
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="010-0000-0000"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="zipcode"
+          >주소 <span class="req">*</span></label
+        >
+        <div class="zip-row">
+          <input
+            class="order-input"
+            type="text"
+            id="zipcode"
+            name="zipcode"
+            placeholder="우편번호"
+            inputmode="numeric"
+            required
+          />
+          <button type="button" class="btn">주소 검색</button>
+        </div>
+        <input
+          class="order-input"
+          type="text"
+          name="address1"
+          placeholder="도로명, 지번, 건물명"
+          aria-label="도로명 주소"
+          required
+        />
+        <input
+          class="order-input"
+          type="text"
+          name="address2"
+          placeholder="상세 주소 (동·호수)"
+          aria-label="상세 주소"
+        />
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="request">배송 요청사항</label>
+        <select class="order-input" id="request" name="request">
+          <option>문 앞에 놓아주세요</option>
+          <option>경비실에 맡겨주세요</option>
+          <option>배송 전에 연락 주세요</option>
+          <option>직접 받을게요</option>
+        </select>
+      </div>
+
+      <label class="check-label">
+        <input type="checkbox" name="save_default" />
+        기본 배송지로 저장
+      </label>
+    </div>
+
+    <!-- 주문 요약 -->
+    {% set ns = namespace(sum=0) %} {% for item in items %}{% set ns.sum =
+    ns.sum + item.price * item.qty %}{% endfor %}
+    <aside class="order-summary">
+      <div class="order-card">
+        <h2 class="order-card__title">주문 상품</h2>
+        <ul class="order-items">
+          {% for item in items %}
+          <li class="order-item">
+            <span class="order-item__thumb">
+              <img
+                src="{{ url_for('static', filename='images/' + item.image) }}"
+                alt=""
+              />
+            </span>
+            <span class="order-item__name"
+              >{{ item.name }} × {{ item.qty }}</span
+            >
+            <span class="order-item__price"
+              >{{ "{:,}".format(item.price * item.qty) }}원</span
+            >
+          </li>
+          {% endfor %}
+        </ul>
+        <hr class="divider" />
+        <dl class="price-row">
+          <dt>상품 금액</dt>
+          <dd>{{ "{:,}".format(ns.sum) }}원</dd>
+        </dl>
+        <dl class="price-row">
+          <dt>배송비</dt>
+          <dd>{{ "{:,}".format(fee) }}원</dd>
+        </dl>
+        <hr class="divider" />
+        <dl class="price-row price-row--total">
+          <dt>총 결제 금액</dt>
+          <dd>{{ "{:,}".format(ns.sum + fee) }}원</dd>
+        </dl>
+      </div>
+      <button type="submit" class="btn btn-big btn-big--green btn-pay">
+        결제하기
+      </button>
+    </aside>
+  </form>
+</div>
+{% endblock section %}

@@ -3,6 +3,7 @@ import hashlib
 
 from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from database import DBhandler
+from datetime import datetime
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "helloosp"
@@ -123,6 +124,31 @@ def reg_item_submit_post():
     DB.insert_item(data['name'], data, image_file.filename)
     return render_template("result.html", data=data,
                            img_path="images/" + image_file.filename)
+
+# 주문·결제 임시 데이터 (시안과 동일). 나중에 DB 연동 시 교체
+ORDER_ITEMS = [
+    {"name": "피자 붕어빵", "price": 1000, "qty": 1, "image": "pizza.png"},
+]
+ORDER_FEE = 1500
+
+@app.route("/order")
+def view_order():
+    return render_template("order.html", items=ORDER_ITEMS, fee=ORDER_FEE)
+
+@app.route("/order_complete", methods=["POST"])
+def order_complete():
+    now = datetime.now()
+    form = request.form
+    order = {
+        "id": now.strftime("%Y%m%d") + "-0042",
+        "paid_at": now.strftime("%Y.%m.%d %H:%M"),
+        "receiver": form.get("receiver", ""),
+        "phone": form.get("phone", ""),
+        "address": f'{form.get("address1", "")} {form.get("address2", "")}'.strip(),
+        "products": ORDER_ITEMS,  # "items"라고 쓰면 Jinja에서 dict.items()랑 겹쳐서 에러 남
+        "total": sum(i["price"] * i["qty"] for i in ORDER_ITEMS) + ORDER_FEE,
+    }
+    return render_template("order_complete.html", order=order)
 
 if __name__ == "__main__":
     app.run(debug=True)

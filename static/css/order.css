@@ -1,0 +1,361 @@
+/* ===== 주문·결제 (배송 정보 입력 / 결제 완료) 전용 스타일 =====
+   공용 style.css(차양 헤더, body, footer, .btn, input)는 그대로 쓰고,
+   이 파일은 두 페이지 안쪽만 담당합니다. */
+:root {
+  --green: #00640f;
+  --cream: #fbffe5;
+  --field: #fff9d0;
+  --line: rgba(0, 0, 0, 0.12);
+  --font-display: "okdandan", sans-serif;
+}
+
+/* 차양이 아래로 튀어나온 만큼 본문을 내려 줌 */
+.order-page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding-top: 90px;
+}
+
+/* ===== 상품으로 돌아가기 ===== */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 30px;
+  color: var(--green);
+}
+.back-link img {
+  width: 22px;
+  height: 26px;
+}
+
+/* ===== 2단 레이아웃 (배송지 : 주문 요약 340) ===== */
+.order-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  align-items: start;
+  margin-top: 16px;
+}
+
+/* ===== 카드 공통 ===== */
+.order-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px 26px;
+  background: var(--cream);
+  border-radius: 24px;
+}
+.order-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.order-card__title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--green);
+}
+
+/* 테두리만 있는 버튼 (기본 배송지 불러오기) */
+.btn--outline {
+  padding: 6px 16px;
+  border: 2px solid var(--green);
+  background: transparent;
+  color: var(--green);
+  font-size: 13px;
+}
+.btn--outline:hover {
+  background: var(--green);
+  color: #fff;
+}
+
+/* ===== 입력 폼 ===== */
+.field-row {
+  display: flex;
+  gap: 12px;
+}
+.field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field__label {
+  font-size: 17px;
+  font-weight: 600;
+}
+.field__label .req {
+  color: var(--green);
+}
+
+.order-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 14px 0 16px;
+  border: 1.5px solid rgba(0, 100, 15, 0.3);
+  border-radius: 12px;
+  background-color: var(--field);
+  color: #000;
+  font-size: 15px;
+}
+.order-input::placeholder {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+select.order-input {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 40px;
+  color: rgba(0, 0, 0, 0.45);
+  background: var(--field)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='%2300640f' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    right 14px center / 16px no-repeat;
+  cursor: pointer;
+}
+
+.zip-row {
+  display: flex;
+  gap: 10px;
+}
+.zip-row .order-input {
+  flex: 1;
+  min-width: 0;
+}
+.zip-row .btn {
+  flex: none;
+  width: 96px;
+  height: 42px;
+  padding: 0;
+  font-size: 13px;
+}
+
+.check-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+}
+.check-label input {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 2px solid var(--green);
+  border-radius: 5px;
+  background: #fff;
+  cursor: pointer;
+}
+.check-label input:checked {
+  background: var(--green)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / 80% no-repeat;
+}
+
+/* ===== 주문 요약 ===== */
+.order-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+}
+.order-item__thumb {
+  flex: none;
+  width: 70px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border-radius: 14px;
+}
+.order-item__thumb img {
+  width: 56px;
+  height: 45px;
+  object-fit: contain;
+}
+.order-item__name {
+  flex: 1;
+  min-width: 0;
+}
+.order-item__price {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  border: 0;
+  background: var(--line);
+}
+
+/* 금액 행 (okdandan은 숫자 0이 네모로 보여서 금액은 Inter 사용) */
+.price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 17px;
+}
+.price-row dt {
+  color: rgba(0, 0, 0, 0.5);
+}
+.price-row--total dt {
+  font-size: 22px;
+  font-weight: 600;
+  color: #000;
+}
+.price-row--total dd {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--green);
+}
+/* 배송 정보 입력 페이지의 금액 행만 작게 (결제 완료 페이지는 그대로) */
+.order-summary .price-row {
+  font-size: 14px;
+}
+.order-summary .price-row--total dt {
+  font-size: 18px;
+}
+.order-summary .price-row--total dd {
+  font-size: 21px;
+}
+
+/* ===== 큰 알약 버튼 (결제하기 / 주문 내역 보기 / 쇼핑 계속하기) ===== */
+.btn-big {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 83px;
+  padding: 0 20px;
+  border-radius: 50px;
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.btn-big--green {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25),
+    inset 4px 10px 30px 10px rgba(255, 255, 255, 0.3);
+}
+.btn-big--white {
+  background: #fff;
+  color: var(--green);
+}
+.btn-big--white:hover {
+  background: #eef0dc;
+}
+.btn-pay {
+  width: 100%;
+  height: 66px;
+  font-size: 36px;
+}
+
+.btn:focus-visible,
+.back-link:focus-visible,
+.check-label input:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
+}
+
+/* ===== 결제 완료 ===== */
+.complete {
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.complete-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 36px 26px;
+  background: var(--cream);
+  border-radius: 24px;
+}
+.complete-card__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--green)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4L18 8' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / 60% no-repeat;
+}
+.complete-card__title {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 400;
+  color: var(--green);
+}
+.complete-card__desc {
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+.order-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 6px 0;
+  font-size: 15px;
+}
+.order-info > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.order-info dt {
+  flex: none;
+  width: 110px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.order-info dd {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+}
+
+.complete-card .price-row {
+  width: 100%;
+  padding-top: 2px;
+}
+.complete-card .price-row--total dt {
+  font-size: 18px;
+}
+.complete-card .price-row--total dd {
+  font-size: 22px;
+}
+
+.complete-actions {
+  display: flex;
+  gap: 16px;
+}
+.complete-actions .btn-big {
+  width: 240px;
+  height: 66px;
+  font-size: 30px;
+}

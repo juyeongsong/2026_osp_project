@@ -1,0 +1,28 @@
+.my-btn {
+  position: absolute;
+  top: 20px;
+  left: 16px;
+  z-index: 11;
+
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 3px solid #00640f;
+  border-radius: 50%;
+  background-color: #fbffe5;
+  color: #00640f;
+
+  font-family: "okdandan", sans-serif;
+  font-size: 24px;
+
+  box-shadow: 0 4px 8px rgba(68, 78, 63, 0.2);
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.my-btn:hover {
+  background-color: #00640f;
+  color: #fbffe5;
+}

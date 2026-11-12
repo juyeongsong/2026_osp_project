@@ -18,10 +18,10 @@
       }
 
       .awning {
-        margin-bottom: 70px;
+        margin-bottom: 58px;
       }
       .body-area {
-        padding: 10px 48px 4px;
+        padding: 20px 48px 4px;
       }
 
       .lead {
@@ -45,7 +45,7 @@
         background: rgba(255, 222, 121, 0.45);
         border-radius: 30px;
         padding: 10px 16px 12px;
-        margin-bottom: 8px;
+        margin-bottom: 2px;
       }
 
       .start-row,
@@ -134,6 +134,7 @@
         align-items: center;
         gap: 93.68px;
         margin-left: 469px;
+        margin-top: -12px;
         padding-bottom: 6px;
       }
 

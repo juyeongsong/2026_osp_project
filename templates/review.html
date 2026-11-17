@@ -1,6 +1,5 @@
 {% extends "index.html" %} {% block section %}
-<!-- 후기 목록 페이지 (담당: 조소연)
-     공통 부분(천막, 로고, 홈 버튼)은 index.html에서 가져와요. -->
+<!-- 후기 목록 페이지  -->
 <link
   rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Sans+KR:wght@400;500&display=swap"
@@ -15,8 +14,7 @@
 <div class="review-main">
   <!-- 맛 필터 + 후기 작성 버튼 -->
   <div class="review-toolbar">
-    <!-- 맛 필터: 3개씩 보이고 화살표로 하나씩 돌아가요 (static/review.js)
-         새 메뉴는 맨 끝(피자 뒤)에 <li> 하나만 추가하면 돼요. -->
+    <!-- 맛 필터 -->
     <nav class="flavor-filter" aria-label="맛별 후기 골라보기">
       <p class="flavor-filter__label">후기<br />골라보기</p>
       <button class="flavor-filter__arrow" type="button" data-dir="-1">
@@ -140,7 +138,7 @@
     <a class="write-button" href="/reg_reviews">후기 작성하기</a>
   </div>
 
-  <!-- 후기 카드: 한 페이지에 3개, 최신순 -->
+  <!-- 후기 카드 -->
   <ul class="review-list">
     <li>
       <a class="review-item" href="/review_detail?id=1">
@@ -189,7 +187,7 @@
             >
           </div>
         </div>
-        <!-- 첫 번째 사진. 실제 사진은 <img class="review-photo" src="..."> 로 바꿔 넣으면 돼요 -->
+
         <div class="review-item__thumb">
           <span class="bungeo">
             <img
@@ -253,7 +251,7 @@
             >
           </div>
         </div>
-        <!-- 첫 번째 사진. 실제 사진은 <img class="review-photo" src="..."> 로 바꿔 넣으면 돼요 -->
+
         <div class="review-item__thumb">
           <span class="bungeo">
             <img
@@ -318,7 +316,7 @@
             >
           </div>
         </div>
-        <!-- 첫 번째 사진. 실제 사진은 <img class="review-photo" src="..."> 로 바꿔 넣으면 돼요 -->
+
         <div class="review-item__thumb">
           <span class="bungeo">
             <img
@@ -337,8 +335,6 @@
     </li>
   </ul>
 
-  <!-- 페이지 번호: 5개씩 묶어서 보여줘요 (1~5 → 6~10 → ...)
-       DB 연결 후에는 data-current-page, data-total-pages 값만 넣어 주면 돼요. -->
   <nav
     class="pagination"
     aria-label="후기 페이지"
@@ -367,7 +363,6 @@
   </nav>
 </div>
 
-<!-- 예시 후기 데이터: DB 연결 후에는 이 줄을 지우면 돼요 -->
 <script src="{{ url_for('static', filename='sample-reviews.js') }}"></script>
 <script src="{{ url_for('static', filename='review.js') }}"></script>
 {% endblock section %}

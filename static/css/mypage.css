@@ -1,14 +1,8 @@
-/* =========================================================
-   마이페이지 전용 스타일 - 조소연
-   공통(천막, 로고, 홈·장바구니 아이콘, 푸터, .btn)은 style.css,
-   제목(.page-title), 붕어빵 그림, 프로필 동그라미, 페이지 번호는 review.css를 같이 써요.
-   노트북 화면(1440×750)에서 스크롤 없이 페이지 번호까지 보이도록 맞췄어요.
-   ========================================================= */
+/* 마이페이지 */
 
-/* 내용 폭은 공통 section(최대 1100px)을 그대로 따라요 */
 .mypage {
   width: 100%;
-  padding: 80px 0 20px; /* 천막 아래로 (후기 목록과 같은 시작 높이) */
+  padding: 80px 0 20px;
   font-family: var(--review-font-body);
 }
 
@@ -17,7 +11,6 @@
   list-style: none;
 }
 
-/* 크림색 카드 공통 */
 .mypage-card {
   border-radius: var(--review-radius);
   background: var(--review-cream);
@@ -31,7 +24,6 @@
   padding: 10px 30px;
 }
 
-/* 큰 프로필 동그라미 */
 .avatar--lg {
   flex: 0 0 64px;
   width: 64px;
@@ -100,7 +92,6 @@
   text-align: center;
 }
 
-/* 단계 사이 화살표 */
 .delivery-summary li + li::before {
   content: "";
   position: absolute;
@@ -141,14 +132,11 @@
   font-weight: 700;
 }
 
-/* 주문 영역 높이는 맛 3개 카드 기준으로 고정.
-   카드는 내용만큼 늘고 줄고, 아래 페이지 번호는 늘 같은 자리에 있어요 */
 .order-list {
   min-height: 206px;
   margin-top: 6px;
 }
 
-/* JS가 켜지기 전에는 첫 주문만 */
 .order-list > li:nth-child(n + 2) {
   display: none;
 }
@@ -193,10 +181,22 @@
   white-space: nowrap;
 }
 
-.status--received  { background: rgba(0, 0, 0, 0.08); color: rgba(0, 0, 0, 0.7); }
-.status--preparing { background: var(--review-yellow); color: #000000; }
-.status--shipping  { box-shadow: inset 0 0 0 2px var(--review-green); color: var(--review-green); }
-.status--delivered { background: var(--review-green); color: #ffffff; }
+.status--received {
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.7);
+}
+.status--preparing {
+  background: var(--review-yellow);
+  color: #000000;
+}
+.status--shipping {
+  box-shadow: inset 0 0 0 2px var(--review-green);
+  color: var(--review-green);
+}
+.status--delivered {
+  background: var(--review-green);
+  color: #ffffff;
+}
 
 /* 주문한 상품 줄 */
 .order__items li {
@@ -233,7 +233,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* 후기 쓰기 버튼 자리 (배송 완료 전에는 빈자리로 줄 맞춤) */
 .order__review,
 .order__review-slot {
   min-width: 112px;
@@ -276,7 +275,6 @@
   font-size: 18px;
 }
 
-/* 주문 페이지 번호: 후기 목록과 같은 모양 (review.css) */
 .mypage .pagination {
   margin-top: 8px;
 }

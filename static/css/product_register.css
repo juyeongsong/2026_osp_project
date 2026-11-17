@@ -218,6 +218,11 @@ section {
   color: rgba(0, 0, 0, 0.5);
   font-weight: 400;
 }
+.upload-box .txt.has-file {
+  color: var(--green);
+  text-decoration: underline;
+  font-weight: 700;
+}
 .upload-box .sub {
   font-size: 0.74rem;
   color: #8a9e8e;

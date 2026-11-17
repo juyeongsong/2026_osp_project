@@ -15,6 +15,9 @@ DB = DBhandler()
 
 UPLOAD_DIR = os.path.join(app.root_path, "static", "images")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+REVIEW_DIR = os.path.join(app.root_path, "static", "images", "reviews")
+os.makedirs(REVIEW_DIR, exist_ok=True)
+app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 업로드 5MB 제한
 
 ADMIN_IDS = {"admin"} #관리자 아이디
 PER_PAGE = 6

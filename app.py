@@ -214,7 +214,53 @@ def reg_item():
 
 @app.route("/reg_reviews")
 def reg_review():
-    return render_template("reg_reviews.html")
+    if not session.get("id"):
+        flash("로그인 후 후기를 쓸 수 있어요.")
+        return redirect(url_for("login"))
+    return render_template(
+        "reg_reviews.html",
+        items=DB.get_items(),
+        selected=request.args.get("item", ""),
+    )
+
+
+@app.route("/submit_review_post", methods=["POST"])
+def submit_review_post():
+    user_id = session.get("id")  # 폼 값이 아니라 로그인 정보를 신뢰
+    if not user_id:
+        return redirect(url_for("login"))
+
+    form = request.form
+    product = form.get("product", "").strip()
+    title = form.get("title", "").strip()
+    content = form.get("content", "").strip()
+    rating = to_int(form.get("rating"), 0)
+
+    item_names = {i["name"] for i in DB.get_items()}
+    if product not in item_names or not title or not content or not 1 <= rating <= 5:
+        flash("입력 내용을 다시 확인해 주세요. (상품명은 등록된 상품 중에서 골라 주세요)")
+        return redirect(url_for("reg_review", item=product))
+
+    img_path = ""
+    photo = request.files.get("file_input")
+    if photo and photo.filename:
+        ext = photo.filename.rsplit(".", 1)[-1].lower() if "." in photo.filename else ""
+        if ext not in {"png", "jpg", "jpeg"}:
+            flash("JPG, PNG 사진만 올릴 수 있어요.")
+            return redirect(url_for("reg_review", item=product))
+        img_path = f"review_{uuid.uuid4().hex[:12]}.{ext}"
+        photo.save(os.path.join(REVIEW_DIR, img_path))
+
+    DB.insert_review({
+        "item": product,
+        "user_id": user_id,
+        "title": title,
+        "content": content,
+        "rating": rating,
+        "img_path": img_path,
+        "created_at": datetime.now().strftime("%Y-%m-%dT%H:%M"),
+    })
+    return redirect(url_for("view_review"))
 
 @app.route("/product_register")
 def view_product_register():

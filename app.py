@@ -232,8 +232,7 @@ def reg_item_submit_post():
     image_file.save(os.path.join(UPLOAD_DIR, image_file.filename))
     data = request.form
     DB.insert_item(data['name'], data, image_file.filename)
-    return render_template("result.html", data=data,
-                           img_path="images/" + image_file.filename)
+    return redirect(url_for("view_item_detail", name=data['name']))
 
 # 주문·결제 임시 데이터 (시안과 동일). 나중에 DB 연동 시 교체
 ORDER_ITEMS = [

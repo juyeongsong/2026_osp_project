@@ -13,7 +13,7 @@
   </script>
   {% endif %}
 
-  <form class="auth-form" action="/signup_post" method="post">
+  <form class="auth-form" action="{{ url_for('register_user') }}" method="post">
     <div class="form-group">
       <label for="id">아이디</label>
       <div class="id-check-row">
@@ -61,7 +61,7 @@
     const formData = new FormData();
     formData.append("id", id);
 
-    const response = await fetch("/check_id", {
+    const response = await fetch("{{ url_for('check_id') }}", {
       method: "POST",
       body: formData,
     });

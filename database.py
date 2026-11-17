@@ -111,4 +111,19 @@ class DBhandler:
                 return value
             
         return None
+        
+    def insert_review(self, data):
+        self.db.child("review").push(data)
+        return True
+
+    def get_reviews(self, item=None):
+        snap = self.db.child("review").get()
+        reviews = []
+        for res in (snap.each() or []):
+            r = dict(res.val())
+            r["key"] = res.key()
+            if item is None or r.get("item") == item:
+                reviews.append(r)
+        reviews.sort(key=lambda r: r.get("created_at", ""), reverse=True)
+        return reviews
 

@@ -109,6 +109,28 @@ def cart_add():
     cart[name] = min(cart.get(name, 0) + qty, 99)
     session["cart"] = cart
     return jsonify({"ok": True, "count": sum(cart.values())})
+    
+@app.route("/cart/update", methods=["POST"])
+def cart_update():
+    data = request.get_json(silent=True) or {}
+    name = data.get("name", "")
+    qty = max(1, min(to_int(data.get("qty"), 1), 99))
+
+    cart = session.get("cart", {})
+    if name not in cart:
+        return jsonify({"ok": False, "message": "장바구니에 없는 상품이에요."}), 404
+    cart[name] = qty
+    session["cart"] = cart
+    return jsonify({"ok": True})
+
+
+@app.route("/cart/remove", methods=["POST"])
+def cart_remove():
+    data = request.get_json(silent=True) or {}
+    cart = session.get("cart", {})
+    cart.pop(data.get("name", ""), None)
+    session["cart"] = cart
+    return jsonify({"ok": True})
 
 
 @app.route("/logout")

@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   max-width: 800px;
-  margin: 100px auto 0; 
+  margin: 100px auto 0;
 }
 
 /* ----- 목록으로 돌아가기 ----- */
@@ -284,10 +284,10 @@
   left: calc(100% + 10px);
   z-index: 5;
   display: flex;
-  flex-direction: column; /* 수정 · 삭제는 위아래로 */
+  flex-direction: column;
   align-items: flex-start;
   gap: 4px;
-  width: max-content; /* 메뉴가 좁아져 글자가 세로로 쪼개지지 않게 */
+  width: max-content;
   min-width: 80px;
   padding: 8px 14px;
   border-radius: 14px;
@@ -299,7 +299,7 @@
 }
 .kebab-menu button {
   display: flex;
-  flex-direction: row; /* 아이콘 + 글자는 한 줄로 */
+  flex-direction: row;
   white-space: nowrap;
   writing-mode: horizontal-tb;
   align-items: center;

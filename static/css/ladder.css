@@ -18,10 +18,10 @@
       }
 
       .awning {
-        margin-bottom: 70px;
+        margin-bottom: 58px;
       }
       .body-area {
-        padding: 28px 48px 10px;
+        padding: 20px 48px 4px;
       }
 
       .lead {
@@ -30,22 +30,22 @@
         gap: 16px;
         margin-left: 4px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 50px;
+        font-size: 30px;
         font-weight: 700;
         color: var(--line);
-        margin-bottom: 18px;
+        margin-bottom: 6px;
       }
       .lead .fish {
-        width: 74px;
-        height: 59.11px;
+        width: 54px;
+        height: 43px;
         display: block;
       }
 
       .board-wrap {
         background: rgba(255, 222, 121, 0.45);
         border-radius: 30px;
-        padding: 20px 18px 24px;
-        margin-bottom: 20px;
+        padding: 10px 16px 6px;
+        margin-bottom: 2px;
       }
 
       .start-row,
@@ -87,7 +87,7 @@
 
       svg {
         display: block;
-        margin: 8px 0;
+        margin: 2px 0;
         width: 100%;
         height: auto;
       }
@@ -97,15 +97,15 @@
         fill: none;
       }
       .highlight-line {
-        stroke: var(--green);
+        stroke: #ffcc00;
         stroke-width: 5;
         stroke-linecap: round;
         fill: none;
       }
 
       .flavor-card-mini {
-        width: 140px;
-        height: 170px;
+        width: 82px;
+        height: 99px;
         text-align: center;
       }
       .card-mini-img {
@@ -121,8 +121,8 @@
       }
 
       .result-box {
-        margin-top: 16px;
-        min-height: 30px;
+        margin-top: 4px;
+        min-height: 18px;
         text-align: center;
         font-size: 1.1rem;
         font-weight: 800;
@@ -134,12 +134,13 @@
         align-items: center;
         gap: 93.68px;
         margin-left: 469px;
-        padding-bottom: 20px;
+        margin-top: -2px;
+        padding-bottom: 6px;
       }
 
       .ladder-btn {
-        width: 156px;
-        height: 60px;
+        width: 180px;
+        height: 52px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -148,10 +149,11 @@
         border: none;
         border-radius: 50px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 22px;
+        font-size: 20px;
         font-weight: 700;
         cursor: pointer;
         transition: background 0.15s ease;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
       }
       .ladder-btn:hover {
         background: var(--green);
@@ -163,8 +165,8 @@
       }
 
       .reagain-btn {
-        width: 156px;
-        height: 60px;
+        width: 180px;
+        height: 52px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -173,9 +175,10 @@
         border: none;
         border-radius: 50px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
-        font-size: 22px;
+        font-size: 20px;
         font-weight: 700;
         cursor: pointer;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3), inset 4px 10px 30px 10px rgba(255, 255, 255, 0.3);
       }
       .reagain-btn:hover {
         background: var(--cream);
@@ -186,5 +189,5 @@
         font-size: 20px;
         font-family: "OkDanDan", "Pretendard", sans-serif;
         color: #8a9e8e;
-        padding-bottom: 14px;
+        padding-bottom: 0px;
       } /* 글자 크기 = 상품 등록 .page-subtitle과 동일 */

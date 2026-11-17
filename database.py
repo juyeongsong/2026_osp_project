@@ -17,7 +17,7 @@ class DBhandler:
         item_info = {
             "seller": data.get('seller', '이화 붕어'),
             "addr": data.get('addr', '서울특별시 서대문구 이화여대길52'),
-            "price": data.get['price'],
+            "price": to_int(data.get('price')),
             "status": data.get('status', ''),
             "email": data.get('email', ''),
             "img_path": img_path,

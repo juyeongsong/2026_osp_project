@@ -1,66 +1,19 @@
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>이화 붕어빵 - 상품 등록</title>
+{% extends "index.html" %} {% block section %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/reg_pages.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/product_register.css') }}"
+/>
 
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/reg_pages.css') }}"
-    />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/product_register.css') }}">
-  </head>
-  <body>
-    <header class="site-top">
-      <div class="awning">
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-      </div>
+<h1 class="page-title">상품 등록</h1>
 
-      <div class="site-logo">
-        <a href="/">
-          <img
-            src="{{ url_for('static', filename='images/logo.png') }}"
-            alt="이화 붕어빵"
-          />
-        </a>
-      </div>
-
-      <h1 class="page-title">상품 등록</h1>
-
-      <div class="header-icons">
-        <a href="/" class="icon-btn">
-          <img
-            src="{{ url_for('static', filename='images/home.png') }}"
-            alt="홈"
-          />
-        </a>
-        <a href="#" class="icon-btn cart">
-          <img
-            src="{{ url_for('static', filename='images/cart.png') }}"
-            alt="장바구니"
-          />
-        </a>
-      </div>
-    </header>
-
-    <section>
       <p class="page-subtitle">판매할 붕어빵 정보를 입력해주세요</p>
 
       <div class="form-wrap">
-        <form>
+        <form method="POST" action="{{ url_for('reg_item_submit_post') }}" enctype="multipart/form-data">
           <div class="four-col">
             <div class="field">
               <label
@@ -68,7 +21,7 @@
                   >*</span
                 ></label
               >
-              <input type="text" placeholder="seller_id" required />
+              <input type="text" name="seller" placeholder="seller_id" required />
             </div>
             <div class="field">
               <label
@@ -76,7 +29,7 @@
                   >*</span
                 ></label
               >
-              <input type="text" placeholder="예) 팥붕어빵" required />
+              <input type="text" name="name" placeholder="예) 팥붕어빵" required />
             </div>
             <div class="field">
               <label
@@ -85,7 +38,7 @@
                 ></label
               >
               <div class="price-row">
-                <input type="number" placeholder="1500" required />
+                <input type="number" name="price" placeholder="1500" required />
                 <span class="unit">원</span>
               </div>
             </div>
@@ -95,7 +48,7 @@
                   >*</span
                 ></label
               >
-              <input type="text" placeholder="이화여대 정문 앞" required />
+              <input type="text" name="addr" placeholder="이화여대 정문 앞" required />
             </div>
           </div>
 
@@ -107,6 +60,7 @@
                 ></label
               >
               <textarea
+                name="desc"
                 placeholder="붕어빵에 대한 소개를 자유롭게 적어주세요"
               ></textarea>
             </div>
@@ -117,10 +71,9 @@
                 ></label
               >
               <div class="upload-box" id="uploadBox">
-                <span class="txt">클릭해서 사진 업로드(JPG, PNG)</span>
-                <input type="file" accept="image/*" id="fileInput" />
+                <span class="txt" id="uploadTxt">클릭해서 사진 업로드(JPG, PNG)</span>
+                <input type="file" accept="image/*" id="fileInput" name="file_input" />
               </div>
-              <img class="preview-img" id="previewImg" alt="미리보기" />
             </div>
           </div>
 
@@ -132,19 +85,19 @@
             >
             <div class="status-group">
               <label class="status-pill selected">
-                <input type="radio" name="status" checked /> 판매중
+                <input type="radio" name="status" value="판매중" checked /> 판매중
               </label>
               <label class="status-pill">
-                <input type="radio" name="status" /> 준비중
+                <input type="radio" name="status" value="준비중" /> 준비중
               </label>
               <label class="status-pill">
-                <input type="radio" name="status" /> 품절
+                <input type="radio" name="status" value="품절" /> 품절
               </label>
             </div>
           </div>
 
           <div class="action-row">
-            <button type="button" class="cancel-btn">취소</button>
+            <button type="button" class="cancel-btn" onclick="location.href='{{ url_for('hello') }}'">취소</button>
             <button type="submit" class="submit-btn">등록하기</button>
           </div>
           <div class="bottom-row">
@@ -154,14 +107,6 @@
           </div>
         </form>
       </div>
-    </section>
-
-    <footer class="site-footer">
-      <p>
-        <span style="color: #006b2d">문의 상담 | 이화 붕어빵 </span>02)
-        1886-0531
-      </p>
-    </footer>
 
     <script>
       document.querySelectorAll(".status-pill").forEach((pill) => {
@@ -175,22 +120,14 @@
       });
 
       const fileInput = document.getElementById("fileInput");
-      const previewImg = document.getElementById("previewImg");
+      const uploadTxt = document.getElementById("uploadTxt");
       fileInput.addEventListener("change", () => {
         const file = fileInput.files[0];
         if (file) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            previewImg.src = e.target.result;
-            previewImg.style.display = "block";
-          };
-          reader.readAsDataURL(file);
+          uploadTxt.textContent = file.name;
+          uploadTxt.classList.add("has-file");
         }
       });
 
-      document
-        .querySelector("form")
-        .addEventListener("submit", (e) => e.preventDefault());
     </script>
-  </body>
-</html>
+{% endblock section %}

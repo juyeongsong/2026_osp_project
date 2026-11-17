@@ -1,62 +1,15 @@
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>이화 붕어빵 - 오늘의 붕어빵은?</title>
+{% extends "index.html" %} {% block section %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/reg_pages.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/ladder.css') }}"
+/>
 
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/reg_pages.css') }}"
-    />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/ladder.css') }}">
-  </head>
-  <body>
-    <header class="site-top">
-      <div class="awning">
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-        <div class="awning_piece"></div>
-      </div>
+<h1 class="page-title">오늘의 붕어빵은?</h1>
 
-      <div class="site-logo">
-        <a href="/">
-          <img
-            src="{{ url_for('static', filename='images/logo.png') }}"
-            alt="이화 붕어빵"
-          />
-        </a>
-      </div>
-
-      <h1 class="page-title">오늘의 붕어빵은?</h1>
-
-      <div class="header-icons">
-        <a href="/" class="icon-btn">
-          <img
-            src="{{ url_for('static', filename='images/home.png') }}"
-            alt="홈"
-          />
-        </a>
-        <a href="#" class="icon-btn cart">
-          <img
-            src="{{ url_for('static', filename='images/cart.png') }}"
-            alt="장바구니"
-          />
-        </a>
-      </div>
-    </header>
-
-    <section>
       <div class="body-area">
         <div class="lead">
           <img
@@ -67,12 +20,11 @@
         </div>
 
         <div class="board-wrap">
+          <div class="result-box" id="resultBox"></div>
           <div class="start-row" id="startRow"></div>
           <svg id="ladderSvg"></svg>
           <div class="bottom-row" id="bottomRow"></div>
         </div>
-
-        <div class="result-box" id="resultBox"></div>
 
         <div class="action-row">
           <button class="ladder-btn" id="ladderBtn">사다리 타기</button>
@@ -82,14 +34,6 @@
           ※ 먼저 "사다리 타기"를 누른 뒤, 위쪽 숫자 중 하나를 골라주세요
         </div>
       </div>
-    </section>
-
-    <footer class="site-footer">
-      <p>
-        <span style="color: #006b2d">문의 상담 | 이화 붕어빵 </span>02)
-        1886-0531
-      </p>
-    </footer>
 
     <script>
       (function () {
@@ -113,7 +57,7 @@
         const ROWS = 7;
         const svgW = 1500;
         const SLICE = svgW / N;
-        const ROW_H = 35;
+        const ROW_H = 22;
         const svgH = ROWS * ROW_H;
         const FIXED_RUNGS = [[3], [1], [0, 4], [2], [1], [0], []];
 
@@ -253,7 +197,7 @@
             line.setAttribute("x2", s.x1);
             line.setAttribute("y2", s.y1);
             line.setAttribute("class", "highlight-line");
-            svg.appendChild(line);
+            svg.querySelector("#linesGroup").appendChild(line);
 
             const duration = 110;
             const start = performance.now();
@@ -301,5 +245,4 @@
         resetAll();
       })();
     </script>
-  </body>
-</html>
+{% endblock section %}

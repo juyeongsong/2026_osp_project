@@ -32,7 +32,7 @@ class DBhandler:
         item["name"] = name
         item["price"] = to_int(item.get("price"))
         item["order"] = to_int(item.get("order"), 999)
-        item["status"] = str(item.get("status", "")).replace(" ", "")
+        item["status"] = str(item.get("status", "준비중")).replace(" ", "")
         return item
     
     def get_items(self):

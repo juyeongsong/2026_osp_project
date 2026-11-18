@@ -29,7 +29,9 @@
         <div class="awning_piece"></div>
       </div>
 
+      {% if session.get('id') %}
       <a href="{{ url_for('view_mypage') }}" class="my-btn">MY</a>
+      {% endif %}
 
       <div class="site-logo">
         <a href="/">
@@ -42,17 +44,11 @@
 
       <div class="header-icons">
         <a href="/" class="icon-btn">
-          <img
-            src="{{url_for('static', filename='images/home.png')}}"
-            alt="홈"
-          />
+		<img src="{{url_for('static', filename='images/home.png')}}" alt="홈" />
         </a>
 
         <a href="#" class="icon-btn">
-          <img
-            src="{{url_for('static', filename='images/cart.png')}}"
-            alt="장바구니"
-          />
+		<img src="{{url_for('static', filename='images/cart.png')}}" alt="장바구니"/>
         </a>
       </div>
     </header>

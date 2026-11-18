@@ -188,7 +188,12 @@ def view_review():
 
 @app.route("/mypage")
 def view_mypage():
-    return render_template("mypage.html")
+    user_id = session.get("id")
+    if not user_id:
+        return redirect(url_for("login"))
+    user = DB.get_user_by_id(user_id) or {}
+    orders = [] #주문 저장 기능 생길 시 DB에서 이 사람만 주문만 불러오도록 수정 필요
+    return render_template("mypage.html", user_id=user_id, email=user.get("email", ""), orders=orders)
 
 @app.route("/review_detail")
 def view_review_detail():

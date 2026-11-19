@@ -207,11 +207,36 @@ def check_id():
         "available": available
     })
 
+AVATAR_COLORS = ["green", "brown", "purple", "pink", "navy"]
+
+def review_cards():
+    cards = []
+    for r in DB.get_reviews():
+        user = r.get("user", "")
+        product = r.get("product", "")
+        content = r.get("content", "")
+        photos = r.get("img_path") or []
+        if isinstance(photos, str):
+            photos = [photos]
+        cards.append({
+            "id": r["key"],
+            "user": user,
+            "avatar": AVATAR_COLORS[sum(map(ord, user)) % len(AVATAR_COLORS)],
+            "product": product,
+            "flavor": FLAVOR_KEYS.get(product, ""),
+            "rating": to_int(r.get("rating"), 0),
+            "title": r.get("title", ""),
+            "excerpt": content.splitlines()[0] if content else "",
+            "content": content,
+            "createdAt": r.get("created_at", "").replace(" ", "T"),
+            "photos": [url_for("static", filename="images/reviews/" + name) for name in photos],
+        })
+    return cards
+
 @app.route("/review")
 def view_review():
-    return render_template("review.html")
+    return render_template("review.html", reviews=review_cards())
 
-# 마이페이지: 배송 단계, 상태별 색(CSS 클래스), 상품 이름별 붕어빵 속 그림
 ORDER_STEPS = ["주문 접수", "배송 준비", "배송 중", "배송 완료"]
 STATUS_CLASS = {"주문 접수": "received", "배송 준비": "preparing", "배송 중": "shipping", "배송 완료": "delivered"}
 FLAVOR_KEYS = {
@@ -250,7 +275,7 @@ def view_mypage():
 
 @app.route("/review_detail")
 def view_review_detail():
-    return render_template("review_detail.html")
+        return render_template("review_detail.html", reviews=review_cards())
 
 @app.route("/reg_items")
 def reg_item():

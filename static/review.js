@@ -95,6 +95,12 @@ function detailUrl(id) {
   return "/review_detail?" + query.toString();
 }
 
+// 사진이 있으면 첫 번째 사진, 없으면 아무것도 안 보여줌
+function thumbHtml(review) {
+  if (!review.photos.length) return "";
+  return `<div class="review-item__thumb"><img class="review-photo" src="${escapeHtml(review.photos[0])}" alt=""></div>`;
+}
+
 function cardHtml(review) {
   const date = review.createdAt.slice(0, 10);
   const shownDate = date.replace(/-/g, ".");
@@ -110,8 +116,8 @@ function cardHtml(review) {
                   review.user
                 )}</span>
                 <span class="review-item__flavor">구매: ${escapeHtml(
-                  flavorName(review.flavor)
-                )} 붕어빵</span>
+                  review.product
+                )}</span>
                 ${starsHtml(review.rating)}
               </div>
               <p class="review-item__title">${escapeHtml(review.title)}</p>
@@ -121,20 +127,13 @@ function cardHtml(review) {
                 <time class="review-item__date" datetime="${date}">${shownDate}</time>
               </div>
             </div>
-            <div class="review-item__thumb">
-              <span class="bungeo">
-                <img class="bungeo__fish" src="${IMG}fish.png" alt="">
-                <img class="bungeo__filling" src="${IMG}filling-${escapeHtml(
-    review.flavor
-  )}.svg" alt="">
-              </span>
-            </div>
+            ${thumbHtml(review)}
           </a>
         </li>`;
 }
 
 function renderSampleReviews() {
-  const data = window.SAMPLE_REVIEWS;
+  const data = window.REVIEWS;
   if (!data) return;
 
   const selected = params.get("flavor");

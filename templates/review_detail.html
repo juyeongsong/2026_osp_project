@@ -1,5 +1,4 @@
 {% extends "index.html" %} {% block section %}
-<!-- 후기 상세 페이지 (담당: 조소연) -->
 <link
   rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Sans+KR:wght@400;500&display=swap"
@@ -132,7 +131,6 @@
   </article>
 </div>
 
-<!-- 예시 후기 데이터: DB 연결 후에는 이 줄을 지우면 돼요 -->
-<script src="{{ url_for('static', filename='sample-reviews.js') }}"></script>
+<script id="reviews-data" type="application/json">{{ reviews|tojson }}</script>
 <script src="{{ url_for('static', filename='review-detail.js') }}"></script>
 {% endblock section %}

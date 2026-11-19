@@ -333,28 +333,90 @@ def reg_item_submit_post():
     DB.insert_item(data['name'], data, image_file.filename)
     return redirect(url_for("view_item_detail", name=data['name']))
 
-# 주문·결제 임시 데이터 (시안과 동일). 나중에 DB 연동 시 교체
-ORDER_ITEMS = [
-    {"name": "피자 붕어빵", "price": 1000, "qty": 1, "image": "pizza.png"},
-]
 ORDER_FEE = 1500
+
+
+def build_order_items(names):
+    """세션 장바구니 수량 + DB 가격으로 주문 상품 목록 만들기"""
+    cart = session.get("cart", {})
+    items = []
+    for name in names:
+        if name not in cart:
+            continue
+        item = DB.get_item(name)
+        if item and item.get("status") == "판매중":
+            items.append({
+                "name": name,
+                "price": item["price"],
+                "qty": cart[name],
+                "image": item.get("img_path") or "fish-base.png",
+            })
+    return items
+
 
 @app.route("/order")
 def view_order():
-    return render_template("order.html", items=ORDER_ITEMS, fee=ORDER_FEE)
+    if not session.get("id"):
+        flash("로그인 후 주문할 수 있어요.")
+        return redirect(url_for("login"))
+    names = request.args.getlist("item") or list(session.get("cart", {}).keys())
+    items = build_order_items(names)
+    if not items:
+        flash("주문할 상품을 장바구니에서 선택해 주세요.")
+        return redirect(url_for("view_cart"))
+    return render_template("order.html", items=items, fee=ORDER_FEE)
+
 
 @app.route("/order_complete", methods=["POST"])
 def order_complete():
-    now = datetime.now()
+    user_id = session.get("id")
+    if not user_id:
+        return redirect(url_for("login"))
+
     form = request.form
+    items = build_order_items(form.getlist("item"))
+    if not items:
+        flash("주문할 상품이 없어요.")
+        return redirect(url_for("view_cart"))
+
+    now = datetime.now()
+    total = sum(i["price"] * i["qty"] for i in items) + ORDER_FEE
+    order_id = DB.next_order_id(now)
+    address = f'{form.get("address1", "")} {form.get("address2", "")}'.strip()
+    products = [{"name": i["name"], "price": i["price"], "qty": i["qty"]} for i in items]
+
+    try:
+        DB.insert_order({
+            "order_id": order_id,
+            "user": user_id,
+            "created_at": now.strftime("%Y-%m-%d %H:%M:%S"),
+            "status": "주문 접수",
+            "products": products,
+            "fee": ORDER_FEE,
+            "total": total,
+            "receiver": form.get("receiver", ""),
+            "phone": form.get("phone", ""),
+            "address": address,
+        })
+    except Exception as e:
+        print("주문 저장 실패:", repr(e))
+        flash("주문을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.")
+        return redirect(url_for("view_order"))
+
+    # 주문한 상품은 장바구니에서 제거
+    cart = session.get("cart", {})
+    for p in products:
+        cart.pop(p["name"], None)
+    session["cart"] = cart
+
     order = {
-        "id": now.strftime("%Y%m%d") + "-0042",
+        "id": order_id,
         "paid_at": now.strftime("%Y.%m.%d %H:%M"),
         "receiver": form.get("receiver", ""),
         "phone": form.get("phone", ""),
-        "address": f'{form.get("address1", "")} {form.get("address2", "")}'.strip(),
-        "products": ORDER_ITEMS,  # "items"라고 쓰면 Jinja에서 dict.items()랑 겹쳐서 에러 남
-        "total": sum(i["price"] * i["qty"] for i in ORDER_ITEMS) + ORDER_FEE,
+        "address": address,
+        "products": products,  # "items"라고 쓰면 Jinja에서 dict.items()랑 겹쳐서 에러 남
+        "total": total,
     }
     return render_template("order_complete.html", order=order)
 

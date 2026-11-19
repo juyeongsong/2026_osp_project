@@ -236,13 +236,13 @@ def reg_review():
     return render_template(
         "reg_reviews.html",
         items=DB.get_items(),
-        selected=request.args.get("item", ""),
+        selected=request.args.get("product", ""),  # 마이페이지에서 ?product=상품명
     )
 
 
 @app.route("/submit_review_post", methods=["POST"])
 def submit_review_post():
-    user_id = session.get("id")  # 폼 값이 아니라 로그인 정보를 신뢰
+    user_id = session.get("id")  # 폼 값 대신 로그인 정보 사용 (저장되는 값은 같아요)
     if not user_id:
         return redirect(url_for("login"))
 
@@ -253,29 +253,41 @@ def submit_review_post():
     rating = to_int(form.get("rating"), 0)
 
     item_names = {i["name"] for i in DB.get_items()}
+    print("입력한 상품명:", repr(product), "/ DB 상품명:", item_names)
     if product not in item_names or not title or not content or not 1 <= rating <= 5:
         flash("입력 내용을 다시 확인해 주세요. (상품명은 등록된 상품 중에서 골라 주세요)")
-        return redirect(url_for("reg_review", item=product))
+        return redirect(url_for("reg_review", product=product))
 
-    img_path = ""
-    photo = request.files.get("file_input")
-    if photo and photo.filename:
-        ext = photo.filename.rsplit(".", 1)[-1].lower() if "." in photo.filename else ""
+    # 사진 여러 장 → 파일명 리스트
+    files = [f for f in request.files.getlist("file_input") if f and f.filename]
+    if len(files) > 4:
+        flash("사진은 최대 4장까지 올릴 수 있어요.")
+        return redirect(url_for("reg_review", product=product))
+
+    img_paths = []
+    for f in files:
+        ext = f.filename.rsplit(".", 1)[-1].lower() if "." in f.filename else ""
         if ext not in {"png", "jpg", "jpeg"}:
             flash("JPG, PNG 사진만 올릴 수 있어요.")
-            return redirect(url_for("reg_review", item=product))
-        img_path = f"review_{uuid.uuid4().hex[:12]}.{ext}"
-        photo.save(os.path.join(REVIEW_DIR, img_path))
+            return redirect(url_for("reg_review", product=product))
+        name = f"review_{uuid.uuid4().hex[:12]}.{ext}"
+        f.save(os.path.join(REVIEW_DIR, name))
+        img_paths.append(name)
 
-    DB.insert_review({
-        "item": product,
-        "user_id": user_id,
-        "title": title,
-        "content": content,
-        "rating": rating,
-        "img_path": img_path,
-        "created_at": datetime.now().strftime("%Y-%m-%dT%H:%M"),
-    })
+    try:
+        DB.insert_review({
+            "user": user_id,
+            "product": product,
+            "title": title,
+            "rating": rating,
+            "content": content,
+            "img_path": img_paths,
+            "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        })
+    except Exception as e:
+        print("후기 저장 실패:", repr(e))
+        flash("후기를 저장하지 못했어요. 잠시 후 다시 시도해 주세요.")
+        return redirect(url_for("reg_review", product=product))
     return redirect(url_for("view_review"))
 
 @app.route("/product_register")

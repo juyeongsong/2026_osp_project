@@ -34,8 +34,7 @@
       </div>
 
       {% if session.get('id') %}
-      <a href="{{ url_for('view_mypage') }}" class="my-btn">MY</a>
-      {% endif %}
+      <a href="{{ url_for('view_mypage') }}" class="my-btn">MY</a>      
       {% endif %}
 
       <div class="site-logo">
@@ -55,8 +54,7 @@
             alt="홈"
           />
         </a>
-
-        <a href="{{ url_for('view_cart') }}" class="icon-btn">
+        
         <a href="{{ url_for('view_cart') }}" class="icon-btn">
           <img
             src="{{url_for('static', filename='images/cart.png')}}"

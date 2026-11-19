@@ -335,7 +335,6 @@ def reg_item_submit_post():
 
 ORDER_FEE = 1500
 
-
 def build_order_items(names):
     """세션 장바구니 수량 + DB 가격으로 주문 상품 목록 만들기"""
     cart = session.get("cart", {})

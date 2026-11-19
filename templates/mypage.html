@@ -75,7 +75,11 @@
               </span>
               <span class="order__item-name">{{ p.name }}<span class="order__item-qty">× {{ p.qty }}</span></span>
               <span class="order__item-price">{{ "{:,}".format(p.price * p.qty) }}원</span>
-              <a class="btn order__review" href="{{ url_for('reg_review', product=p.name) }}">후기 쓰기</a>
+              {% if (order.order_id, p.name) in reviewed %}
+              <span class="order__review is-done">작성 완료</span>
+              {% else %}
+              <a class="btn order__review" href="{{ url_for('reg_review', product=p.name, order=order.order_id) }}">후기 쓰기</a>
+              {% endif %}
             </li>
             {% endfor %}
           </ul>

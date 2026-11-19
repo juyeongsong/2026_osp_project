@@ -255,6 +255,7 @@ def view_mypage():
         return redirect(url_for("login"))
     user = DB.get_user_by_id(user_id) or {}
     orders = DB.get_orders_by_user(user_id)
+    reviewed = {(r.get("order_id"), r.get("product")) for r in DB.get_reviews() if r.get("user") == user_id}
 
     counts = {step: 0 for step in ORDER_STEPS}
     for order in orders:
@@ -271,6 +272,7 @@ def view_mypage():
         steps=ORDER_STEPS,
         status_class=STATUS_CLASS,
         flavor_keys=FLAVOR_KEYS,
+        reviewed=reviewed,
     )
 
 @app.route("/review_detail")

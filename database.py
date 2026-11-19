@@ -7,6 +7,18 @@ def to_int(value, default=0):
         return default
 
 class DBhandler:
+    def next_order_id(self, now):
+        today = now.strftime("%Y%m%d")
+        snap = self.db.child("order").get()
+        count = sum(
+            1 for r in (snap.each() or [])
+            if str(r.val().get("order_id", "")).startswith(today)
+        )
+        return f"{today}-{count + 1:04d}"
+
+    def insert_order(self, data):
+        self.db.child("order").push(data)
+        return True
     def __init__(self):
         with open('./authentication/firebase_auth.json') as f:
             config = json.load(f)

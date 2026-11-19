@@ -207,9 +207,46 @@ def check_id():
         "available": available
     })
 
+AVATAR_COLORS = ["green", "brown", "purple", "pink", "navy"]
+
+def review_cards():
+    cards = []
+    for r in DB.get_reviews():
+        user = r.get("user", "")
+        product = r.get("product", "")
+        content = r.get("content", "")
+        photos = r.get("img_path") or []
+        if isinstance(photos, str):
+            photos = [photos]
+        cards.append({
+            "id": r["key"],
+            "user": user,
+            "avatar": AVATAR_COLORS[sum(map(ord, user)) % len(AVATAR_COLORS)],
+            "product": product,
+            "flavor": FLAVOR_KEYS.get(product, ""),
+            "rating": to_int(r.get("rating"), 0),
+            "title": r.get("title", ""),
+            "excerpt": content.splitlines()[0] if content else "",
+            "content": content,
+            "createdAt": r.get("created_at", "").replace(" ", "T"),
+            "photos": [url_for("static", filename="images/reviews/" + name) for name in photos],
+        })
+    return cards
+
 @app.route("/review")
 def view_review():
-    return render_template("review.html")
+    return render_template("review.html", reviews=review_cards())
+
+ORDER_STEPS = ["주문 접수", "배송 준비", "배송 중", "배송 완료"]
+STATUS_CLASS = {"주문 접수": "received", "배송 준비": "preparing", "배송 중": "shipping", "배송 완료": "delivered"}
+FLAVOR_KEYS = {
+    "팥 붕어빵": "pat",
+    "슈크림 붕어빵": "choux",
+    "딸기슈크림 붕어빵": "strawberry-choux",
+    "고구마 붕어빵": "sweetpotato",
+    "말차 붕어빵": "matcha",
+    "피자 붕어빵": "pizza",
+}
 
 @app.route("/mypage")
 def view_mypage():
@@ -217,12 +254,28 @@ def view_mypage():
     if not user_id:
         return redirect(url_for("login"))
     user = DB.get_user_by_id(user_id) or {}
-    orders = [] #주문 저장 기능 생길 시 DB에서 이 사람만 주문만 불러오도록 수정 필요
-    return render_template("mypage.html", user_id=user_id, email=user.get("email", ""), orders=orders)
+    orders = DB.get_orders_by_user(user_id)
+
+    counts = {step: 0 for step in ORDER_STEPS}
+    for order in orders:
+        if order.get("status") in counts:
+            counts[order["status"]] += 1
+
+    return render_template(
+        "mypage.html",
+        user_id=user_id,
+        email=user.get("email", ""),
+        address=user.get("address", ""),
+        orders=orders,
+        counts=counts,
+        steps=ORDER_STEPS,
+        status_class=STATUS_CLASS,
+        flavor_keys=FLAVOR_KEYS,
+    )
 
 @app.route("/review_detail")
 def view_review_detail():
-    return render_template("review_detail.html")
+        return render_template("review_detail.html", reviews=review_cards())
 
 @app.route("/reg_items")
 def reg_item():

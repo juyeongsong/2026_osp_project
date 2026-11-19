@@ -22,6 +22,17 @@ class DBhandler:
     
     def get_order(self, order_key):
         return self.db.child("order").child(order_key).get().val()
+
+    def get_orders_by_user(self, user_id):
+        snap = self.db.child("order").get()
+        orders = []
+        for res in (snap.each() or []):
+            order = dict(res.val())
+            order["key"] = res.key()
+            if order.get("user") == user_id:
+                orders.append(order)
+        orders.sort(key=lambda o: o.get("created_at", ""), reverse=True)
+        return orders
     
     def __init__(self):
         with open('./authentication/firebase_auth.json') as f:

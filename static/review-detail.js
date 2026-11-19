@@ -15,13 +15,12 @@ function escapeDetailHtml(text) {
 }
 
 function renderReviewDetail(root, review) {
-  const names = window.SAMPLE_FLAVOR_NAMES || {};
   const date = review.createdAt.slice(0, 10);
 
   root.querySelector(".avatar").className = "avatar avatar--" + review.avatar;
   root.querySelector(".review-detail__user").textContent = review.user;
   root.querySelector(".review-detail__flavor").textContent =
-    "구매: " + (names[review.flavor] || review.flavor) + " 붕어빵";
+  "구매: " + review.product;
 
   let stars = `<span class="sr-only">별점 ${review.rating}점</span>`;
   for (let i = 0; i < 5; i++) {
@@ -38,17 +37,10 @@ function renderReviewDetail(root, review) {
   root.querySelector(".review-detail__content").textContent =
     review.content || review.excerpt;
 
-  const flavor = escapeDetailHtml(review.flavor);
-  let photos = "";
-  for (let i = 0; i < (review.photos || 0); i++) {
-    photos += `
-          <li>
-            <span class="bungeo">
-              <img class="bungeo__fish" src="${DETAIL_IMG}fish.png" alt="">
-              <img class="bungeo__filling" src="${DETAIL_IMG}filling-${flavor}.svg" alt="">
-            </span>
-          </li>`;
-  }
+    let photos = "";
+  review.photos.forEach((url) => {
+    photos += `<li><img class="review-photo" src="${escapeDetailHtml(url)}" alt="후기 사진"></li>`;
+  });
   const list = root.querySelector(".review-detail__photos");
   list.innerHTML = photos;
   list.hidden = !photos;
@@ -66,8 +58,8 @@ function renderReviewDetail(root, review) {
   const qs = back.toString();
   document.querySelector(".back-link").href = "/review" + (qs ? "?" + qs : "");
 
-  const data = window.SAMPLE_REVIEWS;
-  const id = Number(params.get("id"));
+  const data = JSON.parse(document.getElementById("reviews-data").textContent);
+  const id = params.get("id");
   if (!data || !id) return;
 
   const review = data.find((r) => r.id === id);

@@ -30,6 +30,10 @@
       <dl class="profile__list">
         <dt>이메일</dt>
         <dd>{{email}}</dd>
+        {% if address %}
+        <dt>기본 배송지</dt>
+        <dd>{{ address }}</dd>
+        {% endif %}
       </dl>
     </div>
     <div class="profile__actions">

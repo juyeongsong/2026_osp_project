@@ -133,7 +133,7 @@ function cardHtml(review) {
 }
 
 function renderSampleReviews() {
-  const data = window.REVIEWS;
+  const data = JSON.parse(document.getElementById("reviews-data").textContent);
   if (!data) return;
 
   const selected = params.get("flavor");

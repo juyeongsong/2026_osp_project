@@ -25,13 +25,11 @@
     /></span>
     <div class="profile__info">
       <p class="profile__name">
-        chooo9<small>님, 오늘도 붕어빵 어때요?</small>
+        {{user_id}}<small>님, 오늘도 붕어빵 어때요?</small>
       </p>
       <dl class="profile__list">
         <dt>이메일</dt>
-        <dd>chooo9@ewha.ac.kr</dd>
-        <dt>기본 배송지</dt>
-        <dd>서울 서대문구 이화여대길 52, 한우리집 기숙사 A동 S000호</dd>
+        <dd>{{email}}</dd>
       </dl>
     </div>
     <div class="profile__actions">
@@ -50,11 +48,11 @@
       <span class="delivery-summary__label">배송 준비</span>
     </li>
     <li>
-      <span class="delivery-summary__count">1</span>
+      <span class="delivery-summary__count is-zero">0</span>
       <span class="delivery-summary__label">배송 중</span>
     </li>
     <li>
-      <span class="delivery-summary__count">2</span>
+      <span class="delivery-summary__count is-zero">0</span>
       <span class="delivery-summary__label">배송 완료</span>
     </li>
   </ol>
@@ -62,6 +60,7 @@
   <!-- 3. 주문·배송 내역 -->
   <div role="region" aria-labelledby="orders-heading">
     <h2 class="mypage-heading" id="orders-heading">주문·배송 내역</h2>
+    {% if orders %}
     <ul class="order-list">
       <li>
         <article class="mypage-card order">
@@ -329,6 +328,13 @@
           alt="다음 주문"
       /></a>
     </nav>
+        {% else %}
+    <div class="mypage-card order-empty">
+      <p class="order-empty__title">아직 주문한 붕어빵이 없어요</p>
+      <p class="order-empty__text">갓 구운 이화 붕어빵이 첫 주문을 기다리고 있어요!</p>
+      <a class="btn" href="/">붕어빵 고르러 가기</a>
+    </div>
+    {% endif %}
   </div>
 </div>
 

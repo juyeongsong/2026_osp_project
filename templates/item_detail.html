@@ -18,7 +18,6 @@
            data-unit-price="{{ item.price }}"
            data-status="{{ item.status }}">
 
-    <!-- 판매 상태: 보기 모드에선 현재 상태 1개만, 수정 모드에선 3개 중 선택 -->
     <div class="status-group" id="status-group">
       {% for s in status_list %}
       <button type="button"
@@ -54,12 +53,12 @@
     {% endif %}
 
     <div class="detail-body">
-      <!-- 왼쪽: 그림 + 후기 보기 -->
+
       <div class="detail-media">
         <div class="detail-media__img" id="media-img">
           {{ m.bungeo_img(item) }}
           {% if is_admin %}
-          <!-- [관리자] 수정 모드에서 그림을 클릭하면 파일 선택 창이 열림 → static/item_detail.js -->
+
           <span class="img-hint edit-only" aria-hidden="true">클릭해서 사진 바꾸기</span>
           <input type="file" id="img-input" class="img-input" accept="image/*" aria-label="상품 사진 바꾸기" />
           {% endif %}
@@ -80,7 +79,6 @@
         {% endif %}
 
         <div class="price-row">
-          <!-- 수량을 바꾸면 이 값(단가 × 수량)이 같이 바뀜 → static/js/item_detail.js -->
           <span class="price view-only" id="total-price">{{ "{:,}".format(item.price) }}원</span>
           {% if is_admin %}
           <span class="price-edit edit-only">

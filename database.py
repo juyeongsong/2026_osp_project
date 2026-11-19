@@ -7,6 +7,18 @@ def to_int(value, default=0):
         return default
 
 class DBhandler:
+    def next_order_id(self, now):
+        today = now.strftime("%Y%m%d")
+        snap = self.db.child("order").get()
+        count = sum(
+            1 for r in (snap.each() or [])
+            if str(r.val().get("order_id", "")).startswith(today)
+        )
+        return f"{today}-{count + 1:04d}"
+
+    def insert_order(self, data):
+        self.db.child("order").push(data)
+        return True
     def __init__(self):
         with open('./authentication/firebase_auth.json') as f:
             config = json.load(f)
@@ -17,7 +29,7 @@ class DBhandler:
         item_info = {
             "seller": data.get('seller', '이화 붕어'),
             "addr": data.get('addr', '서울특별시 서대문구 이화여대길52'),
-            "price": data.get['price'],
+            "price": to_int(data.get('price')),
             "status": data.get('status', ''),
             "email": data.get('email', ''),
             "img_path": img_path,
@@ -32,7 +44,7 @@ class DBhandler:
         item["name"] = name
         item["price"] = to_int(item.get("price"))
         item["order"] = to_int(item.get("order"), 999)
-        item["status"] = str(item.get("status", "")).replace(" ", "")
+        item["status"] = str(item.get("status", "준비중")).replace(" ", "")
         return item
     
     def get_items(self):
@@ -111,4 +123,19 @@ class DBhandler:
                 return value
             
         return None
+        
+    def insert_review(self, data):
+        self.db.child("review").push(data)
+        return True
+
+    def get_reviews(self, item=None):
+        snap = self.db.child("review").get()
+        reviews = []
+        for res in (snap.each() or []):
+            r = dict(res.val())
+            r["key"] = res.key()
+            if item is None or r.get("product") == item:
+                reviews.append(r)
+        reviews.sort(key=lambda r: r.get("created_at", ""), reverse=True)
+        return reviews
 

@@ -122,7 +122,7 @@ class DBhandler:
         for res in (snap.each() or []):
             r = dict(res.val())
             r["key"] = res.key()
-            if item is None or r.get("item") == item:
+            if item is None or r.get("product") == item:
                 reviews.append(r)
         reviews.sort(key=lambda r: r.get("created_at", ""), reverse=True)
         return reviews

@@ -42,283 +42,51 @@
   </div>
 
   <!-- 2. 배송 현황  -->
-  <ol class="mypage-card delivery-summary" aria-label="배송 현황">
+    <ol class="mypage-card delivery-summary" aria-label="배송 현황">
+    {% for step in steps %}
     <li>
-      <span class="delivery-summary__count is-zero">0</span>
-      <span class="delivery-summary__label">주문 접수</span>
+      <span class="delivery-summary__count{% if not counts[step] %} is-zero{% endif %}">{{ counts[step] }}</span>
+      <span class="delivery-summary__label">{{ step }}</span>
     </li>
-    <li>
-      <span class="delivery-summary__count is-zero">0</span>
-      <span class="delivery-summary__label">배송 준비</span>
-    </li>
-    <li>
-      <span class="delivery-summary__count is-zero">0</span>
-      <span class="delivery-summary__label">배송 중</span>
-    </li>
-    <li>
-      <span class="delivery-summary__count is-zero">0</span>
-      <span class="delivery-summary__label">배송 완료</span>
-    </li>
+    {% endfor %}
   </ol>
 
   <!-- 3. 주문·배송 내역 -->
   <div role="region" aria-labelledby="orders-heading">
     <h2 class="mypage-heading" id="orders-heading">주문·배송 내역</h2>
     {% if orders %}
-    <ul class="order-list">
+        <ul class="order-list">
+      {% for order in orders %}
       <li>
         <article class="mypage-card order">
           <div class="order__head">
-            <time class="order__date" datetime="2026-11-06">2026.11.06</time>
-            <span class="order__number">주문번호 20261106-0007</span>
-            <span class="status status--shipping">배송 중</span>
+            <time class="order__date" datetime="{{ order.created_at[:10] }}">{{ order.created_at[:10]|replace('-', '.') }}</time>
+            <span class="order__number">주문번호 {{ order.order_id }}</span>
+            <span class="status status--{{ status_class.get(order.status, 'received') }}">{{ order.status }}</span>
           </div>
           <ul class="order__items">
+            {% for p in order.products %}
             <li>
               <span class="bungeo">
-                <img
-                  class="bungeo__fish"
-                  src="{{ url_for('static', filename='images/review/fish.png') }}"
-                  alt=""
-                />
-                <img
-                  class="bungeo__filling"
-                  src="{{ url_for('static', filename='images/review/filling-pat.svg') }}"
-                  alt=""
-                />
+                <img class="bungeo__fish" src="{{ url_for('static', filename='images/review/fish.png') }}" alt="" />
+                {% if flavor_keys.get(p.name) %}
+                <img class="bungeo__filling" src="{{ url_for('static', filename='images/review/filling-' ~ flavor_keys[p.name] ~ '.svg') }}" alt="" />
+                {% endif %}
               </span>
-              <span class="order__item-name"
-                >팥 붕어빵<span class="order__item-qty">× 2</span></span
-              >
-              <span class="order__item-price">1,000원</span>
-              <span class="order__review-slot"></span>
+              <span class="order__item-name">{{ p.name }}<span class="order__item-qty">× {{ p.qty }}</span></span>
+              <span class="order__item-price">{{ "{:,}".format(p.price * p.qty) }}원</span>
+              <a class="btn order__review" href="{{ url_for('reg_review', product=p.name) }}">후기 쓰기</a>
             </li>
-            <li>
-              <span class="bungeo">
-                <img
-                  class="bungeo__fish"
-                  src="{{ url_for('static', filename='images/review/fish.png') }}"
-                  alt=""
-                />
-                <img
-                  class="bungeo__filling"
-                  src="{{ url_for('static', filename='images/review/filling-choux.svg') }}"
-                  alt=""
-                />
-              </span>
-              <span class="order__item-name"
-                >슈크림 붕어빵<span class="order__item-qty">× 2</span></span
-              >
-              <span class="order__item-price">1,000원</span>
-              <span class="order__review-slot"></span>
-            </li>
-            <li>
-              <span class="bungeo">
-                <img
-                  class="bungeo__fish"
-                  src="{{ url_for('static', filename='images/review/fish.png') }}"
-                  alt=""
-                />
-                <img
-                  class="bungeo__filling"
-                  src="{{ url_for('static', filename='images/review/filling-sweetpotato.svg') }}"
-                  alt=""
-                />
-              </span>
-              <span class="order__item-name"
-                >고구마 붕어빵<span class="order__item-qty">× 1</span></span
-              >
-              <span class="order__item-price">500원</span>
-              <span class="order__review-slot"></span>
-            </li>
+            {% endfor %}
           </ul>
           <div class="order__foot">
-            <span class="order__address"
-              >배송지: 서울 서대문구 이화여대길 52, 한우리집 기숙사 A동
-              S000호</span
-            >
-            <span class="order__total"
-              >상품 5개 2,500원 + 배송비 1,500원<strong>4,000원</strong></span
-            >
+            <span class="order__address">배송지: {{ order.address }}</span>
+            <span class="order__total">상품 {{ order.products|sum(attribute='qty') }}개 {{ "{:,}".format(order.total - order.fee) }}원 + 배송비 {{ "{:,}".format(order.fee) }}원<strong>{{ "{:,}".format(order.total) }}원</strong></span>
           </div>
         </article>
       </li>
-      <li>
-        <article class="mypage-card order">
-          <div class="order__head">
-            <time class="order__date" datetime="2026-10-09">2026.10.09</time>
-            <span class="order__number">주문번호 20261009-0031</span>
-            <span class="status status--delivered">배송 완료</span>
-          </div>
-          <ul class="order__items">
-            <li>
-              <span class="bungeo">
-                <img
-                  class="bungeo__fish"
-                  src="{{ url_for('static', filename='images/review/fish.png') }}"
-                  alt=""
-                />
-                <img
-                  class="bungeo__filling"
-                  src="{{ url_for('static', filename='images/review/filling-pat.svg') }}"
-                  alt=""
-                />
-              </span>
-              <span class="order__item-name"
-                >팥 붕어빵<span class="order__item-qty">× 3</span></span
-              >
-              <span class="order__item-price">1,500원</span>
-              <span class="order__review is-done">후기 작성 완료</span>
-            </li>
-            <li>
-              <span class="bungeo">
-                <img
-                  class="bungeo__fish"
-                  src="{{ url_for('static', filename='images/review/fish.png') }}"
-                  alt=""
-                />
-                <img
-                  class="bungeo__filling"
-                  src="{{ url_for('static', filename='images/review/filling-pizza.svg') }}"
-                  alt=""
-                />
-              </span>
-              <span class="order__item-name"
-                >피자 붕어빵<span class="order__item-qty">× 1</span></span
-              >
-              <span class="order__item-price">500원</span>
-              <a
-                class="btn order__review"
-                href="/reg_reviews?order=20261009-0031&amp;item=pizza"
-                >후기 쓰기</a
-              >
-            </li>
-            <li>
-              <span class="bungeo">
-                <img
-                  class="bungeo__fish"
-                  src="{{ url_for('static', filename='images/review/fish.png') }}"
-                  alt=""
-                />
-                <img
-                  class="bungeo__filling"
-                  src="{{ url_for('static', filename='images/review/filling-choux.svg') }}"
-                  alt=""
-                />
-              </span>
-              <span class="order__item-name"
-                >슈크림 붕어빵<span class="order__item-qty">× 1</span></span
-              >
-              <span class="order__item-price">500원</span>
-              <a
-                class="btn order__review"
-                href="/reg_reviews?order=20261009-0031&amp;item=choux"
-                >후기 쓰기</a
-              >
-            </li>
-          </ul>
-          <div class="order__foot">
-            <span class="order__address"
-              >배송지: 서울 서대문구 이화여대길 52, 한우리집 기숙사 A동
-              S000호</span
-            >
-            <span class="order__total"
-              >상품 5개 2,500원 + 배송비 1,500원<strong>4,000원</strong></span
-            >
-          </div>
-        </article>
-      </li>
-      <li>
-        <article class="mypage-card order">
-          <div class="order__head">
-            <time class="order__date" datetime="2026-10-02">2026.10.02</time>
-            <span class="order__number">주문번호 20261002-0015</span>
-            <span class="status status--delivered">배송 완료</span>
-          </div>
-          <ul class="order__items">
-            <li>
-              <span class="bungeo">
-                <img
-                  class="bungeo__fish"
-                  src="{{ url_for('static', filename='images/review/fish.png') }}"
-                  alt=""
-                />
-                <img
-                  class="bungeo__filling"
-                  src="{{ url_for('static', filename='images/review/filling-sweetpotato.svg') }}"
-                  alt=""
-                />
-              </span>
-              <span class="order__item-name"
-                >고구마 붕어빵<span class="order__item-qty">× 2</span></span
-              >
-              <span class="order__item-price">1,000원</span>
-              <a
-                class="btn order__review"
-                href="/reg_reviews?order=20261002-0015&amp;item=sweetpotato"
-                >후기 쓰기</a
-              >
-            </li>
-            <li>
-              <span class="bungeo">
-                <img
-                  class="bungeo__fish"
-                  src="{{ url_for('static', filename='images/review/fish.png') }}"
-                  alt=""
-                />
-                <img
-                  class="bungeo__filling"
-                  src="{{ url_for('static', filename='images/review/filling-matcha.svg') }}"
-                  alt=""
-                />
-              </span>
-              <span class="order__item-name"
-                >말차 붕어빵<span class="order__item-qty">× 2</span></span
-              >
-              <span class="order__item-price">1,000원</span>
-              <a
-                class="btn order__review"
-                href="/reg_reviews?order=20261002-0015&amp;item=matcha"
-                >후기 쓰기</a
-              >
-            </li>
-            <li>
-              <span class="bungeo">
-                <img
-                  class="bungeo__fish"
-                  src="{{ url_for('static', filename='images/review/fish.png') }}"
-                  alt=""
-                />
-                <img
-                  class="bungeo__filling"
-                  src="{{ url_for('static', filename='images/review/filling-strawberry-choux.svg') }}"
-                  alt=""
-                />
-              </span>
-              <span class="order__item-name"
-                >딸기슈크림 붕어빵<span class="order__item-qty">× 1</span></span
-              >
-              <span class="order__item-price">500원</span>
-              <a
-                class="btn order__review"
-                href="/reg_reviews?order=20261002-0015&amp;item=strawberry-choux"
-                >후기 쓰기</a
-              >
-            </li>
-          </ul>
-          <div class="order__foot">
-            <span class="order__address"
-              >배송지: 서울 서대문구 이화여대길 52, 한우리집 기숙사 A동
-              S000호</span
-            >
-            <span class="order__total"
-              >상품 5개 2,500원 + 배송비 1,500원<strong>4,000원</strong></span
-            >
-          </div>
-        </article>
-      </li>
+      {% endfor %}
     </ul>
-
     <nav class="pagination" aria-label="주문 내역 페이지">
       <a class="pagination__arrow pagination__prev" href="#"
         ><img

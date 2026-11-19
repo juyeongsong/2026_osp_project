@@ -16,6 +16,9 @@
   </a>
 
   <form class="order-body" action="/order_complete" method="post">
+    {% for item in items %}
+    <input type="hidden" name="item" value="{{ item.name }}" />
+    {% endfor %}
     <!-- 배송지 입력 -->
     <div class="order-card">
       <div class="order-card__head">

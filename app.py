@@ -15,6 +15,9 @@ DB = DBhandler()
 
 UPLOAD_DIR = os.path.join(app.root_path, "static", "images")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+REVIEW_DIR = os.path.join(app.root_path, "static", "images", "reviews")
+os.makedirs(REVIEW_DIR, exist_ok=True)
+app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 업로드 5MB 제한
 
 ADMIN_IDS = {"admin"} #관리자 아이디
 PER_PAGE = 6
@@ -120,6 +123,28 @@ def cart_add():
     cart[name] = min(cart.get(name, 0) + qty, 99)
     session["cart"] = cart
     return jsonify({"ok": True, "count": sum(cart.values())})
+    
+@app.route("/cart/update", methods=["POST"])
+def cart_update():
+    data = request.get_json(silent=True) or {}
+    name = data.get("name", "")
+    qty = max(1, min(to_int(data.get("qty"), 1), 99))
+
+    cart = session.get("cart", {})
+    if name not in cart:
+        return jsonify({"ok": False, "message": "장바구니에 없는 상품이에요."}), 404
+    cart[name] = qty
+    session["cart"] = cart
+    return jsonify({"ok": True})
+
+
+@app.route("/cart/remove", methods=["POST"])
+def cart_remove():
+    data = request.get_json(silent=True) or {}
+    cart = session.get("cart", {})
+    cart.pop(data.get("name", ""), None)
+    session["cart"] = cart
+    return jsonify({"ok": True})
 
 
 @app.route("/logout")
@@ -205,7 +230,65 @@ def reg_item():
 
 @app.route("/reg_reviews")
 def reg_review():
-    return render_template("reg_reviews.html")
+    if not session.get("id"):
+        flash("로그인 후 후기를 쓸 수 있어요.")
+        return redirect(url_for("login"))
+    return render_template(
+        "reg_reviews.html",
+        items=DB.get_items(),
+        selected=request.args.get("product", ""),  # 마이페이지에서 ?product=상품명
+    )
+
+
+@app.route("/submit_review_post", methods=["POST"])
+def submit_review_post():
+    user_id = session.get("id")  # 폼 값 대신 로그인 정보 사용 (저장되는 값은 같아요)
+    if not user_id:
+        return redirect(url_for("login"))
+
+    form = request.form
+    product = form.get("product", "").strip()
+    title = form.get("title", "").strip()
+    content = form.get("content", "").strip()
+    rating = to_int(form.get("rating"), 0)
+
+    item_names = {i["name"] for i in DB.get_items()}
+    print("입력한 상품명:", repr(product), "/ DB 상품명:", item_names)
+    if product not in item_names or not title or not content or not 1 <= rating <= 5:
+        flash("입력 내용을 다시 확인해 주세요. (상품명은 등록된 상품 중에서 골라 주세요)")
+        return redirect(url_for("reg_review", product=product))
+
+    # 사진 여러 장 → 파일명 리스트
+    files = [f for f in request.files.getlist("file_input") if f and f.filename]
+    if len(files) > 4:
+        flash("사진은 최대 4장까지 올릴 수 있어요.")
+        return redirect(url_for("reg_review", product=product))
+
+    img_paths = []
+    for f in files:
+        ext = f.filename.rsplit(".", 1)[-1].lower() if "." in f.filename else ""
+        if ext not in {"png", "jpg", "jpeg"}:
+            flash("JPG, PNG 사진만 올릴 수 있어요.")
+            return redirect(url_for("reg_review", product=product))
+        name = f"review_{uuid.uuid4().hex[:12]}.{ext}"
+        f.save(os.path.join(REVIEW_DIR, name))
+        img_paths.append(name)
+
+    try:
+        DB.insert_review({
+            "user": user_id,
+            "product": product,
+            "title": title,
+            "rating": rating,
+            "content": content,
+            "img_path": img_paths,
+            "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        })
+    except Exception as e:
+        print("후기 저장 실패:", repr(e))
+        flash("후기를 저장하지 못했어요. 잠시 후 다시 시도해 주세요.")
+        return redirect(url_for("reg_review", product=product))
+    return redirect(url_for("view_review"))
 
 @app.route("/product_register")
 def view_product_register():
@@ -250,28 +333,89 @@ def reg_item_submit_post():
     DB.insert_item(data['name'], data, image_file.filename)
     return redirect(url_for("view_item_detail", name=data['name']))
 
-# 주문·결제 임시 데이터 (시안과 동일). 나중에 DB 연동 시 교체
-ORDER_ITEMS = [
-    {"name": "피자 붕어빵", "price": 1000, "qty": 1, "image": "pizza.png"},
-]
 ORDER_FEE = 1500
+
+def build_order_items(names):
+    """세션 장바구니 수량 + DB 가격으로 주문 상품 목록 만들기"""
+    cart = session.get("cart", {})
+    items = []
+    for name in names:
+        if name not in cart:
+            continue
+        item = DB.get_item(name)
+        if item and item.get("status") == "판매중":
+            items.append({
+                "name": name,
+                "price": item["price"],
+                "qty": cart[name],
+                "image": item.get("img_path") or "fish-base.png",
+            })
+    return items
+
 
 @app.route("/order")
 def view_order():
-    return render_template("order.html", items=ORDER_ITEMS, fee=ORDER_FEE)
+    if not session.get("id"):
+        flash("로그인 후 주문할 수 있어요.")
+        return redirect(url_for("login"))
+    names = request.args.getlist("item") or list(session.get("cart", {}).keys())
+    items = build_order_items(names)
+    if not items:
+        flash("주문할 상품을 장바구니에서 선택해 주세요.")
+        return redirect(url_for("view_cart"))
+    return render_template("order.html", items=items, fee=ORDER_FEE)
+
 
 @app.route("/order_complete", methods=["POST"])
 def order_complete():
-    now = datetime.now()
+    user_id = session.get("id")
+    if not user_id:
+        return redirect(url_for("login"))
+
     form = request.form
+    items = build_order_items(form.getlist("item"))
+    if not items:
+        flash("주문할 상품이 없어요.")
+        return redirect(url_for("view_cart"))
+
+    now = datetime.now()
+    total = sum(i["price"] * i["qty"] for i in items) + ORDER_FEE
+    order_id = DB.next_order_id(now)
+    address = f'{form.get("address1", "")} {form.get("address2", "")}'.strip()
+    products = [{"name": i["name"], "price": i["price"], "qty": i["qty"]} for i in items]
+
+    try:
+        DB.insert_order({
+            "order_id": order_id,
+            "user": user_id,
+            "created_at": now.strftime("%Y-%m-%d %H:%M:%S"),
+            "status": "주문 접수",
+            "products": products,
+            "fee": ORDER_FEE,
+            "total": total,
+            "receiver": form.get("receiver", ""),
+            "phone": form.get("phone", ""),
+            "address": address,
+        })
+    except Exception as e:
+        print("주문 저장 실패:", repr(e))
+        flash("주문을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.")
+        return redirect(url_for("view_order"))
+
+    # 주문한 상품은 장바구니에서 제거
+    cart = session.get("cart", {})
+    for p in products:
+        cart.pop(p["name"], None)
+    session["cart"] = cart
+
     order = {
-        "id": now.strftime("%Y%m%d") + "-0042",
+        "id": order_id,
         "paid_at": now.strftime("%Y.%m.%d %H:%M"),
         "receiver": form.get("receiver", ""),
         "phone": form.get("phone", ""),
-        "address": f'{form.get("address1", "")} {form.get("address2", "")}'.strip(),
-        "products": ORDER_ITEMS,  # "items"라고 쓰면 Jinja에서 dict.items()랑 겹쳐서 에러 남
-        "total": sum(i["price"] * i["qty"] for i in ORDER_ITEMS) + ORDER_FEE,
+        "address": address,
+        "products": products,  # "items"라고 쓰면 Jinja에서 dict.items()랑 겹쳐서 에러 남
+        "total": total,
     }
     return render_template("order_complete.html", order=order)
 

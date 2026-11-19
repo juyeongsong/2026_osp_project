@@ -182,7 +182,6 @@ def signup():
 @app.route("/signup_post", methods=["POST"])
 def register_user():
     data = request.form
-    print(data)
     pw = request.form['pw']
 
     pw_hash = hashlib.sha256(
@@ -404,7 +403,7 @@ def order_complete():
             if not saved:
                 raise ValueError("기본 배송지를 저장할 회원을 찾지 못했습니다.")
 
-        DB.insert_order({
+        order_key = DB.insert_order({
             "order_id": order_id,
             "user": user_id,
             "created_at": now.strftime("%Y-%m-%d %H:%M:%S"),
@@ -429,15 +428,32 @@ def order_complete():
         cart.pop(p["name"], None)
     session["cart"] = cart
 
+    return redirect(
+        url_for("view_order_complete", order_key=order_key),
+        code=303
+    )
+
+@app.route("/order_complete/<order_key>")
+def view_order_complete(order_key):
+    user_id = session.get("id")
+    if not user_id:
+        return redirect(url_for("login"))
+
+    saved_order = DB.get_order(order_key)
+
+    if not saved_order or saved_order.get("user") != user_id:
+        abort(404)
+
     order = {
-        "id": order_id,
-        "paid_at": now.strftime("%Y.%m.%d %H:%M"),
-        "receiver": form.get("receiver", ""),
-        "phone": form.get("phone", ""),
-        "address": address,
-        "products": products,  # "items"라고 쓰면 Jinja에서 dict.items()랑 겹쳐서 에러 남
-        "total": total,
+        "id": saved_order["order_id"],
+        "paid_at": saved_order["created_at"],
+        "receiver": saved_order["receiver"],
+        "phone": saved_order["phone"],
+        "address": saved_order["address"],
+        "products": saved_order["products"],
+        "total": saved_order["total"],
     }
+
     return render_template("order_complete.html", order=order)
 
 if __name__ == "__main__":

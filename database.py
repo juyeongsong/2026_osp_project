@@ -17,8 +17,12 @@ class DBhandler:
         return f"{today}-{count + 1:04d}"
 
     def insert_order(self, data):
-        self.db.child("order").push(data)
-        return True
+        result = self.db.child("order").push(data)
+        return result["name"]
+    
+    def get_order(self, order_key):
+        return self.db.child("order").child(order_key).get().val()
+    
     def __init__(self):
         with open('./authentication/firebase_auth.json') as f:
             config = json.load(f)

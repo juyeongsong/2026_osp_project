@@ -17,8 +17,12 @@ class DBhandler:
         return f"{today}-{count + 1:04d}"
 
     def insert_order(self, data):
-        self.db.child("order").push(data)
-        return True
+        result = self.db.child("order").push(data)
+        return result["name"]
+    
+    def get_order(self, order_key):
+        return self.db.child("order").child(order_key).get().val()
+    
     def __init__(self):
         with open('./authentication/firebase_auth.json') as f:
             config = json.load(f)
@@ -138,4 +142,28 @@ class DBhandler:
                 reviews.append(r)
         reviews.sort(key=lambda r: r.get("created_at", ""), reverse=True)
         return reviews
+    
+    def save_default_address(self, user_id, address):
+        users = self.db.child("user").get()
+
+        for user in users.each() or []:
+            if user.val().get("id") == user_id:
+                self.db.child("user").child(user.key()).update({
+                    "address": " ".join(
+                        part.strip()
+                        for part in (
+                            address.get("address1", ""),
+                            address.get("address2", "")
+                        )
+                        if part.strip()
+                    ),
+                    "default_address": address
+                })
+                return True
+
+        return False
+
+    def get_default_address(self, user_id):
+        user = self.get_user_by_id(user_id)
+        return (user or {}).get("default_address") or {}
 

@@ -8,10 +8,14 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
-   <link
-     rel="stylesheet"
-     href="{{ url_for('static', filename='css/header_nav.css') }}"
-     />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/header_nav.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/header_nav.css') }}"
+    />
     <script src="{{ url_for('static', filename='main.js') }}" defer></script>
   </head>
 
@@ -30,11 +34,12 @@
       </div>
 
       {% if session.get('id') %}
-      <a href="{{ url_for('view_mypage') }}" class="my-btn">MY</a>
+      <a href="{{ url_for('view_mypage') }}" class="my-btn">MY</a>      
       {% endif %}
 
       <div class="site-logo">
-        <a href="/">
+        <a href="{{ url_for('hello') }}">
+        <a href="{{ url_for('hello') }}">
           <img
             src="{{url_for('static', filename='images/logo2.png')}}"
             alt="이화붕어빵"
@@ -43,13 +48,19 @@
       </div>
 
       <div class="header-icons">
-        <a href="/" class="icon-btn">
-		<img src="{{url_for('static', filename='images/home.png')}}" alt="홈" />
+        <a href="{{ url_for('hello') }}" class="icon-btn">
+          <img
+            src="{{url_for('static', filename='images/home.png')}}"
+            alt="홈"
+          />
         </a>
-
-       <a href="{{ url_for('view_cart') }}" class="icon-btn">
-  <img src="{{url_for('static', filename='images/cart.png')}}" alt="장바구니" />
-</a>
+        
+        <a href="{{ url_for('view_cart') }}" class="icon-btn">
+          <img
+            src="{{url_for('static', filename='images/cart.png')}}"
+            alt="장바구니"
+          />
+        </a>
       </div>
     </header>
 

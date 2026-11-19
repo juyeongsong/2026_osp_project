@@ -32,9 +32,21 @@ def is_admin():
 def inject_user():
     return {"is_admin": is_admin(), "user_id": session.get("id")}
 
+SORT_OPTIONS = ["price_asc", "price_desc"]
+
 @app.route("/")
 def hello():
     items = DB.get_items()
+
+    sort = request.args.get("sort", "price_asc")
+    if sort not in SORT_OPTIONS:
+            sort = "price_asc"
+    
+    if sort == "price_desc":
+        items = sorted(items, key=lambda x: (-x["price"], x["name"]))
+    else:
+        items = sorted(items, key=lambda x: (x["price"], x["name"]))
+    
     total_pages = max(1, math.ceil(len(items) / PER_PAGE))
     page = min(max(request.args.get("page", 1, type=int), 1), total_pages)
     start = (page - 1) * PER_PAGE
@@ -43,6 +55,7 @@ def hello():
         items=items[start:start + PER_PAGE],
         page=page,
         total_pages=total_pages,
+        sort=sort,
     )
 
 @app.route("/item/<name>")
@@ -58,7 +71,6 @@ def update_item(name):
     if not is_admin():
         abort(403)
 
-    # 사진이 있으면 FormData(request.form), 없으면 JSON 둘 다 받을 수 있게
     data = request.get_json(silent=True) or request.form
     new_name = (data.get("name") or "").strip() or name
     status = data.get("status")
@@ -77,7 +89,6 @@ def update_item(name):
         ext = image_file.filename.rsplit(".", 1)[-1].lower() if "." in image_file.filename else ""
         if ext not in ALLOWED_IMG_EXT:
             return jsonify({"ok": False, "message": "png, jpg, gif, webp 사진만 올릴 수 있어요."}), 400
-        # 한글 파일명·같은 이름 덮어쓰기를 피하려고 랜덤 이름으로 저장
         filename = f"item_{uuid.uuid4().hex[:12]}.{ext}"
         image_file.save(os.path.join(UPLOAD_DIR, filename))
         fields["img_path"] = filename
@@ -202,7 +213,12 @@ def view_review():
 
 @app.route("/mypage")
 def view_mypage():
-    return render_template("mypage.html")
+    user_id = session.get("id")
+    if not user_id:
+        return redirect(url_for("login"))
+    user = DB.get_user_by_id(user_id) or {}
+    orders = [] #주문 저장 기능 생길 시 DB에서 이 사람만 주문만 불러오도록 수정 필요
+    return render_template("mypage.html", user_id=user_id, email=user.get("email", ""), orders=orders)
 
 @app.route("/review_detail")
 def view_review_detail():

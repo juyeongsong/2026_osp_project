@@ -198,4 +198,37 @@
   .main-menu {
     padding: 0;
   }
+  .sort-bar {
+		position: static;
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 10px;
+	}  
+}
+
+.board-wrap {
+	position: relative;  /* 드롭다운 위치의 기준점 */
+}
+
+.sort-bar {
+	position: absolute;
+	top: 0; 
+	left: calc(100% + 12px);  
+}
+
+.sort-bar__select {
+	padding: 6px 28px 6px 12px;
+	border: 2px solid var(--board); 
+	border-radius: 999px;
+	background: #fbffe5;
+	color: #00640f;
+	font-family: var(--font-display);
+	font-size: 15px;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.sort-bar__select:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px var(--board);
 }

@@ -315,9 +315,6 @@ def view_cart():
                 "qty": qty,
                 "image": item.get("img_path") or "",
             })
-    # 담은 상품이 없으면 임시 데이터로 레이아웃을 보여 줌
-    if not items:
-        items = SAMPLE_CART_ITEMS
     return render_template("cart.html", items=items, fee=1500)
 
 @app.route("/submit_item_post", methods=["POST"])

@@ -6,8 +6,14 @@
 
 <h1 class="page-title">배송 정보 입력</h1>
 
+{% with messages = get_flashed_messages() %} {% if messages %}
+<script>
+  alert({{ messages[0] | tojson }});
+</script>
+{% endif %} {% endwith %}
+
 <div class="order-page">
-  <a class="back-link" href="href="{{ request.referrer or '/cart' }}>
+  <a class="back-link" href="{{ url_for('view_cart') }}">
     <img
       src="{{ url_for('static', filename='images/review/arrow-left.svg') }}"
       alt=""
@@ -23,7 +29,11 @@
     <div class="order-card">
       <div class="order-card__head">
         <h2 class="order-card__title">배송지</h2>
-        <button type="button" class="btn btn--outline">
+        <button
+          type="button"
+          class="btn btn--outline"
+          onclick="loadDefaultAddress()"
+        >
           기본 배송지 불러오기
         </button>
       </div>
@@ -71,7 +81,9 @@
             inputmode="numeric"
             required
           />
-          <button type="button" class="btn">주소 검색</button>
+          <button type="button" class="btn" onclick="searchAddress()">
+            주소 검색
+          </button>
         </div>
         <input
           class="order-input"
@@ -151,4 +163,65 @@
     </aside>
   </form>
 </div>
+
+<script src="https://t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+  function searchAddress() {
+    new kakao.Postcode({
+      oncomplete: function (data) {
+        document.getElementById("zipcode").value = data.zonecode;
+
+        document.querySelector('[name="address1"]').value =
+          data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
+
+        const detail = document.querySelector('[name="address2"]');
+        detail.value = "";
+        detail.focus();
+      },
+    }).open();
+  }
+</script>
+
+<script>
+  function loadDefaultAddress() {
+    const address = {{ default_address | default({}, true) | tojson }};
+
+    if (Object.keys(address).length === 0) {
+      alert("저장된 기본 배송지가 없습니다.");
+      return;
+    }
+
+    const fields = [
+      "receiver", "phone", "zipcode", "address1", "address2"
+    ];
+
+    fields.forEach(function (name) {
+      document.querySelector('[name="' + name + '"]').value =
+        address[name] || "";
+    });
+  }
+</script>
+
+<script>
+  const orderForm = document.querySelector(".order-body");
+  const payButton = orderForm.querySelector(".btn-pay");
+  let submitting = false;
+
+  orderForm.addEventListener("submit", function (event) {
+    if (submitting) {
+      event.preventDefault();
+      return;
+    }
+
+    submitting = true;
+    payButton.disabled = true;
+    payButton.textContent = "주문 처리 중...";
+  });
+
+  window.addEventListener("pageshow", function () {
+    submitting = false;
+    payButton.disabled = false;
+    payButton.textContent = "결제하기";
+  });
+</script>
 {% endblock section %}

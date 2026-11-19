@@ -182,7 +182,6 @@ def signup():
 @app.route("/signup_post", methods=["POST"])
 def register_user():
     data = request.form
-    print(data)
     pw = request.form['pw']
 
     pw_hash = hashlib.sha256(
@@ -190,6 +189,7 @@ def register_user():
     ).hexdigest()
 
     if DB.insert_user(data, pw_hash):
+        flash("회원가입이 완료되었습니다. 로그인해주세요!")
         return redirect(url_for("login"))
     else: 
         return render_template(
@@ -355,7 +355,7 @@ def view_order():
     if not items:
         flash("주문할 상품을 장바구니에서 선택해 주세요.")
         return redirect(url_for("view_cart"))
-    return render_template("order.html", items=items, fee=ORDER_FEE)
+    return render_template("order.html", items=items, fee=ORDER_FEE, default_address=DB.get_default_address(session["id"]))
 
 
 @app.route("/order_complete", methods=["POST"])
@@ -365,6 +365,13 @@ def order_complete():
         return redirect(url_for("login"))
 
     form = request.form
+    required_fields = ("receiver", "phone", "zipcode", "address1")
+
+    if any(not form.get(field, "").strip() for field in required_fields):
+        flash("받는 분, 연락처, 우편번호, 주소를 모두 입력해주세요.")
+        return redirect(
+            url_for("view_order", item=form.getlist("item"))
+        )
     items = build_order_items(form.getlist("item"))
     if not items:
         flash("주문할 상품이 없어요.")
@@ -377,7 +384,18 @@ def order_complete():
     products = [{"name": i["name"], "price": i["price"], "qty": i["qty"]} for i in items]
 
     try:
-        DB.insert_order({
+        if form.get("save_default") == "on":
+            saved = DB.save_default_address(user_id, {
+                "receiver": form.get("receiver", "").strip(),
+                "phone": form.get("phone", "").strip(),
+                "zipcode": form.get("zipcode", "").strip(),
+                "address1": form.get("address1", "").strip(),
+                "address2": form.get("address2", "").strip(),
+            })
+            if not saved:
+                raise ValueError("기본 배송지를 저장할 회원을 찾지 못했습니다.")
+
+        order_key = DB.insert_order({
             "order_id": order_id,
             "user": user_id,
             "created_at": now.strftime("%Y-%m-%d %H:%M:%S"),
@@ -388,6 +406,8 @@ def order_complete():
             "receiver": form.get("receiver", ""),
             "phone": form.get("phone", ""),
             "address": address,
+            "zipcode": form.get("zipcode", "").strip(),
+            "delivery_request": form.get("request", "").strip(),
         })
     except Exception as e:
         print("주문 저장 실패:", repr(e))
@@ -400,15 +420,32 @@ def order_complete():
         cart.pop(p["name"], None)
     session["cart"] = cart
 
+    return redirect(
+        url_for("view_order_complete", order_key=order_key),
+        code=303
+    )
+
+@app.route("/order_complete/<order_key>")
+def view_order_complete(order_key):
+    user_id = session.get("id")
+    if not user_id:
+        return redirect(url_for("login"))
+
+    saved_order = DB.get_order(order_key)
+
+    if not saved_order or saved_order.get("user") != user_id:
+        abort(404)
+
     order = {
-        "id": order_id,
-        "paid_at": now.strftime("%Y.%m.%d %H:%M"),
-        "receiver": form.get("receiver", ""),
-        "phone": form.get("phone", ""),
-        "address": address,
-        "products": products,  # "items"라고 쓰면 Jinja에서 dict.items()랑 겹쳐서 에러 남
-        "total": total,
+        "id": saved_order["order_id"],
+        "paid_at": saved_order["created_at"],
+        "receiver": saved_order["receiver"],
+        "phone": saved_order["phone"],
+        "address": saved_order["address"],
+        "products": saved_order["products"],
+        "total": saved_order["total"],
     }
+
     return render_template("order_complete.html", order=order)
 
 if __name__ == "__main__":

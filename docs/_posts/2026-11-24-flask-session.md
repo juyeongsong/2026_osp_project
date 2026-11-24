@@ -55,11 +55,13 @@ def logout():
 session에는 아이디만 저장하고 비밀번호는 저장하지 않았습니다.
 
 ### 3-3. 로그인 상태에 따라 화면 다르게 보여 주기
+{% raw %}
 ```html
 {% if session.get('id') %}
 <a href="{{ url_for('view_mypage') }}" class="my-btn">MY</a>
 {% endif %}
 ```
+{% endraw %}
 템플릿에서도 `session`을 바로 사용할 수 있어서, 로그인한 경우에만 MY 버튼이 보이도록 했습니다.
 
 ### 3-4. 로그인하지 않은 사용자 막기

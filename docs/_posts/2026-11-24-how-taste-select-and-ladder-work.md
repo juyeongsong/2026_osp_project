@@ -39,7 +39,10 @@ const FIXED_RUNGS = [[3], [1], [0, 4], [2], [1], [0], []];
 
 ## Result
 
-(여기에 실제 화면 캡처 2장을 넣으면 좋습니다: ① 6개를 고른 뒤 버튼이 활성화된 맛 선택 화면, ② 사다리 애니메이션이 끝나고 당첨 맛이 반짝이는 화면)
+<img width="1440" height="900" alt="taste-select" src="https://github.com/user-attachments/assets/a4a5acfe-9818-4d0b-bf88-7b1ac53f7d70" />
+<img width="1440" height="900" alt="ladder-work" src="https://github.com/user-attachments/assets/71986182-5582-416f-b519-37b9f7454ca9" />
+
+
 
 ## What I learned
 

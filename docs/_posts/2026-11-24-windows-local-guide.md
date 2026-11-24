@@ -25,7 +25,7 @@ Windows PC에서 프로젝트를 내려받고, 내 Firebase Realtime Database에
 ## Step 1. 저장소 내려받기
 
 ```powershell
-git clone [https://github.com/juyeongsong/2026_osp_project.git](https://github.com/juyeongsong/2026_osp_project.git)
+git clone https://github.com/juyeongsong/2026_osp_project.git
 cd 2026_osp_project
 ```
 

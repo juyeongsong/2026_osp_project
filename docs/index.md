@@ -9,7 +9,7 @@ title: 이화 붕어빵 Tech Blog
 
 ## Posts
 
-- Concept
+- [Concept: Flask session이란?]({{ site.baseurl }}{% post_url 2026-11-24-flask-session %})
 - Tip or Debugging
 - Guide
 - Explanation 1

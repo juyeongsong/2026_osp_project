@@ -104,13 +104,8 @@ python app.py
 
 처음에는 데이터베이스가 비어 있어서 메인 페이지에 상품이 보이지 않습니다. `/product_register` 페이지에서 상품을 등록하면 Firebase 콘솔의 `데이터` 탭에 `item` 노드가 생기고, 메인 페이지에 상품이 나타납니다.
 
-<!--
-스크린샷 파일을 assets/images/ 에 넣은 뒤 아래 주석을 풀어 주세요.
-(프로젝트 이름과 DB 주소, 개인정보가 보이지 않게 가려야 합니다.)
-
-![메인 페이지]({{ '/assets/images/guide-main.png' | relative_url }})
-![상품 등록 후 Firebase 데이터 탭]({{ '/assets/images/guide-firebase-data.png' | relative_url }})
--->
+![메인 페이지]({{ '/assets/images/실제파일명.png' | relative_url }})
+![상품 등록 후 Firebase 데이터 탭]({{ '/assets/images/실제파일명.png' | relative_url }})
 
 ## Troubleshooting: 자주 만나는 오류
 

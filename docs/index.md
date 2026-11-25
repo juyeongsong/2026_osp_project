@@ -11,6 +11,5 @@ title: 이화 붕어빵 Tech Blog
 
 - [Concept: Flask session이란?]({{ site.baseurl }}{% post_url 2026-11-24-flask-session %})
 - [Debugging: 후기를 써도 후기 목록에 아무것도 안 보였던 이유]({{ site.baseurl }}{% post_url 2026-11-24-review-list-empty-debugging %})
-- Guide
-- Explanation 1
+- [Guide: Windows에서 이화 붕어빵 사이트 로컬 실행하기]({{ site.baseurl }}{% post_url 2026-11-24-windows-local-setup-guide %})- Explanation 1
 - Explanation 2

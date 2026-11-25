@@ -113,9 +113,3 @@ function renderSampleReviews() {
 - **데이터를 주고받는 방식을 바꾸면, 그 데이터를 읽는 곳을 전부 같이 바꿔야 합니다.** 이번에는 같은 데이터를 두 파일(`review.js`, `review-detail.js`)이 읽고 있었는데 한 곳만 고쳤습니다. 이런 변경을 할 때는 예전 이름(`REVIEWS`)으로 프로젝트 전체를 검색(Ctrl+Shift+F)해서 남은 곳이 없는지 확인하는 습관이 필요합니다.
 - **"무엇이 안 보이는지"가 원인을 알려 줍니다.** 목록이 비어 있다는 것보다 "빈 문구조차 없다"는 점이 결정적인 단서였습니다. 화면에 나와야 할 것과 실제로 나온 것을 비교하면 코드가 어디서 멈췄는지 좁힐 수 있습니다.
 - **저장과 표시를 나눠서 확인하면 빠릅니다.** 터미널 로그와 Firebase 콘솔로 저장이 정상인 것을 먼저 확인했기 때문에, 화면 코드만 보면 된다는 걸 일찍 알 수 있었습니다.
-
-## References
-
-- [Flask 문서: tojson 필터](https://flask.palletsprojects.com/en/stable/templating/#standard-filters)
-- [MDN: JSON.parse()](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)
-- [MDN: &lt;script&gt; 요소의 type 속성](https://developer.mozilla.org/ko/docs/Web/HTML/Element/script#type)

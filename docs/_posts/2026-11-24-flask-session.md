@@ -92,6 +92,7 @@ session["cart"] = cart
 ![마이페이지 접속 시도]({{ '/images/mypage.png' | relative_url }})
 ![로그인으로 이동]({{ '/images/login.png' | relative_url }})
 ![장바구니]({{ '/images/basket.png' | relative_url }})
+![장바구니2]({{ '/images/basket2.png' | relative_url }})
 
 로그인 후에는 페이지를 이동해도 로그인 상태가 유지되고, 로그인 여부에 따라 MY 버튼이 보이거나 숨겨집니다.
 장바구니에 담은 상품도 다른 페이지에 다녀와도 그대로 남아 있습니다.

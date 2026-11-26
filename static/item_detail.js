@@ -68,7 +68,6 @@
         cartCount.style.display = "flex";
       }
     }
-
     return ok;
   };
 

@@ -43,3 +43,11 @@ h1 {
   font-size: 18px;
   line-height: 1.5;
 }
+
+.site-nav {
+  display: none;
+}
+
+.site-footer {
+  display: none;
+}

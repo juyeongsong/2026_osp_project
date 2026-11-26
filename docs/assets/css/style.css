@@ -1,0 +1,45 @@
+body {
+  background: #fafafa;
+  color: #222;
+}
+
+.wrapper {
+  max-width: 900px;
+}
+
+h1 {
+  margin-bottom: 12px;
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.post-card {
+  display: block;
+  padding: 20px 22px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  background: #fff;
+  color: #222;
+  text-decoration: none;
+}
+
+.post-card:hover {
+  border-color: #bbb;
+}
+
+.post-type {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #777;
+}
+
+.post-card strong {
+  font-size: 18px;
+  line-height: 1.5;
+}

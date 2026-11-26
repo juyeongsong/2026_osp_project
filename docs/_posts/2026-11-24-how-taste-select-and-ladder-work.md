@@ -39,8 +39,8 @@ const FIXED_RUNGS = [[3], [1], [0, 4], [2], [1], [0], []];
 
 ## Result
 
-<img width="1440" height="900" alt="taste-select" src="https://github.com/user-attachments/assets/a4a5acfe-9818-4d0b-bf88-7b1ac53f7d70" />
-<img width="1440" height="900" alt="ladder-work" src="https://github.com/user-attachments/assets/71986182-5582-416f-b519-37b9f7454ca9" />
+<img width="1440" alt="taste-select" src="https://github.com/user-attachments/assets/a4a5acfe-9818-4d0b-bf88-7b1ac53f7d70" />
+<img width="1440" alt="ladder-work" src="https://github.com/user-attachments/assets/71986182-5582-416f-b519-37b9f7454ca9" />
 
 
 

@@ -60,7 +60,15 @@
             src="{{url_for('static', filename='images/cart.png')}}"
             alt="장바구니"
           />
+          <span
+          id="cart-count"
+          class="cart-count"
+          {% if count == 0 %}style="display: none;"{% endif %}
+        >
+          {{ count }}
+        </span>
         </a>
+        
       </div>
     </header>
 

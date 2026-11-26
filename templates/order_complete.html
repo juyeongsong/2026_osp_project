@@ -4,7 +4,7 @@
   href="{{ url_for('static', filename='css/order.css') }}"
 />
 
-<h1 class="page-title">결제 완료</h1>
+<h1 class="page-title">주문 완료</h1>
 
 <div class="order-page complete">
   <div class="complete-card">
@@ -21,7 +21,7 @@
         <dd>{{ order.id }}</dd>
       </div>
       <div>
-        <dt>결제 일시</dt>
+        <dt>주문 일시</dt>
         <dd>{{ order.paid_at }}</dd>
       </div>
       <div>
@@ -43,7 +43,7 @@
     <hr class="divider" />
 
     <dl class="price-row price-row--total">
-      <dt>총 결제 금액</dt>
+      <dt>총 주문 금액</dt>
       <dd>{{ "{:,}".format(order.total) }}원</dd>
     </dl>
   </div>

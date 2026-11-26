@@ -101,6 +101,31 @@ a {
   height: auto;
 }
 
+.icon-btn.cart {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: 10px;
+  right: -10px;
+
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background-color: #ffd400;
+  color: #00640f;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
 .awning {
   display: flex;
   width: 100%;

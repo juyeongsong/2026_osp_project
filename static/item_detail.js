@@ -60,6 +60,15 @@
   const addToCart = async () => {
     const { ok, data } = await post("/cart/add", { name: itemName, qty });
     if (!ok) toast(data.message || "담지 못했어요.");
+    else {
+      const cartCount = document.getElementById("cart-count");
+
+      if (cartCount) {
+        cartCount.textContent = data.count;
+        cartCount.style.display = "flex";
+      }
+    }
+
     return ok;
   };
 

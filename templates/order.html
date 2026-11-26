@@ -4,7 +4,7 @@
   href="{{ url_for('static', filename='css/order.css') }}"
 />
 
-<h1 class="page-title">배송 정보 입력</h1>
+<h1 class="page-title">주문서</h1>
 
 {% with messages = get_flashed_messages() %} {% if messages %}
 <script>
@@ -153,12 +153,12 @@
         </dl>
         <hr class="divider" />
         <dl class="price-row price-row--total">
-          <dt>총 결제 금액</dt>
+          <dt>총 주문 금액</dt>
           <dd>{{ "{:,}".format(ns.sum + fee) }}원</dd>
         </dl>
       </div>
       <button type="submit" class="btn btn-big btn-big--green btn-pay">
-        결제하기
+        주문하기
       </button>
     </aside>
   </form>
@@ -221,7 +221,7 @@
   window.addEventListener("pageshow", function () {
     submitting = false;
     payButton.disabled = false;
-    payButton.textContent = "결제하기";
+    payButton.textContent = "주문하기";
   });
 </script>
 {% endblock section %}

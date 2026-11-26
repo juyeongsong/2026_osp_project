@@ -504,5 +504,10 @@ def view_order_complete(order_key):
 
     return render_template("order_complete.html", order=order)
 
+@app.context_processor
+def inject_cart_count():
+    cart = session.get("cart", {})
+    return {"count": sum(cart.values())}
+
 if __name__ == "__main__":
     app.run(debug=True)
